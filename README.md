@@ -1,2 +1,2 @@
 # Mrlu007.github.io
-联系github链接怎么用
+练习github链接怎么用
