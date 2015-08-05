@@ -1,0 +1,9 @@
+*{margin: 0;padding: 0;}
+.width-980{margin:0 auto;width: 980px;}
+.cfix:before,.cfix:after{clear: both;}
+.cfix:after{content: '';display: table;}
+/* 头部 */
+.header{margin-bottom: 20px;}
+.nav{height:40px;line-height:40px;border: 1px solid #BAC6D3;}
+/* 页脚 */
+.footer-nav{margin-top:20px;line-height:50px;border: 1px solid #BAC6D3;}
