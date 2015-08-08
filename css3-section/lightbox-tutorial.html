@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{
+            background: url("http://thecodeplayer.com/uploads/media/sunsky_m.png") center center fixed;
+            background-size: cover;
+            font-family: arial,verdana,tahoma;
+        }
+        #lightbox{
+            margin: 10px auto;
+            width: 520px;
+            border-bottom: 1px solid #ccc;
+        }
+        #lightbox h1{
+            text-transform:uppercase;
+            text-align: center;
+            padding: 10px 0;
+            margin: 20px 0;
+            color:#ffffff;
+            font-size: 24px;
+            background: rgba(255,255,255,.1);
+            border-left: 2px solid rgba(255,255,255,.65);
+            border-right:2px solid rgba(255,255,255,.65);
+        }
+        #lightbox ul{
+            overflow: hidden;
+        }
+        #lightbox ul li{
+            float: left;
+            padding: 10px;
+            background-color: #fff;
+            margin: 0 20px 20px 0;
+            list-style-type: none;
+            position: relative;
+            cursor: pointer;
+        }
+        #lightbox ul li:nth-child(even){
+            margin-right: 0;
+        }
+        #lightbox ul li img{
+            display: block;
+        }
+        #lightbox .image_title{
+            width: 250px;
+            height: 175px;
+            background: rgba(0,0,0,.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: table;
+            opacity: 0;
+            transition:all .5s;
+        }
+        #lightbox .title{
+            color: #fff;
+            background: rgba(0,0,0,.5);
+            text-transform: uppercase;
+            font-size: 14px;
+            text-align:  center;
+            display: table-cell;
+            vertical-align: middle;
+            transform:scale(0.2);
+            transition:all .25s;
+        }
+
+    </style>
+</head>
+<body>
+<div id="lightbox">
+    <h1>Lightbox</h1>
+    <ul>
+        <li>
+            <img src="http://thecodeplayer.com/uploads/media/lb1_small.png" data-large="http://thecodeplayer.com/uploads/media/lb1.png"/>
+            <div class="image_title">
+                <h5 class="title">Ceiling Art</h5>
+            </div>
+        </li>
+        <li>
+            <img src="http://thecodeplayer.com/uploads/media/lb2_small.png" data-large="http://thecodeplayer.com/uploads/media/lb2.png"/>
+            <div class="image_title">
+                <h5 class="title">Lit Curtain</h5>
+            </div>
+        </li>
+        <li>
+            <img src="http://thecodeplayer.com/uploads/media/lb3_small.png" data-large="http://thecodeplayer.com/uploads/media/lb3.png"/>
+            <div class="image_title">
+                <h5 class="title">Ornamental Lights</h5>
+            </div>
+        </li>
+        <li>
+            <img src="http://thecodeplayer.com/uploads/media/lb4_small.png" data-large="http://thecodeplayer.com/uploads/media/lb4.png"/>
+            <div class="image_title">
+                <h5 class="title">Cube Light</h5>
+            </div>
+        </li>
+        <li>
+            <img src="http://thecodeplayer.com/uploads/media/lb5_small.png" data-large="http://thecodeplayer.com/uploads/media/lb5.png"/>
+            <div class="image_title">
+                <h5 class="title">Damask 14</h5>
+            </div>
+        </li>
+        <li>
+            <img src="http://thecodeplayer.com/uploads/media/lb6_small.png" data-large="http://thecodeplayer.com/uploads/media/lb6.png"/>
+            <div class="image_title">
+                <h5 class="title">Dark Lamp</h5>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
