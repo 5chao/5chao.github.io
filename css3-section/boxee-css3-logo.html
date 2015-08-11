@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #wrapper{
+            width: 255px;
+            height: 255px;
+            position: relative;
+            margin: 100px auto;
+
+            transform:rotate(-45deg);
+        }
+        .eye{
+            background: rgb(94,186,44);
+            width: 30px;
+            height: 30px;
+            position: absolute;
+
+            border: 60px solid rgb(94,186,44);
+            border-radius: 160px;
+        }
+        .left{
+            background: transparent;
+            left: 0;
+            top: 0;
+        }
+        .right{
+            right: 0;
+            top: 0;
+        }
+        .right .ball{
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: 20px solid #fff;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+
+            border-radius: 160px;
+        }
+        .mouth{
+            width: 135px;
+            height: 45px;
+            border: 60px solid rgb(94,186,44);
+            position: absolute;
+            bottom: 0;
+            z-index: -1;
+            border-radius: 160px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <div class="eye left">
+        <div class="ball"></div>
+    </div>
+    <div class="eye right">
+        <div class="ball"></div>
+    </div>
+    <div class="mouth"></div>
+</div>
+</body>
+</html>
