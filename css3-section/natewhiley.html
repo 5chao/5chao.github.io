@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
+    ul,li{list-style: none;}
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #28ABE3;
+    }
+
+    .burger {
+        position: relative;
+        height: 250px;
+        width: 300px;
+    }
+
+    .top-bun-shadow {
+        width: 300px;
+        height: 90px;
+        background: #d29657;
+        border-top-left-radius: 80px;
+        border-top-right-radius: 80px;
+        overflow: hidden;
+    }
+
+    .top-bun {
+        position: relative;
+        width: 280px;
+        height: 90px;
+        background: #E6A45E;
+        border-top-right-radius: 80px;
+    }
+    .top-bun ul li {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #fbd8a2;
+        border-radius: 10px;
+    }
+    .top-bun ul li:before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        top: 7px;
+        border-left: 5.5px solid transparent;
+        border-right: 5.5px solid transparent;
+        border-top: 7px solid #fbd8a2;
+    }
+    .top-bun ul li:nth-child(1) {
+        left: 55px;
+        top: 25px;
+        transform: rotate(145deg);
+        -ms-transform: rotate(145deg);
+        /* IE 9 */
+        -webkit-transform: rotate(145deg);
+        /* Opera, Chrome, and Safari */
+    }
+    .top-bun ul li:nth-child(2) {
+        left: 40px;
+        top: 60px;
+        transform: rotate(40deg);
+        -ms-transform: rotate(40deg);
+        /* IE 9 */
+        -webkit-transform: rotate(40deg);
+        /* Opera, Chrome, and Safari */
+    }
+    .top-bun ul li:nth-child(3) {
+        left: 110px;
+        top: 20px;
+        transform: rotate(40deg);
+        -ms-transform: rotate(40deg);
+        /* IE 9 */
+        -webkit-transform: rotate(40deg);
+        /* Opera, Chrome, and Safari */
+    }
+    .top-bun ul li:nth-child(4) {
+        left: 90px;
+        top: 50px;
+        transform: rotate(-40deg);
+        -ms-transform: rotate(-40deg);
+        /* IE 9 */
+        -webkit-transform: rotate(-40deg);
+        /* Opera, Chrome, and Safari */
+    }
+    .top-bun ul li:nth-child(5) {
+        left: 150px;
+        top: 55px;
+        transform: rotate(40deg);
+        -ms-transform: rotate(40deg);
+        /* IE 9 */
+        -webkit-transform: rotate(40deg);
+        /* Opera, Chrome, and Safari */
+    }
+    .top-bun ul li:nth-child(6) {
+        left: 200px;
+        top: 25px;
+        transform: rotate(-40deg);
+        -ms-transform: rotate(-40deg);
+        /* IE 9 */
+        -webkit-transform: rotate(-40deg);
+        /* Opera, Chrome, and Safari */
+    }
+    .top-bun ul li:nth-child(7) {
+        left: 240px;
+        top: 65px;
+        transform: rotate(130deg);
+        -ms-transform: rotate(130deg);
+        /* IE 9 */
+        -webkit-transform: rotate(130deg);
+        /* Opera, Chrome, and Safari */
+    }
+
+    .cheese {
+        position: relative;
+        width: 300px;
+        height: 20px;
+        background: #FFAB30;
+        border-radius: 40px;
+    }
+    .cheese:before {
+        content: '';
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        z-index: 5;
+        right: 40px;
+        top: 5px;
+        background: #FFAB30;
+        border-radius: 7px;
+        transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        /* IE 9 */
+        -webkit-transform: rotate(45deg);
+        /* Opera, Chrome, and Safari */
+    }
+
+    .bacon {
+        position: relative;
+        background: #fbd6a1;
+        width: 300px;
+        height: 16px;
+    }
+    .bacon:before, .bacon:after {
+        content: '';
+        position: absolute;
+        height: 5px;
+        width: 300px;
+        background: #e24a57;
+    }
+    .bacon:after {
+        top: 11px;
+    }
+
+    .meat {
+        position: relative;
+        background: #5e3112;
+        border-radius: 40px;
+        width: 320px;
+        left: -10px;
+        overflow: hidden;
+    }
+    .meat > ul li {
+        position: absolute;
+        background: #442101;
+        border-radius: 50%;
+    }
+    .meat > ul li:nth-child(1) {
+        width: 12px;
+        height: 12px;
+        top: 8px;
+        left: 20px;
+    }
+    .meat > ul li:nth-child(2) {
+        top: 13px;
+        left: 62px;
+        width: 6px;
+        height: 6px;
+    }
+    .meat > ul li:nth-child(3) {
+        top: 25px;
+        left: 92px;
+        width: 12px;
+        height: 12px;
+    }
+    .meat > ul li:nth-child(4) {
+        top: 18px;
+        left: 138px;
+        width: 6px;
+        height: 6px;
+    }
+    .meat > ul li:nth-child(5) {
+        top: 25px;
+        left: 196px;
+        width: 12px;
+        height: 12px;
+    }
+    .meat > ul li:nth-child(6) {
+        top: 10px;
+        left: 225px;
+        width: 12px;
+        height: 12px;
+    }
+    .meat > ul li:nth-child(7) {
+        top: 18px;
+        left: 260px;
+        width: 6px;
+        height: 6px;
+    }
+    .meat > ul li:nth-child(8) {
+        top: 6px;
+        left: 302px;
+        width: 12px;
+        height: 12px;
+    }
+
+    .salad {
+        position: relative;
+        width: 300px;
+        height: 32px;
+        overflow: hidden;
+        left: 19px;
+        z-index: 5;
+    }
+    .salad ul li {
+        top: -22px;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background: #65bf5b;
+        border-radius: 50%;
+    }
+    .salad ul li:nth-child(1) {
+        left: 0px;
+    }
+    .salad ul li:nth-child(2) {
+        left: 40px;
+    }
+    .salad ul li:nth-child(3) {
+        left: 80px;
+    }
+    .salad ul li:nth-child(4) {
+        left: 120px;
+    }
+    .salad ul li:nth-child(5) {
+        left: 160px;
+    }
+    .salad ul li:nth-child(6) {
+        left: 200px;
+    }
+    .salad ul li:nth-child(7) {
+        left: 240px;
+    }
+
+    .bot-bun-shadow {
+        width: 300px;
+        height: 65px;
+        background: #d29657;
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+        overflow: hidden;
+    }
+
+    .bot-bun {
+        width: 280px;
+        height: 65px;
+        background: #E6A45E;
+        border-bottom-right-radius: 35px;
+    }
+
+    </style>
+</head>
+<body>
+<div class="burger">
+    <div class="top-bun-shadow">
+        <div class="top-bun">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    <div class="cheese"></div>
+    <div class="bacon"></div>
+    <div class="meat">
+        <div class="salad">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="bot-bun-shadow">
+        <div class="bot-bun"></div>
+    </div>
+</div>
+<script src="../lib/jquery-1.7.2.min.js"></script>
+<script src="../lib/TweenMax.js"></script>
+
+<script>
+
+    $(function(){
+        /*
+         Original illustration by: Mads Burcharth
+         https://dribbble.com/shots/1523120-Burgerzz?list=users&offset=0
+
+         Convetred to html/css by Jonathan Selwall.
+
+         Animation by Nate Wiley
+         */
+
+
+
+        var $body = $("body"),
+                $seeds = $(".top-bun-shadow li"),
+                $topBun = $(".top-bun-shadow"),
+                $cheese = $(".cheese"),
+                $bacon = $(".bacon"),
+                $meat = $(".meat"),
+                $lettuce = $(".salad li"),
+                $bottomBun = $(".bot-bun-shadow");
+
+        var tl = new TimelineMax({repeat: -1, repeatDelay: 2 });
+
+
+        tl.set([$topBun, $bacon, $meat, $lettuce, $bottomBun], {y: -600})
+                .set($seeds, {y: -30, opacity: 0 })
+                .set($body, { overflow: "hidden" })
+                .fromTo($bottomBun, .8, { rotationZ: -30}, { y: 0, rotationZ: 0, ease: Bounce.easeOut }, "bottomBun")
+                .fromTo($meat, .8, { rotationY: 360, x: 300  }, {rotationY: 0, x: 0,  y: 0, ease: Power1.easeOut }, "-=.2")
+                .staggerTo($lettuce, .4, {y: 0, ease: Power1.easeOut }, .08, "-=.2")
+                .fromTo($bacon, .8, {rotationZ: 10, x: -50}, {y: -250, rotationZ: -10, x: 50, ease: Sine.easeOut }, "-=.4")
+                .to($bacon, .8, {y: -150, rotationZ: 10, x: -50, ease: Sine.easeOut })
+                .to($bacon, .8, {y: 0, rotationZ: 0, x: 0, ease: Power1.easeIn})
+                .set($cheese, {zIndex: 1000})
+                .fromTo($cheese, .8, { scaleX: 0 }, { scaleX: 1, ease: Back.easeOut })
+                .fromTo($topBun, .8, {rotationZ: 30}, {y: 0, rotationZ: 0, ease: Bounce.easeOut }, "-=.2")
+                .staggerTo($seeds, .8, {y: 0, opacity: 1, ease: Bounce.easeOut }, .2)
+
+
+
+
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html,body{
+            background: #000;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+    var c = document.getElementById('c');
+    var $ = c.getContext('2d');
+    var w = c.width = window.innerWidth;
+    var h = c.height = window.innerHeight;
+
+    var total = 250;
+    var diff = 0;
+
+    //*****************************************
+    //* Particles
+    //*****************************************
+    var Particles = function(t, arr) {
+        this.t = t;
+        this.arr = arr;
+
+        this.vx = -.5 + Math.random();
+        this.vy = -.5 + Math.random();
+        this.radius = Math.floor(3 * Math.random());
+    };
+
+    Particles.prototype.render = function() {
+        $.beginPath();
+        $.fillStyle = 'hsla(' + this.y + ', 100%, 50%, 0.6)';
+        $.arc(this.x, this.y, diff, 0, 2 * Math.PI, false);
+        $.arc(this.x, this.y, 5, 0, 2 * Math.PI, false);
+        $.fill();
+    };
+
+    Particles.prototype.create = function() {
+        for (var i = 0; i < this.t; i++) {
+            this.arr.push(new Particles(total, []));
+        }
+    };
+
+    Particles.prototype.place = function() {
+        this.x = Math.floor((w * Math.random()) + this.radius);
+        this.y = Math.floor((h * Math.random()) + this.radius);
+    };
+
+    Particles.prototype.move = function() {
+        var center = this.radius;
+        return this.arr.map(function(_) {
+            if (_.y < center || _.y > h - center)
+                _.vy = -_.vy;
+            if (_.x < center || _.x > w - center)
+                _.vx = -_.vx;
+
+            _.x += _.vx;
+            _.y += _.vy;
+        });
+    };
+
+    var o = new Particles(total, []);
+
+    o.create();
+    o.arr.map(function(_) {
+        _.place();
+    });
+
+    //*****************************************
+    //* /Particles
+    //*****************************************
+
+    var arr = [];
+
+    function up() {
+        for (var i = 0; i < 70; i++) {
+            arr.push(i);
+        }
+    }
+
+    function down() {
+        var i = 70;
+        while (i--) {
+            arr.push(i);
+        }
+    }
+    var i = 0;
+    up();
+    down();
+
+    (function draw() {
+        $.clearRect(0, 0, w, h);
+
+        i === arr.length ? i = 0 : i++;
+        diff = arr[i];
+
+        o.move();
+        o.arr.map(function(_) {
+            _.render();
+        });
+        window.requestAnimationFrame(draw);
+    }());
+
+    window.addEventListener('resize', function() {
+        w = c.width = window.innerWidth;
+        h = c.height = window.innerHeight;
+        o.arr.map(function(_) {
+            _.place();
+        });
+    }, true);
+
+
+</script>
+</body>
+</html>
