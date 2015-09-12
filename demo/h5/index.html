@@ -1,53 +1,99 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,inital-scale=1.0,maximun-scale=1.0,user-scalable=0"/>
-<title>货代首页</title>
-<link rel="stylesheet" href="css/general.css"/>
-<link rel="stylesheet" href="css/mooc-home.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,inital-scale=1.0,maximun-scale=1.0,user-scalable=0"/>
+    <title>货代首页</title>
+    <link rel="stylesheet" href="css/general.css"/>
+    <link rel="stylesheet" href="css/mooc-home.css"/>
 </head>
-
 <body>
-	<div class="w-bannerTop">
-    	<img src="images/Home-top-banner.png" width="100%">
-   	</div>
-	<div class="w-pln-box">
-    	<a class="w-pln-con" href="#">
-        	<i><img src="images/icon-touxiang-n.png"></i>
-           <div class="w-pln-text">
-           	<h2>未登录</h2>
-            	<p>请您尽快登录</p>       
-           </div>
-           <div class="w-enterIcon"><img src="images/icon-enter.png" width="10" height="17"></div>
-       	</a>
-   	</div>
-   	<div class="w-fastEn">
-    	<div class="w-taskEn"><a href="#"><img src="images/004.png" width="100%"></a></div>
-       	<div class="w-faskEn-o">
-        	<ul>
-           	<li>
-            		<a href="#" class="w-enter-l "><img src="images/icon-01.png" width="100%" ></a>
+    <!-----头部栏目  s----->
+    <div class="w-topNav">
+    </div>
+    <!-----头部栏目  e----->
+    <!-----底部导航  s----->
+    <div class="w-bnav">
+        <ul>
+            <li>
+                <a class="w-nav-box w-nav-box-a">
+                    <i class="w-nav-icon-s w-icon-n1-a"></i>
+                    <p class="w-nav-fc w-nav-fc-a">首页</p>
+                </a>
             </li>
-           	<li>
-            		<a href="#" class="w-enter-r"><img src="images/icon-02.png" width="100%"  ></a>
-              	</li> 
-           	<li>
-            		<a href="#" class="w-enter-l"><img src="images/icon-03.png" width="100%" ></a>
-              	</li>
-           	<li>
-            		<a href="#" class="w-enter-r"><img src="images/icon-04.png" width="100%"  ></a>
-              	</li>                                
-           </ul>
-          
-       	</div>
-       	
-   	</div>
-   	<div class="bg-b"><img src="images/bg-s.jpg" width="100%"></div>
+            <li>
+                <a class="w-nav-box">
+                    <i class="w-nav-icon-s w-icon-n2"></i>
+                    <p class="w-nav-fc">课程</p>
+                </a>
+            </li>
+            <li>
+                <a class="w-nav-box">
+                    <i class="w-nav-icon-s w-icon-n3"></i>
+                    <p class="w-nav-fc">微课</p>
+                </a>
+            </li>
+            <li>
+                <a class="w-nav-box">
+                    <i class="w-nav-icon-s w-icon-n4"></i>
+                    <p class="w-nav-fc">交流</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-----底部导航  e----->
 
-    <script>
-       document.body.addEventListener('touchstart', function () { });
-        document.body.addEventListener('touchend', function () { });
-    </script>
+    <div class="w-bannerTop">
+        <img src="images/Home-top-banner.png" width="100%">
+    </div>
+    <div class="w-pln-box">
+        <a class="w-pln-con" href="http://192.168.3.6:8090/login.html">
+            <i><img src="images/icon-touxiang-n.png" width="100%"></i>
+            <div class="w-pln-text">
+                <h2>未登录</h2>
+                <p>请您尽快登录</p>
+            </div>
+            <div class="w-enterIcon"><img src="images/icon-enter.png" width="10" height="17"></div>
+        </a>
+    </div>
+    <!-----登录后  s---------------------------------------------------------------------------------------------------->
+    <div class="w-Log-in-box hide">
+        <a class="w-pln-con w-in-bg" href="#">
+            <i><img src="images/icon-touxiang-in.png" width="100%"></i>
+            <div class="w-pln-text">
+                <h2>朱紫玉</h2>
+                <p>登录时间 2015-09-08</p>
+            </div>
+            <div class="w-enterIcon"><img src="images/icon-enter.png" width="10" height="17"></div>
+        </a>
+    </div>
+    <!-----登录后   e---------------------------------------------------------------------------------------------------->
+
+    <div class="w-enter">
+        <div class="w-enter-b">
+            <ul>
+                <li><a href="http://192.168.3.6:8090/task-list.html"><img src="images/img-home-task.png" width="100%"></a></li>
+                <li><a href="#"><img src="images/img-home-album.png" width="100%"></a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="w-enter">
+        <div class="w-enter-s">
+            <ul>
+                <li><a href="#"><img src="images/icon-01.png" width="100%"></a></li>
+                <li><a href="http://192.168.3.6:8090/teacher-list.html"><img src="images/icon-02.png" width="100%"></a></li>
+                <li><a href="#"><img src="images/icon-03.png" width="100%"></a></li>
+                <li><a href="#"><img src="images/icon-04.png" width="100%"></a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="w-home-bg"><img src="images/bg-s.jpg" width="100%"></div>
+<script>
+    document.body.addEventListener('touchstart', function () { });
+    document.body.addEventListener('touchend', function () { });
+</script>
 </body>
 </html>
+
