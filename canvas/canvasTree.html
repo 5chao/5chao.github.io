@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{background: #993a2a;}
+    </style>
+</head>
+<body>
+<canvas id="main"></canvas>
+<script src="../lib/jquery-1.7.2.min.js"></script>
+<script>
+    "use strict";
+    var App = {};
+    App.init = function() {
+        $(window).resize(App.resizeHandler).resize();
+        App.tree.init();
+    };
+
+    App.resizeHandler = function() {
+        // canvas size
+        $('#main').attr('width', window.innerWidth).attr('height', window.innerHeight);
+    };
+
+    App.tree = {};
+    App.tree.options = {
+        color: "#110b00",
+        period: 40, // ms
+        segmentLength: 14, // Length of the segment added each period
+        maxAngleDelta: 10, // random variation of angle when growing. On each period, each branch can deviate to +/- maxAngleDelta (degrees)
+        startingWidth: 14, // Width of the trunk, width is reduced with each branch
+        newBranchRate: 0.4, // for the level 1 (trunk), increase each level
+        newBranchRateIncrease: 0.8, // Increase of newBranchRate each level.
+        minBranchAngle: 10, // Angle variation between new branch and parent branch
+        maxBranchAngle: 50,
+        minBranchRatio: 0.5, // Width of new branch (in relation to its parent's)
+        maxBranchRatio: 0.7,
+        branchReduction: 0.07, // Proportion of branch width lost each period
+        branchLifeSpan: 50, // Chances that a branch dies each period. Increase with levels.
+        maxPeriod: 40, // stop growing after a given number of periods. 0 = infinite.
+        maxLevel: 4,
+        minBranchWidth: .2
+    };
+
+    App.tree.init = function() {
+        var o = App.tree.options;
+        // variables
+        App.tree.period = 0;
+        App.tree.branches = [];
+        App.tree.interval;
+        // canvas
+        App.tree.canvas = document.getElementById("main");
+        App.tree.ctx = App.tree.canvas.getContext("2d");
+        // style
+        App.tree.ctx.strokeStyle = o.color;
+        App.tree.ctx.lineJoin = "round";
+        App.tree.ctx.lineCap = "round";
+        App.tree.ctx.lineWidth = o.startingWidth;
+        App.tree.ctx.beginPath();
+        // starting point
+        var startingPoint = {
+            x: App.tree.getWidth() / 2,
+            y: App.tree.getHeight()
+        };
+        // start trunk
+        App.tree.startBranch(1, 90, startingPoint, o.startingWidth);
+        // start growing!
+        App.tree.interval = setInterval(App.tree.grow, o.period);
+    };
+
+    App.tree.clear = function() {
+        clearInterval(App.tree.interval);
+        App.tree.ctx.clearRect(0, 0, App.tree.canvas.width, App.tree.canvas.height);
+    }
+
+    App.tree.reset = function() {
+        $('#main').fadeOut(200, function() {
+            App.tree.clear();
+            App.tree.init();
+            $(this).show(0);
+        });
+    }
+
+    App.tree.startBranch = function(level, angle, startingPoint, width) {
+        var branch = {
+            lastAngle: angle,
+            lastPoint: startingPoint,
+            width: width,
+            level: level,
+            isDead: false,
+            age: 0,
+            newBranchRate: App.tree.options.newBranchRate * Math.pow(App.tree.options.newBranchRateIncrease, level - 1) // -1 because trunk = 1 and not 0. so for the trunk the rate would be off.
+        };
+        App.tree.branches.push(branch);
+    }
+
+    App.tree.growBranch = function(index) {
+        var branch = App.tree.branches[index];
+        // dead?
+        if (branch.isDead) {
+            return;
+        }
+        // options
+        var o = App.tree.options;
+        // move to last point of branch. Have to use moveTo() because branches are drawing simultaneously.
+        App.tree.ctx.lineWidth = branch.width;
+        App.tree.ctx.beginPath();
+        App.tree.ctx.moveTo(branch.lastPoint.x, branch.lastPoint.y);
+        // random angle
+        var angle = branch.lastAngle - o.maxAngleDelta + Math.random() * o.maxAngleDelta * 2;
+        // convert to radians
+        var angleRad = App.tree.toRad(angle);
+        var lastAngleRad = App.tree.toRad(branch.lastAngle);
+        // half segment
+        var d = o.segmentLength / 2;
+        // last point
+        var lastPoint = branch.lastPoint;
+        // control point: go straight to half a segment length (according to last angle)
+        var ctrlPoint = {
+            x: lastPoint.x + d * Math.cos(lastAngleRad),
+            y: lastPoint.y - d * Math.sin(lastAngleRad)
+        };
+        // endpoint: turn a little and go to another half segment length
+        var endPoint = {
+            x: ctrlPoint.x + d * Math.cos(angleRad),
+            y: ctrlPoint.y - d * Math.sin(angleRad)
+        };
+        // set path
+        App.tree.ctx.quadraticCurveTo(ctrlPoint.x, ctrlPoint.y, endPoint.x, endPoint.y);
+        // draw path
+        App.tree.ctx.stroke();
+        // update variables
+        App.tree.branches[index].lastAngle = angle;
+        App.tree.branches[index].lastPoint = endPoint;
+        App.tree.branches[index].width = Math.max(o.minBranchWidth, branch.width * (1 - o.branchReduction));
+        App.tree.branches[index].age++;
+        // Start a new branch
+        var r = Math.random();
+        if (branch.level < o.maxLevel && r <= branch.newBranchRate) {
+            var r2 = r / branch.newBranchRate; // do not get a new random value, for performance. Still between 0 & 1
+            var direction = r2 < 0.5 ? -1 : 1;
+            var newBranchAngle = angle + (o.minBranchAngle + r2 * (o.maxBranchAngle - o.minBranchAngle)) * direction;
+            // OK, here we are forced to calculate a new random value
+            // new branch width is a ratio of current one, and both reduce in width. Eg. if current branch is width=10, then it could be : new branch=4, current=6
+            var branchWidth = Math.max(o.minBranchWidth, branch.width * (o.minBranchRatio + Math.random() * (o.maxBranchRatio - o.minBranchRatio)));
+            App.tree.startBranch(branch.level + 1, newBranchAngle, endPoint, branchWidth);
+        } else {
+            // Die?
+            // Only if no new branch, cause it's ugly
+            // Just flag it as dead. array.splice() would mess up the for() loop (cf. tree.grow())
+            if (branch.age >= o.branchLifeSpan / Math.pow(branch.level, 1.5)) {
+                App.tree.branches[index].isDead = true;
+            }
+        }
+    }
+
+    App.tree.grow = function() {
+        for (var i in App.tree.branches) {
+            App.tree.growBranch(i);
+        }
+        App.tree.period++;
+        if (App.tree.period == App.tree.options.maxPeriod) {
+            clearInterval(App.tree.interval);
+        }
+        return;
+    };
+
+    App.tree.getWidth = function() {
+        return App.tree.canvas.width;
+    }
+    App.tree.getHeight = function() {
+        return App.tree.canvas.height;
+    }
+
+    App.tree.toRad = function(a) {
+        return a * Math.PI / 180;
+    }
+
+    // Init
+    App.init();
+    $('body').click(App.tree.reset);
+</script>
+</body>
+</html>

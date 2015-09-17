@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        @import url("http://fonts.googleapis.com/css?family=Roboto\+Slab:300,100,400,700");
+        @import url("http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900,400italic");
+        @import url("http://fonts.googleapis.com/css?family=Roboto\+Condensed:300italic,400italic,700italic,400,300,700");
+        @import url("http://fonts.googleapis.com/css?family=Roboto\+Mono:400,100,100italic,300,300italic,500,400italic,500italic,700,700italic");
+        * {
+            box-sizing: border-box;
+            list-style: none;
+        }
+        body {
+            background: #d9b38c;
+            font-family: 'roboto slab';
+            font-size: 18px;
+            line-height: 1.5;
+            padding: 3rem;
+            color: #4f4f4f;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+        h1 {
+            color: #4d3319;
+            font-family: 'roboto condensed';
+            font-size: 6rem;
+            font-weight: 900;
+            text-align: center;
+            text-transform: uppercase;
+            -webkit-animation: wiggle 3s linear infinite;
+            animation: wiggle 3s linear infinite;
+        }
+        h2 {
+            color: #bf8040;
+            font-size: 3rem;
+            text-align: center;
+        }
+        ul {
+            background: #e6ccb3;
+            border-radius: 5px;
+            padding: 1rem;
+        }
+        a {
+            background: #e6ccb3;
+            color: #734d26;
+            display: block;
+        }
+        a:hover {
+            color: #407fbf;
+            text-decoration: none;
+        }
+        canvas {
+            margin: 3rem 0;
+            width: 50%;
+        }
+        @-webkit-keyframes wiggle {
+            0%, 7% {
+                -webkit-transform: rotateZ(0);
+                transform: rotateZ(0);
+            }
+            15% {
+                -webkit-transform: rotateZ(-5deg);
+                transform: rotateZ(-5deg);
+            }
+            20% {
+                -webkit-transform: rotateZ(0deg);
+                transform: rotateZ(0deg);
+            }
+            25% {
+                -webkit-transform: rotateZ(-3deg);
+                transform: rotateZ(-3deg);
+            }
+            30% {
+                -webkit-transform: rotateZ(3deg);
+                transform: rotateZ(3deg);
+            }
+            35% {
+                -webkit-transform: rotateZ(-2deg);
+                transform: rotateZ(-2deg);
+            }
+            40%, 100% {
+                -webkit-transform: rotateZ(0);
+                transform: rotateZ(0);
+            }
+        }
+        @keyframes wiggle {
+            0%, 7% {
+                -webkit-transform: rotateZ(0);
+                transform: rotateZ(0);
+            }
+            15% {
+                -webkit-transform: rotateZ(-5deg);
+                transform: rotateZ(-5deg);
+            }
+            20% {
+                -webkit-transform: rotateZ(0deg);
+                transform: rotateZ(0deg);
+            }
+            25% {
+                -webkit-transform: rotateZ(-3deg);
+                transform: rotateZ(-3deg);
+            }
+            30% {
+                -webkit-transform: rotateZ(3deg);
+                transform: rotateZ(3deg);
+            }
+            35% {
+                -webkit-transform: rotateZ(-2deg);
+                transform: rotateZ(-2deg);
+            }
+            40%, 100% {
+                -webkit-transform: rotateZ(0);
+                transform: rotateZ(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Arrest me!</h1>
+<h2>I'm brown, and I made a digital clock!</h2>
+<canvas id="canv" width="1300" height="200"></canvas>
+<script>
+    var c = document.getElementById("canv"),
+            $ = c.getContext("2d");
+    main();
+
+    // bitmap font
+    var clockAlpha = {
+        " ": [0x00, 0x00, 0x00, 0x00, 0x00],
+        "0": [0x3e, 0x45, 0x49, 0x51, 0x3e],
+        "1": [0x00, 0x21, 0x7f, 0x01, 0x00],
+        "2": [0x21, 0x43, 0x45, 0x49, 0x31],
+        "3": [0x22, 0x41, 0x49, 0x49, 0x36],
+        "4": [0x0c, 0x14, 0x24, 0x7f, 0x04],
+        "5": [0x72, 0x51, 0x51, 0x51, 0x4e],
+        "6": [0x1e, 0x29, 0x49, 0x49, 0x06],
+        "7": [0x40, 0x47, 0x48, 0x50, 0x60],
+        "8": [0x36, 0x49, 0x49, 0x49, 0x36],
+        "9": [0x30, 0x49, 0x49, 0x4a, 0x3c],
+        ":": [0x00, 0x36, 0x36, 0x00]
+    };
+
+    var sec; //seconds
+    var ld; //last date
+    var colhue = 0; //color hue
+
+    var blkSize = 25; //num block size
+    var blkGap = 2; // block spacing
+    var charGap = 15; //letter spacing
+    var hue_clk_Inc = 3; //increment clock hue
+    var hue_row_Inc = 5; //increment row hue
+
+    function main() {
+        window.setInterval(clkInt, 100); //clock interaval
+        window.setInterval(rnbwInt, 30); //rainbow interval
+    }
+
+    function clkInt() {
+        var d = new Date();
+        var s = d.getSeconds();
+
+        if (s != sec) {
+            sec = s;
+            ld = d;
+        }
+    }
+
+    function rnbwInt() {
+        if (ld !== undefined) {
+            colhue = incHue(colhue, hue_clk_Inc);
+
+            draw();
+        }
+    }
+
+    function draw() {
+        var h = ld.getHours();
+        var m = ld.getMinutes();
+        var s = ld.getSeconds();
+
+        //easy conversion to 'normal' hours:
+        if (h == 00) { //if midnight (00 hours) hour = 12
+            h = 12;
+        } else if (h >= 13) { //convert military hours at and over 1300 (1pm) to regular hours by subtracting 12.
+            h -= 12;
+        }
+        //display
+        var text = twoDigStr(h, " ") + ":" + twoDigStr(m, "0") + ":" + twoDigStr(s, "0");
+
+        clear();
+
+        var x = 10;
+        var y = 10;
+        var hue = colhue;
+
+        for (var i = 0; i < text.length; i++) {
+            var ch = text.charAt(i);
+
+            var rows = clockAlpha[ch];
+
+            for (var s = 0; s < rows.length; s++) {
+                var row = rows[s];
+
+                var color = new RGBACol();
+                color.setFromHSV(hue, 1, 1, 1);
+                $.shadowColor = 'hsla(0, 0%, 0%, .8)';
+                $.shadowBlur = 25;
+                $.shadowOffsetX = 10;
+                $.shadowOffsetY = 5;
+                $.fillStyle = "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+
+                for (var d = 0; d < 7; d++) {
+                    if ((row & 1) != 0) {
+                        var blkIdx = 6 - d;
+
+                        var blkX = x;
+                        var blkY = y + blkIdx * (blkSize + blkGap);
+
+                        $.fillRect(blkX, blkY, blkSize, blkSize);
+                    }
+
+                    row >>= 1;
+                }
+
+                x += blkSize + blkGap;
+                hue = incHue(hue, hue_row_Inc);
+            }
+
+            x += charGap;
+        }
+    }
+
+    function clear() {
+        $.clearRect(0, 0, c.width, c.height);
+    }
+
+    function twoDigStr(v, padding) {
+        var s = String(v);
+        return s.length == 1 ? padding + s : s;
+    }
+
+    function incHue(hue, inc) {
+        return (hue + inc) % 360;
+    }
+
+    function RGBACol(r, g, b, alpha) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.alpha = alpha;
+    }
+
+    RGBACol.prototype.setFromHSV = function(h, s, v, alpha) {
+        h = h % 360;
+
+        if (h < 0) {
+            h += 360;
+        }
+
+        var c = v * s;
+        var h1 = h / 60;
+        var x = c * (1 - Math.abs(h1 % 2 - 1));
+        var r1 = 0,
+                g1 = 0,
+                b1 = 0;
+
+        switch (Math.floor(h1)) {
+            case 0:
+                r1 = c;
+                g1 = x;
+                b1 = 0;
+                break;
+            case 1:
+                r1 = x;
+                g1 = c;
+                b1 = 0;
+                break;
+            case 2:
+                r1 = 0;
+                g1 = c;
+                b1 = x;
+                break;
+            case 3:
+                r1 = 0;
+                g1 = x;
+                b1 = c;
+                break;
+            case 4:
+                r1 = x;
+                g1 = 0;
+                b1 = c;
+                break;
+            case 5:
+                r1 = c;
+                g1 = 0;
+                b1 = x;
+                break;
+        }
+
+        var m = v - c;
+
+        this.r = Math.floor((r1 + m) * 255);
+        this.g = Math.floor((g1 + m) * 255);
+        this.b = Math.floor((b1 + m) * 255);
+        this.alpha = alpha;
+    };
+
+    RGBACol.prototype.setRGBA = function(r, g, b, alpha) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.alpha = alpha;
+    };
+</script>
+</body>
+</html>
