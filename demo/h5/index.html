@@ -94,6 +94,22 @@
     document.body.addEventListener('touchstart', function () { });
     document.body.addEventListener('touchend', function () { });
 </script>
+
+<script src="http://js.3conline.com/wap/common/wxApi.min.js" charset="utf-8" class=" defer"></script>
+<script>
+    var shareData = {
+        title: "抢首发，听说华强北商城和iphone 6s更配喔！",
+        desc: "小强发福利，iphone 6s好礼预定、0元抢齐上线，苹果5s、苹果6、华为荣耀7i……惊喜价，更多商品，快用华强北商城平价神器看看哟！",
+        link: "http://www1.pconline.com.cn/magazine/150919/new/index2.html",
+        imgUrl: "http://www1.pconline.com.cn/magazine/150919/logo.jpg"
+    };
+    wxApi.init(function() {
+        wx.onMenuShareAppMessage(shareData); // 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+        wx.onMenuShareTimeline(shareData); // 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+        wx.onMenuShareQQ(shareData); // 监听“分享到QQ”按钮点击、自定义分享内容及分享结果接口
+        wx.onMenuShareWeibo(shareData); // 监听“分享到微博”按钮点击、自定义分享内容及分享结果接口
+    });
+</script>
 </body>
 </html>
 
