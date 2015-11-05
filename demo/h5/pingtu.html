@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,inital-scale=1.0,maximun-scale=1.0,user-scalable=0"/>
+    <title></title>
+    <style>
+        *{margin: 0;padding: 0;}
+        html,body{ width: 100%;margin:0 auto;min-width:320px;max-width: 640px;}
+        .game-box{
+            margin-top: 100px;
+            display: -webkit-box;
+            -webkit-box-orient:horizontal;
+            -webkit-box-pack:center;
+            -webkit-box-align:center;
+            display: -moz-box;
+            -moz-box-orient:horizontal;
+            -moz-box-pack:center;
+            -moz-box-align:center;
+            text-align: center;
+        }
+        canvas{margin: 0 auto;border: 1px solid #3399FF;}
+    </style>
+</head>
+<body>
+    <div class="game-box">
+        <canvas width="200" height="200" id="game-body"></canvas>
+    </div>
+    <script>
+
+        var game = document.getElementById('game-body');
+        var content = game.getContext('2d');
+        var boardSize = game.width;
+        var titleCount = 3;
+        var titleSize = boardSize / titleCount;
+        var clickLoc = new Object;
+        var boardParts = new Object;
+        var emptyLoc = new Object;
+        var solved = false;
+
+
+        var img = new Image();
+        img.src = 'images/img-t6.jpg';
+        img.addEventListener('load',drawTitles,false);
+
+        clickLoc.x = 0;
+        clickLoc.y = 0;
+        emptyLoc.x = 0;
+        emptyLoc.y = 0;
+
+        setBoard();
+
+        game.onmousemove = function(e) {
+            clickLoc.x = Math.floor((e.pageX - this.offsetLeft) / titleSize);
+            clickLoc.y = Math.floor((e.pageY - this.offsetTop) / titleSize);
+        };
+
+        game.onclick = function(){
+            if(distance(clickLoc.x,clickLoc.y,emptyLoc.x,emptyLoc.y) == 1){
+                slideTitle(emptyLoc,clickLoc);
+                drawTitles();
+            }
+            if (solved) {
+                setTimeout(function() {alert("You solved it!");}, 500);
+            }
+        }
+
+        function setBoard(){
+            boardParts = new Array(titleCount);
+            for(var i=0;i<titleCount;++i){
+                boardParts[i] = new Array(titleCount);
+                for(var j=0;j<titleCount;++j){
+                    boardParts[i][j] = new Object;
+                    boardParts[i][j].x = (titleCount-1) -i;
+                    boardParts[i][j].y = (titleCount-1) -j;
+                }
+            }
+            emptyLoc.x = boardParts[titleCount-1][titleCount-1].x;
+            emptyLoc.y = boardParts[titleCount-1][titleCount-1].y;
+            solved = false;
+        }
+
+        function drawTitles(){
+            content.clearRect(0,0,boardSize,boardSize);
+            for(var i=0;i<titleCount;++i){
+                for(var j=0;j<titleCount;++j){
+                    var x = boardParts[i][j].x;
+                    var y = boardParts[i][j].y;
+                    if(i !=emptyLoc.x || j !=emptyLoc.y || solved == true){
+                        content.drawImage(img,x*titleSize,y*titleSize,titleSize,titleSize,i*titleSize,j*titleSize,titleSize,titleSize);
+                    }
+                }
+            }
+        }
+
+        function distance(x1,y1,x2,y2){
+            return Math.abs(x1-x2)+Math.abs(y1-y2);
+        }
+
+        function slideTitle(toLoc,fromLoc){
+            if(!solved){
+                boardParts[toLoc.x][toLoc.y].x = boardParts[fromLoc.x][fromLoc.y].x;
+                boardParts[toLoc.x][toLoc.y].y = boardParts[fromLoc.x][fromLoc.y].y;
+                boardParts[fromLoc.x][fromLoc.y].x = titleCount-1;
+                boardParts[fromLoc.x][fromLoc.y].y = titleCount-1;
+                toLoc.x = fromLoc.x;
+                toLoc.y = fromLoc.y;
+                checkSolved();
+            }
+        }
+
+        function checkSolved(){
+            var flag = true;
+            for(var i=0;i<titleCount;++i){
+                for(var j=0;j<titleCount;++j){
+                    if(boardParts[i][j].x != i || boardParts[i][j].y != j){
+                        flag = false;
+                    }
+                }
+            }
+            solved = flag;
+        }
+
+
+
+    </script>
+</body>
+</html>
