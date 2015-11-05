@@ -7,7 +7,7 @@
     <style>
         *{margin: 0;padding: 0;}
         html,body{margin:0 auto;max-width: 640px;}
-        #box{width:200px;height:200px;border: 1px solid #3399FF;-webkit-transition:background 1s ease;background-color: #0f1030;color: #fff;text-align: center;font-size: 18px;font-weight: 600;}
+        #box{margin:50% auto;width:200px;height:200px;border: 1px solid #3399FF;-webkit-transition:background 1s ease;background-color: #0f1030;color: #fff;text-align: center;font-size: 18px;font-weight: 600;}
     </style>
 </head>
 <body>
@@ -24,7 +24,6 @@
             if(window.DeviceMotionEvent){
                 window.addEventListener('devicemotion',deviceMotionHandler,false);
             }else{
-                alert('no');
                 box.style.backgroundColor='red';
                 box.innerHTML='not support mobile event';
             }
@@ -42,6 +41,8 @@
                 var speed = Math.abs(x+y+z-last_x-last_y-last_z)/diffTime*10000;
                 if(speed>SHAKE_THRESHOLD){
                     box.style.backgroundColor = 'yellow';
+                }else{
+                    box.style.backgroundColor = '#0f1030';
                 }
                 box.innerHTML = diffTime+'<--->'+speed;
 
