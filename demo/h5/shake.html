@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximun-scale=1.0,user-scalable=0"/>
+    <title></title>
+    <style>
+        *{margin: 0;padding: 0;}
+        html,body{margin:0 auto;max-width: 640px;}
+        #box{width:200px;height:200px;border: 1px solid #3399FF;-webkit-transition:background 1s ease;background-color: #0f1030;}
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        window.onload=function(){
+            init();
+        }
+        var SHAKE_THRESHOLD = 3000;
+        var last_update = 0;
+        var x = y =z =last_x=last_y=last_z = 0;
+        var box = document.getElementById('box');
+        function init(){
+            if(window.DeviceMotionEvent){
+                window.addEventListener('devicemotion',deviceMotionHandler,false);
+            }else{
+                box.style.backgroundColor='red';
+                box.innerHTML='not support mobile event';
+            }
+        }
+
+        function deviceMotionHandler(eventData){
+            var acceleration = eventData.accelerationIncludingGravity;
+            var curTime = new Date().getTime();
+            var diffTime = curTime-last_update;
+            if(diffTime>100){
+                last_update = curTime;
+                x = acceleration.x;
+                y = acceleration.y;
+                z = acceleration.z;
+                var speed = Math.abs(x+y+z-last_x-last_y-last_z)/diffTime*1000;
+                if(speed>SHAKE_THRESHOLD){
+                    box.style.backgroundColor = 'yellow';
+                }
+                last_x = x;
+                last_y = y;
+                last_z = z;
+            }
+        }
+    </script>
+</body>
+</html>
