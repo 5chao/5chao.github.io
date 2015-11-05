@@ -7,7 +7,7 @@
     <style>
         *{margin: 0;padding: 0;}
         html,body{margin:0 auto;max-width: 640px;}
-        #box{width:200px;height:200px;border: 1px solid #3399FF;-webkit-transition:background 1s ease;background-color: #0f1030;}
+        #box{width:200px;height:200px;border: 1px solid #3399FF;-webkit-transition:background 1s ease;background-color: #0f1030;color: #fff;text-align: center;font-size: 18px;font-weight: 600;}
     </style>
 </head>
 <body>
@@ -42,9 +42,9 @@
                 var speed = Math.abs(x+y+z-last_x-last_y-last_z)/diffTime*1000;
                 if(speed>SHAKE_THRESHOLD){
                     box.style.backgroundColor = 'yellow';
-                }else{
-                    alert('no1')
                 }
+                box.innerHTML = diffTime+'---'+speed;
+
                 last_x = x;
                 last_y = y;
                 last_z = z;
