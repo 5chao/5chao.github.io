@@ -18,12 +18,13 @@
         }
         var SHAKE_THRESHOLD = 3000;
         var last_update = 0;
-        var x = y =z =last_x=last_y=last_z = 0;
+        var x = y = z =last_x=last_y=last_z = 0;
         var box = document.getElementById('box');
         function init(){
             if(window.DeviceMotionEvent){
                 window.addEventListener('devicemotion',deviceMotionHandler,false);
             }else{
+                alert('no');
                 box.style.backgroundColor='red';
                 box.innerHTML='not support mobile event';
             }
@@ -41,6 +42,8 @@
                 var speed = Math.abs(x+y+z-last_x-last_y-last_z)/diffTime*1000;
                 if(speed>SHAKE_THRESHOLD){
                     box.style.backgroundColor = 'yellow';
+                }else{
+                    alert('no1')
                 }
                 last_x = x;
                 last_y = y;
