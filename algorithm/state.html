@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>状态模式</title>
+</head>
+<body>
+<script>
+    var State = function(){};
+
+    State.prototype.download = function(){
+        throw new Error('该方法必须被重载!');
+    }
+
+    State.prototype.parse = function(){
+        throw new Error('该方法必须被重载！');
+    }
+
+    State.prototype.fail = function(){
+        throw new Error('改方法必须被重载!');
+    }
+
+    var ReadyState = function(oDownload){
+        State.apply(this);
+        this.oDownload = oDownload;
+    };
+
+    ReadyState.prototype.download = function(){
+        this.oDownload.setState(this.oDownload.getDownloadingState());
+        console.log('Start Download!');
+    }
+
+    ReadyState.prototype.pause = function(){
+        throw new Error('还没开始下载，不能暂停！');
+    }
+
+    ReadyState.prototype.fail = function(){
+        throw new Error('文件还没开始下载，怎么能说失败呢！');
+    }
+
+    ReadyState.prototype.finish = function(){
+        throw new Error('文件还没开始下载，当然不能结束了！');
+    }
+
+    var Download = function (){};
+    Download.prototype.setState = function (oState){
+        this.oState = oState;
+    }
+    Download.prototype.download = function(){
+        this.oState.download();
+    }
+
+    Download.prototype.pause = function(){
+        this.oState.pause();
+    }
+
+    Download.prototype.fail = function(){
+        this.oState.fail();
+    }
+
+    Download.prototype.finish = function(){
+        this.oState.finish();
+    }
+
+    Download.prototype.getReadyState = function(){
+        return new ReadyState(this);
+    }
+
+    Download.prototype.getDownloadingState = function(){
+        return new DownloadingState(this);
+    }
+
+    Download.prototype.getDownloadPausedState = function(){
+        return new DownloadPausedState(this);
+    }
+
+    Download.prototype.getDownloadedState = function(){
+        return new DownloadedState(this);
+    }
+
+    Download.prototype.getDownloadedFailedState = function () {
+        return new DownloadFailedState(this);
+    };
+</script>
+</body>
+</html>

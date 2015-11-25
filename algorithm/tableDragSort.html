@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>表格拖动排序</title>
+    <style>
+        @charset "utf-8";
+        /*科e互联特效基本框架CSS*/
+        body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, textarea, form, select, fieldset, table, td, div, input {margin:0;padding:0;-webkit-text-size-adjust: none}
+        h1, h2, h3, h4, h5, h6{font-size:12px;font-weight:normal}
+        body>div{margin:0 auto}
+        div {text-align:left}
+        a img {border:0}
+        body { color: #333; text-align: center; font: 12px "微软雅黑"; }
+        ul, ol, li {list-style-type:none;vertical-align:0}
+        a {outline-style:none;color:#535353;text-decoration:none}
+        a:hover { color: #D40000; text-decoration: none}
+        .kePublic{background:#eee; padding:50px 0;}
+
+        /*科e互联特效基本框架CSS结束，应用特效时，以上样式可删除*/
+        #chenkbox { margin: 0px auto; width: 800px; position: relative; }
+        table { width: 100%; border-collapse: collapse; border-spacing: 0; table-layout: fixed; background-color: #fff; }
+        th { background: #ebf3f0; font-size: 13px; color: #000002; height: 25px; cursor: pointer; }
+        th, td { text-align: center; border: 1px solid #dcdbdb; padding: 8px 10px; }
+        #box { position: absolute; display: none; background: #fff; text-align: center; top: 0; background-color: #000; background-color: rgba(0,0,0,0.8); color: #fff; height: 100%; cursor: move; }
+        #box p { line-height: 34px; }
+
+    </style>
+</head>
+<body>
+<div class="kePublic">
+    <!--效果html开始-->
+    <div id="chenkbox">
+        <table id="tableSort">
+            <tr>
+                <th onclick="sortTable('tableSort',0)" title="点击排序"> 序列 </th>
+                <th onclick="sortTable('tableSort',1)" title="点击排序"> 名称 </th>
+                <th onclick="sortTable('tableSort',2)" title="点击排序"> 数量 </th>
+                <th onclick="sortTable('tableSort',3)" title="点击排序"> 单价(Q点) </th>
+                <th onclick="sortTable('tableSort',4)" title="点击排序"> 总计(Q点) </th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>农场话费A</td>
+                <td>2</td>
+                <td>50</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>飞车道具C</td>
+                <td>1</td>
+                <td>80</td>
+                <td>80</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>空间K</td>
+                <td>1</td>
+                <td>120</td>
+                <td>120</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>农场狗粮C</td>
+                <td>4</td>
+                <td>60</td>
+                <td>240</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>音速种子</td>
+                <td>2</td>
+                <td>110</td>
+                <td>220</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>农场化肥D</td>
+                <td>5</td>
+                <td>60</td>
+                <td>300</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>AVA装扮C</td>
+                <td>1</td>
+                <td>300</td>
+                <td>300</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>三国道具C</td>
+                <td>15</td>
+                <td>60</td>
+                <td>900</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>DNF道具B</td>
+                <td>4</td>
+                <td>300</td>
+                <td>1200</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>农场化肥H</td>
+                <td>6</td>
+                <td>80</td>
+                <td>120</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>农场化肥B</td>
+                <td>1</td>
+                <td>80</td>
+                <td>80</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Q宠元宝</td>
+                <td>100</td>
+                <td>1</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>三国道具K</td>
+                <td>9</td>
+                <td>20</td>
+                <td>180</td>
+            </tr>
+        </table>
+        <div id="box"></div>
+    </div>
+</div>
+<script>
+    function sortTable(table, idx){
+        var otable = document.getElementById(table),
+            otody = otable.tBodies[0],
+            otr = otody.rows,
+            tarr = [];
+
+        for(var i = 1; i < otr.length; i++){
+            tarr[i-1] = otr[i];
+        }
+
+        if(otody.sortCol == idx){
+            tarr.reverse();
+        }else{
+            tarr.sort(function(tr1, tr2){
+                var value1 = tr1.cells[idx].innerHTML,
+                    value2 = tr2.cells[idx].innerHTML;
+
+                if(!isNaN(value1) && !isNaN(value2)){
+                    return value1 - value2;
+                }else{
+                    return value1.localeCompare(value2);
+                }
+            });
+        }
+
+        var fragment = document.createDocumentFragment();
+
+        for(var i = 0; i< tarr.length; i++){
+            fragment.appendChild(tarr[i]);
+        };
+        otody.appendChild(fragment);
+        otody.sortCol = idx;
+    }
+
+    function Drag(table){
+        var ochek = document.getElementById('chenkbox'),
+            otable = document.getElementById(table),
+            otody = otable.tBodies[0],
+            oth = otody.getElementsByTagName('th'),
+            otd = otody.getElementsByTagName('td'),
+            box = document.getElementById('box'),
+            arrn = [];
+
+        for(var i = 0; i < otd.length; i++){
+            otd[i].onmousedown = function(e){
+                var e = e || window.event,
+                    target = e.target || e.srcElement,
+                    thW = target.offsetWidth,
+                    maxl = ochek.offsetWidth - thW,
+                    rows = otable.rows,
+                    ckL = ochek.offsetLeft,
+                    disX = target.offsetLeft,
+                    _this = this,
+                    cdisX = e.clientX - ckL -disX;
+
+                for(var i = 0; i < rows.length; i++){
+                    var op = document.createElement('p');
+                    op.innerHTML = rows[i].cells[this.cellIndex].innerHTML;
+                    box.appendChild(op);
+                };
+
+                for(var i = 0; i< oth.length; i++){
+                    arrn.push(oth[i].offsetLeft);
+                };
+
+                console.log(arrn);
+
+                box.style.display = 'block';
+                box.style.width = thW+'px';
+                box.style.left = disX+'px';
+
+                document.onmousemove = function(e){
+                    var e=e||window.event,
+                            target = e.target||e.srcElement,
+                            thW = target.offsetWidth;
+                    box.style.top=0;
+                    box.style.left=e.clientX-ckL-cdisX+"px";
+                    if(box.offsetLeft>maxl){
+                        box.style.left=maxl+"px";
+                    }else if(box.offsetLeft<0){
+                        box.style.left=0;
+                    }
+                    document.onselectstart=function(){return false};
+                    window.getSelection ? window.getSelection().removeAllRanges() : doc.selection.empty();
+                };
+
+
+                document.onmouseup = function(e){
+                    var e = e || window.event,
+                        opr = box.getElementsByTagName('p'),
+                        oboxl = box.offsetLeft+cdisX;
+
+                    for (var i = 0; i < arrn.length; i++) {
+                        if(arrn[i]<oboxl){
+                            var index=i;
+                        }
+                    };
+                    for(var i = 0; i < arrn.length; i++){
+                        rows[i].cells[_this.cellIndex].innerHTML = '';
+                        rows[i].cells[_this.cellIndex].innerHTML = rows[i].cells[index].innerHTML;
+                        rows[i].cells[index].innerHTML = '';
+                        rows[i].cells[index].innerHTML = opr[i].innerHTML;
+                    }
+
+                    box.innerHTML = '';
+                    arrn.splice(0, arrn.length);
+                    box.style.display = 'none';
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    document.onselectstart = function(){
+                        return false;
+                    }
+                }
+
+            }
+        }
+    }
+    Drag("tableSort");
+</script>
+</body>
+</html>

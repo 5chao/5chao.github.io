@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>波浪动的画笔</title>
+    <style>
+        body {
+            background: hsla(0, 0%, 90%, 1);
+            margin: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canv"></canvas>
+<script>
+    var c = document.getElementById('canv'),
+            $ = c.getContext('2d'),
+            w = c.width = window.innerWidth,
+            h = c.height = window.innerHeight,
+            t = 0, num = 90,
+            s, a, b,
+            x, y, _x, _y,
+            _t = 1 / 40;
+
+    var anim = function() {
+        $.fillStyle = 'hsla(0, 0%, 90%, .4)';
+        $.fillRect(0, 0, w, h);
+        for (var i = 0; i < 1; i++) {
+            x = 0;
+            $.beginPath();
+            $.strokeStyle = 'hsla(0,0%,15%,1)';
+            for (var j = 0; j < num; j++) {
+                x += 4.5 * Math.sin(5);
+                y = x * Math.sin(i + 2.5 * t + x * 50) / 4.5;
+                _x = x * Math.cos(b) + y * Math.sin(i);
+                _y = x * Math.sin(b) + y * Math.cos(i);
+                b = (j*2) * Math.PI / 3;
+                $.arc(w / 2 + _x, h / 2 + _y, 0, 0, 2 * Math.PI);
+            }
+            $.lineWidth = 1;
+            $.stroke();
+        }
+        t += _t;
+        window.requestAnimationFrame(anim);
+    };
+    anim();
+
+    window.addEventListener('resize', function() {
+        c.width = w = window.innerWidth;
+        c.height = h = window.innerHeight;
+    }, false);
+</script>
+</body>
+</html>

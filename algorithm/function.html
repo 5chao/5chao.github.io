@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Function 模式</title>
+</head>
+<body>
+<script>
+    var partialAny = (function (aps) {
+
+        // 该函数是你们自执行函数表达式的结果，并且赋值给了partialAny变量
+        function func(fn) {
+            var argsOrig = aps.call(arguments, 1);
+            return function () {
+                var args = [],
+                        argsPartial = aps.call(arguments),
+                        i = 0;
+
+                // 变量所有的原始参数集， // 如果参数是partialAny._ 占位符，则使用下一个函数参数对应的值 // 否则使用原始参数里的值
+                for (; i < argsOrig.length; i++) {
+                    args[i] = argsOrig[i] === func._
+                            ? argsPartial.shift()
+                            : argsOrig[i];
+                }
+
+                // 如果有任何多余的参数，则添加到尾部
+                return fn.apply(this, args.concat(argsPartial));
+            };
+        }
+
+        // 用于占位符设置
+        func._ = {};
+
+        return func;
+    })(Array.prototype.slice);
+
+    function hex(r, g, b){
+        return '#'+r+g+b;
+    }
+
+    var __ = partialAny._;
+
+    var greenMax = partialAny(hex, __, 'ff');
+    console.log(greenMax('33', '44'));
+
+    var blueMax = partialAny(hex, __, __, 'ff');
+    console.log(blueMax('55', '66'));
+
+    var magentaMax = partialAny(hex, 'ff', __, 'ff');
+    console.log(magentaMax('77'));
+
+    // currying
+    function curry(func, minArgs) {
+        if (minArgs == undefined) {
+            minArgs = 1;
+        }
+
+        function funcWithArgsFrozen(frozenargs) {
+            return function () {
+                // 优化处理，如果调用时没有参数，返回该函数本身
+                var args = Array.prototype.slice.call(arguments);
+                var newArgs = frozenargs.concat(args);
+                if (newArgs.length >= minArgs) {
+                    return func.apply(this, newArgs);
+                } else {
+                    return funcWithArgsFrozen(newArgs);
+                }
+            };
+        }
+
+        return funcWithArgsFrozen([]);
+    }
+
+    var plus = curry(function () {
+        var result = 0;
+        for (var i = 0; i < arguments.length; ++i) {
+            result += arguments[i];
+        }
+        return result;
+    }, 2);
+
+    plus(3, 2) // 正常调用
+    plus(3) // 偏应用，返回一个函数（返回值为3+参数值）
+    plus(3)(2) // 完整应用（返回5）
+    plus()(3)()()(2) // 返回 5
+    plus(3, 2, 4, 5) // 可以接收多个参数
+    plus(3)(2, 3, 5) // 同理
+
+    var minus = curry(function(){
+        var result = x;
+        for(var i = 1; i < arguments.length; ++i){
+            result -= arguments[i];
+        }
+        return result;
+    }, 2);
+
+    var flip = curry(function(func){
+        return curry(function(a, b){
+            return func(b, a);
+        }, 2);
+    });
+    // 立即执行函数
+    !function(){
+        console.log('!!!!');
+    }();
+
+
+    var utils = {
+        addListener: null,
+        removeListener: null
+    };
+
+    if(typeof window.addEventListener === 'function'){
+        utils.addListener = function(el, type, fn){
+            el.addEventListener(type, fn, false);
+        };
+        utils.removeListener = function(el, type, fn){
+            el.removeEventListener(type, fn, false);
+        }
+    } else if(typeof document.attachEvent !== 'undefined'){
+        utils.addListener = function(el, type, fn){
+            el.attachEvent('on'+type, fn);
+        };
+        utils.removeListener = function(el, type, fn){
+            el.detachEvent('on'+type, fn);
+        };
+    }else{
+        utils.addListener = function(el, type, fn){
+            el['on'+type] = fn;
+        };
+        utils.removeListener = function(el, type, fn){
+            el['on'+type] = null;
+        }
+    }
+
+    var myFunc = function(param){
+        if(!myFunc.cache[param]){
+            var result = {};
+            myFunc.cache[param] = result;
+        }
+        return myFunc.cache[param];
+    };
+    myFunc.cache = {};
+</script>
+</body>
+</html>

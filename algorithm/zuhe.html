@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>组合模式</title>
+    <style>
+        *{margin: 0;padding: 0;-webkit-user-select:none;user-select:none;}
+        .drag{position:absolute;top:0;left:0;z-index:10;width: 100px;height: 100px;border: 1px solid #3399FF;cursor: pointer;}
+        .target{display:table;margin:300px auto 0 auto;width: 200px;height: 200px;border: 1px solid #3399FF;}
+        .content{
+            display: table-cell;vertical-align: middle;width: 50px;height: 50px;text-align: center;border: 1px solid #004050;
+            color:transparent;
+            text-shadow: #111 0 0 1px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="drag" id="drag"></div>
+<div class="target">
+    <div class="content">T1</div>
+    <div class="content">T2</div>
+    <div class="content">T3</div>
+    <div class="content">T4</div>
+</div>
+<script>
+    // 第一种方法 在火狐下能很好地工作 在其他浏览器有bug
+    /*var Drag = {
+        D: document.querySelector('.drag') || document.getElementsByClassName('drag')[0],
+        drag: function(){
+
+            if(this.D.addEventListener){
+                this.D.addEventListener('mousedown', this.mouseDown, false);
+                this.D.addEventListener('mousemove', this.mouseMove, false);
+                this.D.addEventListener('mouseup', this.mouseUp, false);
+            }else{
+                this.D.attachEvent('onmousedown', this.mouseDown);
+                this.D.attachEvent('onmousemove', this.mouseMove);
+                this.D.attachEvent('onmouseup', this.mouseUp);
+            }
+
+        },
+        mouseDown: function(e) {
+
+            e = e || window.event;
+
+            if (this.setCapture){
+                this.setCapture();
+             }
+            this.isDrag = true;
+
+            this.x = (e.pageX || e.clientX) - this.offsetLeft;
+            this.y = (e.pageY || e.clientY) - this.offsetTop;
+
+
+
+        },
+        mouseUp: function(){
+            this.isDrag = false;
+
+            if(this.releaseCapture){
+                this.releaseCapture();
+            }
+        },
+        mouseMove: function(e){
+
+            e = e || window.event;
+            if(this.isDrag){
+
+
+                var L = (e.pageX || e.clientX) - this.x;
+                var T = (e.pageY || e.clientY) - this.y;
+
+
+                L = (L-100) < 0 ? 0 : L;
+                L = (L+102) > window.innerWidth ? (window.innerWidth - 102) : L;
+                T = (T-100) <0 ? 0 : T;
+                T = (T+102) > window.innerHeight ? (window.innerHeight - 102) : T;
+
+
+
+                this.style.left = L + 'px';
+                this.style.top = T + 'px';
+
+            }
+        }
+    };*/
+
+   // 第二种方法 兼容性好
+
+    var DragAll = {
+        D: document.getElementById('drag'),
+        drag: function(){
+            //alert(window.innerWidth);
+            this.D.onmousedown = function(event){
+                var e=event||window.event,
+                    t=e.target||e.srcElement,
+                    //鼠标按下时的坐标x1,y1
+                    x1=e.clientX,
+                    y1=e.clientY,
+                    //鼠标按下时的左右偏移量
+                    dragLeft=this.offsetLeft,
+                    dragTop=this.offsetTop,
+                    width = window.innerWidth || document.documentElement.clientWidth,
+                    height = window.innerHeight || document.documentElement.clientHeight;
+
+
+
+                if(typeof this.setCapture!='undefined'){
+                    this.setCapture();
+                }
+
+                document.onmousemove=function(event){
+
+                    var e=event||window.event,
+                        t=e.target||e.srcElement,
+                        //鼠标移动时的动态坐标
+                        x2=e.clientX,
+                        y2=e.clientY,
+                        //鼠标移动时的坐标的变化量
+                        x=x2-x1,
+                        y=y2-y1;
+
+
+                    x = ( x >width - dragLeft - 102) ? (width - dragLeft - 102) : x;
+                    x = ( x -102 <0 ) ? 0 : x;
+
+                    y = (y>height-dragTop - 102) ? (height - dragTop -102) : y;
+
+                    if(y<0){
+                        y = 0;
+                    }
+
+                    DragAll.D.style.left=(dragLeft+x)+'px';
+                    DragAll.D.style.top=(dragTop+y)+'px';
+
+                };
+
+
+                document.onmouseup=function(){
+                    this.onmousemove=null;
+                    this.onmouseup = null;
+
+
+                    if(typeof DragAll.D.releaseCapture!='undefined'){
+                        DragAll.D.releaseCapture();
+                    }
+                };
+
+            };
+
+        }
+    };
+    DragAll.drag();
+
+</script>
+
+</body>
+</html>

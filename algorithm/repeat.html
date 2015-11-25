@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>代码复用模式</title>
+</head>
+<body>
+<script>
+    /* 浅拷贝 */
+    function extend(parent, child){
+        var i;
+        child = child || {};
+        for(i in parent){
+            if(parent.hasOwnProperty(i)){
+                child[i] = parent[i];
+            }
+        }
+        return child;
+    }
+
+    var dad = {name: 'Adam'};
+    var kid = extend(dad);
+
+    console.log(kid.name);
+
+    var dad = {
+        counts: [1, 2, 3],
+        reads: {paper: true}
+    };
+    var kid = extend(dad);
+    kid.counts.push(4);
+    console.log(dad.counts.toString());
+    console.log(kid.counts.toString());
+    console.log(dad.reads === kid.reads);
+
+    /* 深拷贝 */
+    function extendDeep(parent, child){
+        var i,
+            toStr = Object.prototype.toString,
+            astr = "[object Array]";
+
+        child = child || {};
+        for(i in parent){
+            if(parent.hasOwnProperty(i)){
+                if(typeof parent[i] === 'object'){
+                    child[i] = (toStr.call(parent[i]) === astr) ? [] : {};
+                    extendDeep(parent[i], child[i]);
+                }else{
+                    child[i] = parent[i];
+                }
+
+            }
+        }
+        return child;
+    }
+
+    var dad = {
+        counts: [1, 2, 3],
+        reads: {paper: true}
+    }
+    var kid = extendDeep(dad);
+
+    kid.counts.push(4);
+    console.log(kid.counts.toString());
+    console.log(dad.counts.toString());
+
+    console.log(dad.reads === kid.reads);
+    kid.reads.paper = false;
+
+    /* 混入 */
+    function mix(){
+        var arg, prop, child = {};
+        for(arg = 0; arg < arguments.length; arg++){
+            for(prop in arguments[arg]){
+                if(arguments[arg].hasOwnProperty(prop)){
+                    child[prop] = arguments[arg][prop];
+                }
+            }
+        }
+        return child;
+    }
+    var cake = mix({eggs: 2, large: true},{butter: 1, salted: true, flour: '3 cups'},{sugar: 'sure!'});
+    console.dir(cake);
+
+    //
+    var Car = function(settings){
+        this.model = settings.model || 'no model provided';
+        this.colour = settings.colour || 'no colour provided';
+    };
+
+    var Mixin = function(){};
+    Mixin.prototype = {
+        driveForward: function(){
+            console.log('drive forward');
+        },
+        driveBackward: function(){
+            console.log('drive backward');
+        }
+    }
+
+    function augment(receivingObj, givingObj){
+        if(arguments[2]){
+            for(var i = 2, len = arguments.length; i < len; i++){
+                receivingObj.prototype[arguments[i]] = givingObj.prototype[arguments[i]];
+            }
+        }else{
+            for(var methodName in givingObj.prototype){
+                if(!receivingObj.prototype[methodName]){
+                    receivingObj.prototype[methodName] = givingObj.prototype[methodName];
+                }
+            }
+        }
+    }
+
+    augment(Car, Mixin, 'driveForward', 'driveBackward');
+
+    var vehicle = new Car({model: 'Ford Escort', colour: 'blue'});
+
+    vehicle.driveForward();
+    vehicle.driveBackward();
+
+    // 对象方法借用
+    var one = {
+        name: 'object',
+        say: function(greet){
+            return greet+', '+this.name;
+        }
+    };
+
+    console.log(one.say('hi'));
+
+    var two = {
+        name: 'another object'
+    };
+
+    console.log(one.say.apply(two,['hello']));
+
+    var say = one.say;
+    console.log(say('hoho'));
+
+    var yetanother = {
+        name: 'Yet another object',
+        method: function(callback){
+            return callback('Hola');
+        }
+    };
+
+    console.log(yetanother.method(one.say));
+
+    function bind(o, m){
+        return function(){
+            console.dir(arguments);
+            return m.apply(o, [].slice.call(arguments));
+        };
+    }
+
+    var twosay = bind(two, one.say);
+    console.log(twosay('yo'));
+
+    if(typeof Function.prototype.bind === 'undefined'){
+        Function.prototype.bind = function(thisArg){
+            var fn = this,
+                slice = Array.prototype.slice,
+                args = slice.call(arguments, 1);
+            return function(){
+                return fn.apply(thisArg, args.concat(slice.call(arguments)));
+            };
+        }
+    }
+
+    var twosay2 = one.say.bind(two);
+    console.log(twosay2('Bonjour'));
+
+    var twosay3 = one.say.bind(two, 'Enchante');
+    console.log(twosay3());
+</script>
+</body>
+</html>
