@@ -200,7 +200,7 @@
                     arrn.push(oth[i].offsetLeft);
                 };
 
-                console.log(arrn);
+                //console.log(arrn);
 
                 box.style.display = 'block';
                 box.style.width = thW+'px';
@@ -218,7 +218,7 @@
                         box.style.left=0;
                     }
                     document.onselectstart=function(){return false};
-                    window.getSelection ? window.getSelection().removeAllRanges() : doc.selection.empty();
+                    window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
                 };
 
 

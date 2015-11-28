@@ -1,0 +1,76 @@
+.load-container {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 240px;
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin:10em auto;
+}
+.load-container a{ text-align:center; display:block; color:#CCCCCC;}
+.load4 .loader {
+  font-size: 10px;
+  margin: 5em auto;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-animation: load4 1.3s infinite linear;
+  animation: load4 1.3s infinite linear;
+}
+@-webkit-keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0em -3em 0em 0.2em #CCCCCC, 2em -2em 0 0em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 0em #CCCCCC;
+  }
+  12.5% {
+    box-shadow: 0em -3em 0em 0em #CCCCCC, 2em -2em 0 0.2em #CCCCCC, 3em 0em 0 0em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  25% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 0em #CCCCCC, 3em 0em 0 0.2em #CCCCCC, 2em 2em 0 0em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  37.5% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 0em #CCCCCC, 2em 2em 0 0.2em #CCCCCC, 0em 3em 0 0em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  50% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 0em #CCCCCC, 0em 3em 0 0.2em #CCCCCC, -2em 2em 0 0em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  62.5% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 0em #CCCCCC, -2em 2em 0 0.2em #CCCCCC, -3em 0em 0 0em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  75% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 0em #CCCCCC, -3em 0em 0 0.2em #CCCCCC, -2em -2em 0 0em #CCCCCC;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0em 0em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 0em #CCCCCC, -3em 0em 0 0em #CCCCCC, -2em -2em 0 0.2em #CCCCCC;
+  }
+}
+@keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0em -3em 0em 0.2em #CCCCCC, 2em -2em 0 0em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 0em #CCCCCC;
+  }
+  12.5% {
+    box-shadow: 0em -3em 0em 0em #CCCCCC, 2em -2em 0 0.2em #CCCCCC, 3em 0em 0 0em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  25% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 0em #CCCCCC, 3em 0em 0 0.2em #CCCCCC, 2em 2em 0 0em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  37.5% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 0em #CCCCCC, 2em 2em 0 0.2em #CCCCCC, 0em 3em 0 0em #CCCCCC, -2em 2em 0 -0.5em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  50% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 0em #CCCCCC, 0em 3em 0 0.2em #CCCCCC, -2em 2em 0 0em #CCCCCC, -3em 0em 0 -0.5em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  62.5% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 0em #CCCCCC, -2em 2em 0 0.2em #CCCCCC, -3em 0em 0 0em #CCCCCC, -2em -2em 0 -0.5em #CCCCCC;
+  }
+  75% {
+    box-shadow: 0em -3em 0em -0.5em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 0em #CCCCCC, -3em 0em 0 0.2em #CCCCCC, -2em -2em 0 0em #CCCCCC;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0em 0em #CCCCCC, 2em -2em 0 -0.5em #CCCCCC, 3em 0em 0 -0.5em #CCCCCC, 2em 2em 0 -0.5em #CCCCCC, 0em 3em 0 -0.5em #CCCCCC, -2em 2em 0 0em #CCCCCC, -3em 0em 0 0em #CCCCCC, -2em -2em 0 0.2em #CCCCCC;
+  }
+}

@@ -1,0 +1,55 @@
+html{background:#fbfbfb;}
+
+
+
+.w-taskTab-box ul li{width:100%;float:left; display:block;  border-bottom:1px #CCCCCC solid; background:url(../images/icon-enter.png) no-repeat 97% center;}
+.w-taskTab-box ul li a{width:100%; display:block; margin:10px auto 10px auto; float:left;}
+.w-taskTab-box ul li a i{display:block; width:25%; border-radius:5px; overflow:hidden; box-shadow:2px 2px 2px #DDDDDD; border:1px #FFFFFF solid; float:left; margin-left:10px;}
+.w-imgDb img{display:block;}
+.w-task-name{width:16em; height:30px; float:left;}
+.w-task-icon{display:block; width:30px; height:30px; color:#FFFFFF;  border-radius:5px; float:left; margin-left:20px; font-size:1.6em; text-align:center; line-height:30px;}
+.w-task-icon-bg1{background:#66CC66;}
+.w-task-icon-bg2{background:#BD7CFC;}
+.w-task-icon-bg3{background:#FAA814;}
+.w-task-icon-bg4{background:#FF6666;}
+.w-task-icon-bg5{background:#33CCCC;}
+.w-task-icon-bg6{background:#51D77D;}
+.w-task-icon-bg7{background:#268AE7;}
+.w-task-name h1{width:3em; display:block; float:left; padding-left:10px; font-size:1.6em; font-weight:bold; line-height:30px; color:#333333;}
+.w-taskNote{display:block; float:left;  width:50%; height:1.4em; overflow:hidden; margin-left:20px; font-size:0.9em; margin-top:10px;}
+.text1{display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+
+/*-----二级菜单------*/
+.w-menuTwo-box{width:100%;}
+.w-menuTwo-box ul li a{display:block; height:60px; margin-bottom:10px; border-bottom:1px #EEEEEE solid; border-top:1px #EEEEEE solid; background:url(../images/icon-enter.png) no-repeat 97% center #FFFFFF;}
+.w-task-icon-c2{margin-top:15px;}
+.w-menuTwo-box p{display:block; height:30px; width:10em; float:left; margin-left:20px; margin-top:15px; font-size:1.6em; line-height:30px; font-weight:bold;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
