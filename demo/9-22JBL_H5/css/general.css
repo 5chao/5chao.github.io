@@ -1,0 +1,93 @@
+@charset "UTF-8";
+html{min-height:100%;background:#FFF;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+body{min-width:320px;max-width:640px;min-height:100%;line-height:1.4;margin:0 auto;font:14px/1.4"Helvetica Neue", Helvetica, STHeiTi, sans-serif, tahoma, arial, \5b8b\4f53;color:#444}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;margin:0;padding:0}
+audio,canvas,video{display:inline-block;*display:inline;*zoom:1}
+input:focus,a:focus{outline:none}
+fieldset,img{border:0}
+address,caption,cite,code,dfn,em,strong,th,var,i{font-style:normal;font-weight:normal}
+ol,ul{list-style:none}
+caption,th{text-align:left}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+q:before,q:after{content:''}
+abbr,acronym{border:0;font-variant:normal}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+:root sub,:root sup{vertical-align:baseline}
+sup{top:-0.5em}
+sub{bottom:-0.25em}
+button,input,textarea,select{font-family:tahoma, arial, simsun, sans-serif;font-size:inherit;font-weight:inherit;line-height:1.5;vertical-align:middle}
+button,input,textarea,select{*font-size:100%}
+textarea{resize:none}
+table{border-collapse:collapse;border-spacing:0}
+th{text-align:inherit}a{vertical-align:baseline;color:#444;}
+a:hover{text-decoration:none}
+ins,a{text-decoration:none}
+del{text-decoration:line-through}
+.clear{display:block;float:none;clear:both;overflow:hidden;visibility:hidden;width:0;height:0;background:none;border:0;font-size:0}
+.cfix:before,.cfix:after{content:"";display:table}
+.cfix:after{clear:both}
+.cfix{*zoom:1}
+.fl{float:left;display:inline}
+.fr{float:right;display:inline}
+.dib-wrap{font-size:0;letter-spacing:-.31em;*letter-spacing:normal}
+.dib-wrap .dib{font-size:12px;letter-spacing:normal;word-spacing:normal;vertical-align:top}
+.dib{display:inline-block;*display:inline;*zoom:1}
+.hide{display:none}
+.text{display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+
+
+html{background:#F8F8F8;}
+.content{width:100%; margin-top:3.5em; margin-bottom:3.5em;}
+/*-- TOP导航 --*/
+.w-topNav-box{background:#16CEEE; width:100%; height:3.5em; position:fixed; left:0px; top:0px;}
+.w-homeSearch-box{width:60%; height:3.5em; margin:auto;}
+.w-homeSearch-box a{width:90%; height:2.5em; border-radius:2em; display:block; margin-top:0.5em; color:#FFFFFF; text-align:left; padding-left:5%; padding-right:5%; line-height:2.6em; font-size:1em; background:url(../images/icon-home-sousuo.png) no-repeat 96% center #04A5C1; background-size:16px 16px;}
+.w-topIcon-l{float:left; width:4em; height:3.5em; }
+.w-topIcon-r{float:right; width:4em; height:3.5em; }
+.w-topIcon-l a{float:left; width:4em; height:3.5em; display:block;}
+.w-topIcon-r a{float:right; width:4em; height:3.5em; display:block;}
+.w-topIcon-p{display:block; width:2em; height:2em; margin-top:0.75em; margin-left:1em;}
+.w-topReturn{background:url(../images/icon-navtop.png) no-repeat scroll 0px 0px / 2em auto; }
+.w-topQR{background:url(../images/icon-navtop.png) no-repeat scroll 0px -4em / 2em auto; }
+.w-topNews{background:url(../images/icon-navtop.png) no-repeat scroll 0px -10em / 2em auto; }
+.w-topNews-h{background:url(../images/icon-navtop.png) no-repeat scroll 0px -12em / 2em auto; }
+.w-topIcon-l a:active{background:#04A5C1;}
+.w-topIcon-r a:active{background:#04A5C1;}
+
+
+
+
+
+/*-- 底部导航 --*/
+.w-navB-box{width:100%; height:3.5em; position:fixed; bottom:0px; left:0px; border-top:1px #E5E5E5 solid; background:rgba(255, 255, 255, 0.95) none repeat scroll 0% 0%; }
+.w-navB-box ul li a{width:20%; height:3.5em; display:block; float:left;}
+.w-navB-box ul li a:active{background:#EEEEEE;}
+.w-iconNb{width:24px; height:24px; display:block; margin:auto; margin-top:4px; margin-bottom:1px;  background:url(../images/icon-navbuottom2.png) no-repeat scroll 0% 0% / 24px auto;}
+/*-- 底部导航图标 --*/
+.w-nbHome{background-position:0px 0px;}
+.w-nbShop{background-position:0px -48px;}
+.w-nbService{background-position:0px -96px;}
+.w-nbCar{background-position:0px -144px;}
+.w-nbMy{background-position:0px -192px;}
+/*-- 底部导航图标获得焦点时相应更换样式 --*/
+.w-nbHome-f{background-position:0px -24px;}
+.w-nbShop-f{background-position:0px -72px;}
+.w-nbService-f{background-position:0px -120px;}
+.w-nbCar-f{background-position:0px -168px;}
+.w-nbMy-f{background-position:0px -216px;}
+
+.w-nb-color{color:#888888;}
+.w-nb-color-f{color:#03BDDD;}
+
+
+
+.w-navB-box ul li a p{font-size:0.86em; text-align:center; }
+
+
+
+
+
+
+
+
