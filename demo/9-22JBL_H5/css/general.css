@@ -52,6 +52,8 @@ html{background:#F8F8F8;}
 .w-topQR{background:url(../images/icon-navtop.png) no-repeat scroll 0px -4em / 2em auto; }
 .w-topNews{background:url(../images/icon-navtop.png) no-repeat scroll 0px -10em / 2em auto; }
 .w-topNews-h{background:url(../images/icon-navtop.png) no-repeat scroll 0px -12em / 2em auto; }
+/*.w-topIcon-l a:active{background:#04A5C1;}
+.w-topIcon-r a:active{background:#04A5C1;}*/
 .w-topIcon-l a:active{background:#04A5C1;}
 .w-topIcon-r a:active{background:#04A5C1;}
 
