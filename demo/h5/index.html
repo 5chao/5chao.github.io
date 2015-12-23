@@ -99,22 +99,21 @@
 
 <script>
     function onBridgeReady() {
-
-        alert('000');
         WeixinJSBridge.call('showOptionMenu');
         WeixinJSBridge.on('menu:share:appmessage', function(argv) {
             WeixinJSBridge.invoke('sendAppMessage', {
-                "img_url": '',
+                "img_url": 'http://mrlu007.github.io/demo/h5/images/quan.jpg',
                 "link": 'http://m.okhqb.com',
                 "desc":'这是一个测试',
                 "title": '测试'
             }, function(res) {
                 //document.location.href = mebtnopenurl;
+                alert('555');
             })
         });
         WeixinJSBridge.on('menu:share:timeline', function(argv) {
             WeixinJSBridge.invoke('shareTimeline', {
-                "img_url": '',
+                "img_url": 'http://mrlu007.github.io/demo/h5/images/quan.jpg',
                 "img_width": "640",
                 "img_height": "640",
                 "link": 'http://m.okhqb.com',
@@ -122,6 +121,7 @@
                 "title": '测试'
             }, function(res) {
                 //document.location.href = mebtnopenurl;
+                alert('6666');
             });
         });
     }
