@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>简单左右无缝滑动</title>
+    <style>
+        *{padding: 0;margin: 0;}
+        ul,li{list-style: none;}
+        .slide{position:relative;z-index:5;margin:0 auto;width: 600px;height: 500px;border: 1px solid #3399FF;overflow: hidden;}
+        .slide ul{position:absolute;top:0;left:0;width: 2400px;height: 600px;line-height: 500px;text-align: center;font-size: 60px;color: #3399FF;}
+        .slide li{float: left;width: 600px;}
+        .btn-box{position: relative;height: 200px;border: 1px solid #00ee00;}
+        .btn{position:absolute;top:0;z-index:10;width: 50px;height: 100px;border: 1px solid #00ee00;cursor: pointer;}
+        .left{left: 200px;}
+        .right{right: 200px;}
+    </style>
+</head>
+<body>
+<div class="slide">
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+</div>
+<div class="btn-box">
+    <div class="btn left"></div>
+    <div class="btn right"></div>
+</div>
+
+<p><a href="" id="a1">鼠标放上来试试</a></p>
+
+<script src="../lib/jquery-1.7.2.min.js"></script>
+<script>
+    $(function(){
+        var slide = $('.slide ul'),
+            $right = $('.right'),
+            $left = $('.left');
+
+
+        $left.click(function(){
+            slide.find('li:last').prependTo(slide);
+            slide.css('left',-(600)+'px').stop().animate({'left':0}, 500);
+
+        });
+        $right.click(function(){
+            slide.stop().animate({'margin-left':'-600px'}, 500, function(){
+                slide.find('li:first').appendTo(slide);
+                slide.css('margin-left','0px');
+            });
+        });
+
+
+
+        $('#a1').mouseOverTips({
+            color:'#000',
+            size:'16px'
+        });
+
+    });
+
+    (function($){
+        $.fn.mouseOverTips = function(options){
+            var defaults = {
+                pos:'top',
+                color:'red',
+                size:'12px'
+            };
+
+            var option = $.extend({}, defaults, options);
+
+            return this.each(function(){
+                var $this = $(this),
+                    pos = $this.position();
+
+                console.dir(option);
+
+                $this.mouseover(function(){
+                    var str = '<div class="new-tips">'+$this.html()+'</div>';
+                    $this.append(str);
+                    $('.new-tips').css({
+                        'position':'absolute',
+                        'top': (pos.top-$('.new-tips').height())+'px',
+                        'left':pos.left+'px',
+                        'width':'200px',
+                        'border':'1px solid skyblue',
+                        'color':option.color,
+                        'size':option.size,
+                        'background':'#fff'
+                    });
+                });
+                $this.mouseleave(function(){
+                    $this.find('.new-tips').remove();
+                });
+
+            });
+
+        };
+
+    })(jQuery)
+</script>
+</body>
+</html>

@@ -96,7 +96,48 @@
     document.body.addEventListener('touchend', function () { });
 </script>
 
-<script src="http://js.3conline.com/wap/common/wxApi.min.js" charset="utf-8" class=" defer"></script>
+
+<script>
+    function onBridgeReady() {
+        WeixinJSBridge.call('showOptionMenu');
+        WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url": '',
+                "link": 'http://m.okhqb.com',
+                "desc":'这是一个测试',
+                "title": '测试'
+            }, function(res) {
+                //document.location.href = mebtnopenurl;
+            })
+        });
+        WeixinJSBridge.on('menu:share:timeline', function(argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": '',
+                "img_width": "640",
+                "img_height": "640",
+                "link": 'http://m.okhqb.com',
+                "desc": '这是一个测试',
+                "title": '测试'
+            }, function(res) {
+                //document.location.href = mebtnopenurl;
+            });
+        });
+    }
+
+    if (typeof WeixinJSBridge == "undefined") {
+        if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    } else {
+        onBridgeReady();
+    }
+</script>
+
+
+<!--<script src="http://js.3conline.com/wap/common/wxApi.min.js" charset="utf-8" class=" defer"></script>
 <script>
     var shareData = {
         title: "抢首发，听说华强北商城和iphone 6s更配喔！",
@@ -110,7 +151,7 @@
         wx.onMenuShareQQ(shareData); // 监听“分享到QQ”按钮点击、自定义分享内容及分享结果接口
         wx.onMenuShareWeibo(shareData); // 监听“分享到微博”按钮点击、自定义分享内容及分享结果接口
     });
-</script>
+</script>-->
 </body>
 </html>
 
