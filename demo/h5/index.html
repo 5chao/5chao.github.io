@@ -99,6 +99,8 @@
 
 <script>
     function onBridgeReady() {
+
+        alert('000');
         WeixinJSBridge.call('showOptionMenu');
         WeixinJSBridge.on('menu:share:appmessage', function(argv) {
             WeixinJSBridge.invoke('sendAppMessage', {
