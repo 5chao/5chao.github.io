@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Luckiest+Guy);
+        body{
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canv"></canvas>
+<script>
+    var c = document.getElementById('canv');
+    var $ = c.getContext('2d');
+    var w = c.width = window.innerWidth;
+    var h = c.height = window.innerHeight;
+    var num = 950, cnt = 0;
+    var fl = 550, rad = 30;
+    var ms = new msp(0, 0);
+    var _arr = [];
+    var curY = 500, curX = 500;
+    var nY = 10000, nX = 10000;
+    var fx = w * 0.5, fy = h * 0.5
+    var _fx = fx * 0.5, _fy = fy * 0.5
+    var vpx, vpy;
+    function txt() {
+        var t   =  "Puffs".split("").join(String.fromCharCode(0x2004));
+        $.font = "4.5em Luckiest Guy";
+        $.fillStyle = 'hsla(255, 255%, 255%, .4)';
+        $.fillText(t, (c.width - $.measureText(t).width) * 0.5, c.height * 0.5);
+    }
+    function set(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.px = 0;
+        this.py = 0;
+        this.rad = 1;
+        this.ang = 0;
+        this.tr = 1;
+        this.nr = 1;
+        this.alph = Math.random()*.99;
+        this.nrad = function() {
+            var dx = Math.abs(ms.msX - this.px);
+            var dy = Math.abs(ms.msY - this.py);
+            var dmax = 500;
+            var rmax = 10;
+            var d = dx + dy;
+            if (d >= dmax) d = dmax;
+            var r = (d / dmax) * rmax;
+            this.tr = rmax + 1 - r;
+            this.nr += (this.tr - this.nr) * 0.2;
+            this.rad = Math.abs(Math.sin(this.ang * Math.PI / 180) * this.nr);
+            this.ang += 10;
+            if (this.ang > 360) this.ang = 0;
+        };
+        this.updp = function(x, y) {
+            this.px = x;
+            this.py = y;
+        };
+    }
+    function draw() {
+        window.requestAnimationFrame(draw);
+        $.fillStyle = 'hsla(218, 95%, 25%, 1)';
+        $.fillRect(0, 0, c.width, c.height);
+        nY += (curY - nY) * 0.1;
+        for (var i = 0; i < cnt; i++) {
+            var p = _arr[i];
+            var ay = nY * 0.0001;
+            var ax = 2 * 0.0005;
+            vpx = w * 0.5;
+            vpy = h * 0.5;
+            var _x = p.x * Math.cos(ay) - p.z * Math.sin(ay);
+            var _z = p.z * Math.cos(ay) + p.x * Math.sin(ay);
+            var _y = p.y * Math.cos(ax) - _z * Math.sin(ax);
+            p.x = _x;
+            p.y = _y;
+            p.z = _z;
+            var sc = fl / (fl + p.z);
+            var rad = p.rad * sc;
+            var x = vpx + p.x * sc;
+            var y = vpy + p.y * sc;
+            $.beginPath();
+            $.fillStyle = 'hsla(255,255%,255%, '+p.alph+')';
+            $.arc(p.px, p.py, p.rad * 5, 0, Math.PI * 2, false);
+            $.fill();
+            p.updp(x, y);
+            p.nrad();
+        }
+        cnt++;
+        if (cnt >= num) cnt = num;
+        txt();
+    }
+    for (var i = 0; i < num; i++) {
+        var x = Math.random() * fx - _fx;
+        var y = Math.random() * fy - _fy;
+        var z = Math.random() * 500 - 200;
+        var p = new set(x, y, z);
+        _arr[i] = p;
+    }
+    draw();
+    function msp(msX, msY) {
+        this.msX = msX;
+        this.msY = msY;
+        this.msp = function(e) {
+            this.msX = e.x;
+            this.msY = e.y;
+        };
+    }
+    window.addEventListener('mousemove', function(e) {
+        ms.msX = e.clientX;
+        ms.msY = e.clientY;
+    }, false);
+
+    window.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        ms.msX = e.touches[0].clientX;
+        ms.msY = e.touches[0].clientY;
+    }, false);
+
+    window.addEventListener('resize',function(){
+        c.width = w = window.innerWidth;
+        c.height = h = window.innerHeight;
+    }, false);
+
+
+</script>
+</body>
+</html>

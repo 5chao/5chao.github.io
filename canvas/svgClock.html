@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>svg-clock</title>
+    <style>
+        html,body{height: 100%;overflow: hidden;}
+        body{
+            background: #0a0a0a;
+            background-image: -webkit-linear-gradient(#0f0f0f, 1px, transparent 1px), -webkit-linear-gradient(left, #0f0f0f 1px, transparent 1px);
+            background-image: linear-gradient(#0f0f0f 1px, transparent 1px), linear-gradient(to right, #0f0f0f 1px, transparent 1px);
+            background-size: 3.33333vmin 3.33333vmin;
+        }
+        svg{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        path{
+            fill-opacity: .6;
+        }
+        .shapes-filled path{
+
+        }
+        .shapes-stroked path{
+            fill: transparent;
+            stroke: black;
+            stroke-width: 2;
+            stroke-dasharray: 10;
+        }
+        text{
+            stroke: white;
+            stroke-width: 1;
+            stroke-dasharray: 5;
+            font-size: 20vw;
+            font-family: Tahoma;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <svg>
+        <defs>
+            <path class="shape" d="M45, 0 L90, 30 90, 80 45, 110 0, 80 0, 30 z"></path>
+        </defs>
+        <mask id="mask">
+            <text x="50%" y="50%" dy=".3em" text-anchor="middle">Pattern</text>
+        </mask>
+
+        <pattern id="patt" class="pattern" width="400" height="400" patternUnits="userSpaceOnUse" viewBox="0 45 900 900">
+            <rect fill="#fff" width="1000" height="1000"></rect>
+            <g class="shapes-filled"></g>
+            <g class="shapes-stroked"></g>
+        </pattern>
+        <g fill="url(#patt)">
+            <text x="50%" y="50%" dy=".3em" text-anchor="middle" class="text">&hearts</text>
+        </g>
+    </svg>
+    <script src="../lib/TweenMax.js"></script>
+    <script>
+        console.clear();
+        var doc = document,
+            shape = doc.querySelector('.shape'),
+            shapeW = 90,
+            shapeVOffset = shapeW / 2.5,
+            shapeH = shapeW -shapeVOffset,
+            shapeCounter = 0,
+            pattern = doc.querySelector('.pattern'),
+            pattVbox = pattern.getAttribute('viewBox').split(' '),
+            pattVboxHor = pattVbox[2],
+            pattVboxVert = pattVbox[3],
+            gFilled = doc.querySelector('.shapes-filled'),
+            gStroked = doc.querySelector('.shapes-stroked'),
+            titlesHor = pattVboxHor / shapeW,
+            titleVert = pattVboxVert / shapeH + 1,
+            titleMax = titlesHor * titleVert,
+            colorStep = 360 / titleMax,
+            dutation = 3,
+            text = doc.querySelector('.text');
+
+        fillPattern();
+
+        function getRandColor(){
+            var colorPos = Math.random() * 360,
+                colorS = Math.random() * 30 + 70 +'%',
+                colorB = Math.random() * 40 + 20 +'%',
+                colorVal = [Math.floor(colorPos * colorStep), colorS, colorB].join(','),
+                color = 'hsl('+ colorVal +')';
+
+            return color;
+        }
+
+        var myInt = setInterval(setTime, 1000);
+        function setTime(){
+            var myDate = new Date(),
+                hours = myDate.getHours(),
+                mins = myDate.getMinutes(),
+                secs = myDate.getSeconds(),
+                time = [hours, mins, secs];
+
+            for(var i = 0; i < time.length; i++){
+                time[i] = time[i] < 10 ? '0' + time[i] : time[i];
+            }
+            time = time.join(':');
+
+            text.textContent = time;
+        }
+
+        function Shape(x, y, hasAnim){
+            hasAnim = hasAnim === undefined ? true : hasAnim;
+
+            var newShape = shape.cloneNode();
+            var translateVal = [shapeW * x, shapeH * y].join(' ');
+            var tranform = 'translate('+ translateVal + ')';
+            newShape.setAttribute('transform', tranform);
+
+            if(hasAnim){
+                var color = getRandColor();
+                newShape.setAttribute('fill', color);
+                var newShapeAnim = new Animation( newShape );
+            }
+            shapeCounter++;
+            return newShape;
+        }
+
+        function fillPattern(){
+            for(var y = 0; y < titleVert; y++){
+                for(var x = 0; x < titlesHor; x++){
+                    var newShape = new Shape(x, y);
+                    var newItem = gFilled.appendChild(newShape);
+                    var newShapeStroked = new Shape(x, y, false);
+                    var newItemStroked = gStroked.appendChild(newShapeStroked);
+                }
+            }
+            console.dir(pattern);
+        }
+
+        function Animation(elem){
+            var initFill = elem.getAttribute('fill'),
+                tol = {
+                    fill: getRandColor(),
+                    ease: Power0.easeNone
+                },
+                to2 = {
+                    fill: getRandColor(),
+                    ease: Power0.easeNone
+                },
+                to3 = {
+                    fill: getRandColor(),
+                    ease: Power0.easeNone,
+                    onComplete: forward
+                },
+                myTween = new TimelineLite();
+
+            function forward(){
+                myTween.to(elem, dutation, to1);
+                myTween.to(elem, dutation, to2);
+                myTween.to(elem, dutation, to3);
+            }
+        }
+    </script>
+</body>
+</html>

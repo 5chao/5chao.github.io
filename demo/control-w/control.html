@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>控件通用样式</title>
+<link type="text/css" href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+	
+	<div class="w_controlBox marginTop20">
+        <!-- 单选 -->
+        <div class="w_areaGroup">
+        	<label class="w_groupLabel lineH32">名称文本</label>
+            <div class="w_formControl">
+            	<div class="w_radio">
+                    <span class="w_radio_c1 w_radio_on">
+                        <input type="radio" checked="checked" name="paylist" value="1" class="w_radio02">                    
+                    </span>
+                    <label>条件1</label>
+                </div> 
+            	<div class="w_radio">
+                    <span class="w_radio_c1">
+                        <input type="radio" checked="checked" name="paylist" value="1" class="w_radio02">                    
+                    </span>
+                    <label>条件1</label>
+                </div>                                                                             
+            </div>            
+        </div>
+        <!-- 复选 -->
+        <div class="w_areaGroup">
+        	<label class="w_groupLabel lineH32">名称文本</label>
+            <div class="w_formControl">
+            	<div class="w_radio">
+                    <span class="w_checkbox_c1">
+                        <input type="checkbox" checked="checked" name="paylist" value="1" class="w_radio02">                    
+                    </span>
+                    <label>复选</label>
+                </div> 
+            	<div class="w_radio">
+                    <span class="w_checkbox_c1">
+                        <input type="checkbox" checked="checked" name="paylist" value="1" class="w_radio02">                    
+                    </span>
+                    <label>复选</label>
+                </div>  
+            	<div class="w_radio">
+                    <span class="w_checkbox_c1">
+                        <input type="checkbox" checked="checked" name="paylist" value="1" class="w_radio02">                    
+                    </span>
+                    <label>复选</label>
+                </div>                                                                                            
+            </div>            
+        </div>
+	    <!-- 输入样式 -->        
+        <div class="w_areaGroup">
+        	<label class="w_groupLabel lineH32">名称文本</label>
+            <div class="w_formControl positionR">
+            	<input class="w_inputText" type="text" placeholder="请输入信息">
+                <a href="#" class="w_deleteText"><i></i></a>
+                <div class="w_hintBox">
+                	<div class="w_hintText">这里是错误提示!</div>
+                    <i></i>
+                </div>
+            </div>                    
+        </div>
+	    <!-- 下拉样式 -->         
+        <div class="w_areaGroup">
+        	<label class="w_groupLabel lineH32">名称文本</label>
+            <div class="w_formControl positionR">
+            	<select class="w_selectGroup">
+                	<option value="" selected="">请选择</option>
+                    <option value="0">条件1</option>
+                    <option value="1">条件2</option>
+                </select>
+                <i class="w_get"></i>
+            </div>                    
+        </div>
+	    <!-- 跳转新页面选择 -->         
+        <div class="w_areaGroup">
+        	<label class="w_groupLabel lineH32">名称文本</label>
+            <div class="w_formControl positionR">
+            	<p class="w_flexBox">请选择</p>
+                <i class="w_get"></i>
+            </div>                    
+        </div>  
+	    <!-- 长文本输入 -->         
+        <div class="w_areaGroup">
+        	<div class="w_Nlong">
+            	<i class="w_pen"></i>
+            	<label class="w_groupLabel lineH32">名称文本</label>
+            </div>       
+			<textarea class="w_textLong" type="text" placeholder="请输入长文本"></textarea>                  
+        </div>                                    
+    </div>
+    <!-- 复选框 -->
+    <div class="w_controlBox marginTop20">
+    	<div class="w_checkArea">
+        	<ul>
+            	<li>
+                	<div></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+</body>
+</html>
+
+<script src="js/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script src="js/w_control.js" type="text/javascript"></script>

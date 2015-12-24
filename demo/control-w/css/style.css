@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/* 通用样式 */
+html,body,div,p,dl,dt,dd,ul,li,a,i,span,table{ margin:0; padding:0;}
+.html{font-size:.625rem;/*10 ÷ 16 × 100% = 62.5%*/  height:100%;}
+body{color:#333;font-family:arial; font:12px/1.5 tahoma,arial,\5b8b\4f53,sans-serif;background:#f4f4f4;-webkit-overflow-scrolling:touch;height:100%; overflow-x:hidden; max-width:640px; min-width:320px; background:#F8F8F8;}
+h1,h2,h3,h4,h5,h6{font-size:100%}
+address,cite,dfn,em,var{font-style:normal}
+fieldset,img{border:0}
+.clear{width:100%; clear:both;height:0px;font-size: 1px;line-height: 10px;}
+.clear5{width:100%; clear:both;height:5px;font-size: 1px;line-height: 10px;}
+.clear10{width:100%; clear:both;height:10px;font-size: 1px;line-height: 10px;}
+button,input,select,textarea{font-size:100%}
+table{border-collapse:collapse;border-spacing:0}
+input[type="submit"],input[type="reset"],input[type="button"],button,input[type="date"],input[type="file"],select,input[type="text"]{-webkit-appearance:none;}/*清除控件样式*/
+input[type="radio"],input[type="checkbox"]{ vertical-align:middle;}
+button,input,select{ border:none;}
+*{-webkit-tap-highlight-color:rgba(0,0,0,0);outline:0;margin:0;padding:0}
+*{-webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box; box-sizing:border-box;}
+ul,ol{list-style:none;}
+a{ text-decoration:none;}
+input[type="text"],input[type="search"]{-webkit-appearance:none;-webkit-tap-highlight-color:#fff;outline:0}
+.section{overflow:hidden;}
+i{font-style:normal;}
+textarea{ resize:none;}
+
+.marginTop5{margin-top:5px;}
+.marginTop10{margin-top:10px;}
+.marginTop15{margin-top:15px;}
+.marginTop20{margin-top:20px;}
+
+.color3{color:#333333;}
+.color6{color:#666666;}
+.color9{color:#999999;}
+.colorb{color:#BBB;}
+
+.font12r{font-size:1.2rem;}
+.font1r{font-size:1rem;}
+.font08r{font-size:0.8rem;}
+
+.lineH32{line-height:32px;}
+
+.positionR{position:relative;}
+.positionA{position:absolute;}
+.displayNone{display:none;}
+
+
+
+
+/* 通用样式 */
+.w_controlBox{border-top:1px #E5E5E5 solid;}
+.w_areaGroup{width:100%; background:#FFF; border-bottom:1px #E5E5E5 solid; padding:6px 15px; display: table;}
+.w_groupLabel{width:80px; color:#333; text-align:left; font-size:1rem; color:#666666;}
+.w_formControl,.w_groupLabel{display:table-cell;}
+.w_formControl{ vertical-align:middle;}
+
+.w_radio span{ line-height:20px; position:relative; font-size:0.9rem}
+.w_radio_c1{width: 20px; height: 20px; float: left; cursor: pointer; text-align: center; margin-right: 6px; background:url(../images/icon-01.png) no-repeat scroll 0px 0px / 42px 42px;}
+.w_radio02{opacity: 0; cursor: pointer; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; filter: alpha(opacity=0);}
+.w_radio_on{background-position: -21px 0px;}
+.w_radio{float:left; margin-right:20px;}
+.w_radio label{color:#333; font-size:1rem; line-height:20px;}
+
+
+.w_checkbox_c1{width: 20px; height: 20px; float: left; cursor: pointer; text-align: center; margin-right: 6px; background:url(../images/icon-01.png) no-repeat scroll 0px -21px / 42px 42px;}
+.w_checkbox_on{background-position: -21px -21px;}
+
+
+.w_inputText{width:100%; line-height:32px; font-size:1rem; color:#333;}
+.w_deleteText{ width:32px; height:32px; position:absolute; right:0; top:0px; padding:6px 0px 6px 12px;}
+.w_deleteText i{ width:20px; height:20px; background:url(../images/icon-02.png) no-repeat scroll 50% 50% / 20px 20px; display:block;}
+.w_hintText{height:20px; min-width:100px; background:#EC5254; color:#fff; line-height:20px; font-size:0.8rem; padding-left:10px; padding-right:10px; border-radius:8px; position:relative; z-index:1;}
+.w_hintBox{position:absolute; left:-20px; top:-22px; opacity:0.8;}
+.w_hintBox i{ display:block; width:10px; height:10px; background:#EC5254; position:absolute; top:14px; left:25px; transform:rotate(45deg);}
+
+.w_selectGroup{width:100%; line-height:32px; font-size:1rem; color:#333; height:32px;}
+.w_get{width:9px; height:20px; background:url(../images/icon-03.png) no-repeat scroll 50% 50% / 9px 20px; display:block; position:absolute; right:0; top:6px;}
+
+.w_flexBox{line-height:32px; font-size:1rem;}
+.w_textLong{width:100%; height:160px; border:none; background:#f8f8f8; border-radius:8px; box-shadow:0px 0px 2px #DDD inset; padding:8px; font-size:1rem;}
+.w_Nlong{height:40px;}
+.w_pen{width:20px; height:20px; background:url(../images/icon-04.png) no-repeat scroll 50% 50% / 20px 20px; display:block; float:right; margin-top:6px; margin-left:10px; }
+
+
+.w_checkArea ul li{width:100%; height:40px; display:block; background:#FFF; border-bottom:1px #e5e5e5 solid;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
