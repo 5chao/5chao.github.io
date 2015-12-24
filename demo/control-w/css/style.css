@@ -70,7 +70,7 @@ textarea{ resize:none;}
 .w_deleteText i{ width:20px; height:20px; background:url(../images/icon-02.png) no-repeat scroll 50% 50% / 20px 20px; display:block;}
 .w_hintText{height:20px; min-width:100px; background:#EC5254; color:#fff; line-height:20px; font-size:0.8rem; padding-left:10px; padding-right:10px; border-radius:8px; position:relative; z-index:1;}
 .w_hintBox{position:absolute; left:-20px; top:-22px; opacity:0.8;}
-.w_hintBox i{ display:block; width:10px; height:10px; background:#EC5254; position:absolute; top:14px; left:25px; -webkit-transform:rotateX(45deg);transform:rotateX(45deg);}
+.w_hintBox i{ display:block; width:10px; height:10px; background:#EC5254; position:absolute; top:14px; left:25px; -webkit-transform:rotate(45deg);transform:rotate(45deg);}
 
 .w_selectGroup{width:100%; line-height:32px; font-size:1rem; color:#333; height:32px;}
 .w_get{width:9px; height:20px; background:url(../images/icon-03.png) no-repeat scroll 50% 50% / 9px 20px; display:block; position:absolute; right:0; top:6px;}
