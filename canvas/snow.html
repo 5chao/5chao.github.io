@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>下雪</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{
+            background: #0F536B;
+            width: 100%;
+            height: 100%;
+        }
+        .wrapper{
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            height: 100%;
+            overflow: hidden;
+            margin: 0 auto;
+            background: #0F536B;
+            font-size: 0;
+        }
+        .wrapper img{
+            width: 100%;
+        }
+        canvas{
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 80;
+        }
+        .back{
+            position: absolute;
+            z-index: 70;
+            top: 0;
+            left: 0;
+        }
+        .front{
+            position: absolute;
+            z-index: 99;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper"><img src="http://ywahu.com/play/placeholder.png"/>
+    <div class="back">
+        <img src="http://ywahu.com/play/globe-back.jpg"/>
+    </div>
+    <canvas id="canvas"></canvas>
+    <div class="front">
+        <img src="http://ywahu.com/play/globe-front2.png"/>
+    </div>
+</div>
+<script>
+    var makeitSnow = function(){
+        var canvas = document.getElementById('canvas'),
+                ctx = canvas.getContext('2d'),
+                W = document.getElementsByClassName('wrapper')[0].offsetWidth,
+                H = document.getElementsByClassName('wrapper')[0].offsetHeight;
+
+        canvas.width = W;
+        canvas.height = H;
+
+        var mp = 100;
+        var particles = [];
+
+        for( var i = 0; i < mp; i++){
+            particles.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                r: Math.random() * 4 + 1,
+                d: Math.random() * mp
+            });
+        }
+
+        function draw(){
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.beginPath();
+
+            for(var i = 0; i < mp; i++){
+                var p = particles[i];
+                ctx.moveTo(p.x, p.y);
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+            }
+
+            ctx.fill();
+            update();
+
+        }
+
+        var angle = 0;
+        function update(){
+            angle += 0.01;
+            for(var i = 0; i < mp; i++){
+                var p = particles[i];
+                p.y += Math.cos(angle + p.d) + 1 + p.r / 2;
+                p.x += Math.sin(angle) + 2;
+
+                if(p.x > W + 5 || p.x < -5 || p.y > H){
+                    if(i % 3 > 0){
+                        particles[i] = {
+                            x: Math.random() * W,
+                            y: -10,
+                            r: p.r,
+                            d: p.d
+                        };
+                    }else{
+                        if(Math.sin(angle) > 0){
+                            particles[i] = {
+                                x: -5,
+                                y: Math.random() * H,
+                                r: p.r,
+                                d: p.d
+                            };
+                        }
+                    }
+                }
+            }
+        }
+
+        setInterval(draw, 33);
+    };
+    window.onload = makeitSnow();
+</script>
+</body>
+</html>

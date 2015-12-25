@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>下雪2</title>
+    <style>
+        body{
+            background: #222;
+            text-align: center;
+        }
+        canvas{
+            background: linear-gradient(rgb(84, 184, 195), rgb(125, 205, 178));
+        }
+    </style>
+</head>
+<body>
+<canvas id="c" width="420" height="420"></canvas>
+<script>
+    function Utils(){}
+    Utils.prototype.randomNumber = function(min, max){
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    Utils.prototype.Sin = function(n, angle, arc, plus){
+        return plus ? n + Math.sin(angle) * arc : n - Math.sin(angle) * arc;
+    };
+    Utils.prototype.Cos = function(n, angle, arc, plus){
+        return plus ? n + Math.cos(angle) * arc : n - Math.cos(angle) * arc;
+    };
+
+    var utils = new Utils();
+
+    (function(Utils){
+        function Canvas(_){
+            this.canvas = document.getElementById(_);
+            this.context = this.canvas.getContext('2d');
+            this.width = this.canvas.width;
+            this.height = this.canvas.height;
+        };
+
+        function Snow(canvas, amount){
+            this.canvas = canvas;
+            this.amount = amount;
+
+            this.generate();
+            this.init();
+        };
+
+        Snow.prototype.config = function(_){
+
+            return {
+                id: _,
+                x: 0,
+                y: 0,
+                vx: 0,
+                vy: 0,
+                alpha: 0,
+                angle: 0
+            };
+        };
+
+        Snow.prototype.generate = function(){
+            var i, snowflake;
+            this.arr = [];
+
+            for(i = 0; i < this.amount; ++i){
+                snowflake = this.config(i);
+                this.arr.push(snowflake);
+            }
+        };
+
+        Snow.prototype.reset = function(_){
+            _ = this.arr[_];
+            _.init = false;
+            _.x = Utils.randomNumber(0, this.canvas.width);
+            _.y = Utils.randomNumber(0, this.canvas.height);
+            _.vx = Utils.randomNumber(0.1, 0.5);
+            _.vy = Utils.randomNumber(0.5, 1.5);
+            _.alpha = Utils.randomNumber(0.1, 0.5);
+
+        };
+
+        Snow.prototype.tick = function(_){
+            var index = _;
+            _ = this.arr[_];
+            this.canvas.context.fillStyle = 'rgba(255, 255, 255, '+ _.alpha+')';
+
+
+            if(_.id % 2 === 0){
+                this.canvas.context.fillRect(_.x, _.y, 3, 3);
+            }else{
+                this.flake(_);
+            }
+
+            _.y += _.vy;
+            _.id % 2 === 0 ? _.x = Utils.Sin(_.x, _.angle, 1, true) : _.x = Utils.Cos(_.x, _.angle, 0.5, true);
+            _.angle += 0.01;
+
+            if(_.init){
+                _.alpha -= 0.01;
+            }else{
+                _.alpha += 0.01;
+            }
+
+            if(_.alpha <= 0){
+                this.reset(index);
+            }else{
+                _.init = true;
+            }
+        };
+
+
+        Snow.prototype.flake = function(_){
+            var size = 3;
+
+            this.canvas.context.save();
+            this.canvas.context.translate(_.x, _.y);
+
+            for(var row = 0; row < 3; row++){
+                for(var column = 0; column < 3; column++){
+                    var x = column * size;
+                    var y = row * size;
+
+                    if(row % 2 == 0){
+                        if(column % 2 ==0){
+                            this.canvas.context.fillStyle = 'transparent';
+                        }else{
+                            this.canvas.context.fillStyle = 'rgba(255, 255, 255, ' + _.alpha + ')';
+                        }
+                    }else{
+                        if(column % 2 ==0 ){
+                            this.canvas.context.fillStyle = 'rgba(255, 255, 255, ' + _.alpha + ')';
+                        }else{
+                            this.canvas.context.fillStyle = 'transparent';
+                        }
+                    }
+
+                    this.canvas.context.fillRect(x, y, size, size);
+                }
+            }
+
+            this.canvas.context.fill();
+            this.canvas.context.restore();
+        };
+
+        Snow.prototype.render = function(){
+            var _this = this,
+                i;
+
+            this.canvas.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+            for(i = 0; i < this.arr.length; ++i){
+                this.tick(i);
+            }
+
+            window.requestAnimationFrame(this.render.bind(this));
+        };
+
+        Snow.prototype.init = function(){
+            var i;
+            for(i = 0; i < this.arr.length; ++i){
+                this.reset(i);
+            }
+
+            this.render();
+            console.table(this.arr);
+        }
+
+
+        return new Snow(new Canvas('c'), 20);
+    })(utils)
+</script>
+</body>
+</html>
