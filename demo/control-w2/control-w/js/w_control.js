@@ -18,17 +18,12 @@ $(".w_menuFloat_icon0").click(function(){
     $(this).siblings().removeClass("w_rotate360");
 })
 
-$(".w_menuFloat").click(function(){
+$(".w_menuFloat").on('click', function(){
 	$(".w_MF_bgc1").toggleClass("w_menuFloat_move1");
-})
+    $(".w_MF_bgc3").toggleClass("w_menuFloat_move3");
+    $(".w_MF_bgc2").toggleClass("w_menuFloat_move2");
+});
 
-$(".w_menuFloat").click(function(){
-	$(".w_MF_bgc2").toggleClass("w_menuFloat_move2");
-})
-
-$(".w_menuFloat").click(function(){
-	$(".w_MF_bgc3").toggleClass("w_menuFloat_move3");
-})
 
 
 

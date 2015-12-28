@@ -33,9 +33,9 @@ textarea{ resize:none;}
 .color9{color:#999999;}
 .colorb{color:#BBB;}
 
-.font12r{ font-size:1.2rem; }
-.font1r{ font-size:1rem; }
-.font08r{ font-size:0.8rem; }
+.font12r{font-size:1.2rem;}
+.font1r{font-size:1rem;}
+.font08r{font-size:0.8rem;}
 
 .lineH32{line-height:32px;}
 
@@ -95,9 +95,9 @@ textarea{ resize:none;}
 .w_MF_bgc2{background:#7BD379;}
 .w_MF_bgc3{background:#ECB079;}
 .w_floatPlace_1{position:fixed; left:15px; bottom:40px;}
-.w_menuFloat_move1{-webkit-transform:translate(0PX,-80PX); transform:translate(0PX,-80PX);  transition: transform 0.5s 0s; }
-.w_menuFloat_move2{-webkit-transform:translate(60PX,-60PX); transform:translate(60PX,-60PX);  transition: transform 0.5s 0.1s; }
-.w_menuFloat_move3{-webkit-transform:translate(80PX,0PX); transform:translate(80PX,0PX);  transition: transform 0.5s 0.2s; }
+.w_menuFloat_move1{-webkit-transform:translate(0PX,-80PX); transform:translate(0PX,-80PX);  -webkit-transition: transform 0.5s 0s;transition: transform 0.5s 0s; }
+.w_menuFloat_move2{-webkit-transform:translate(60PX,-60PX); transform:translate(60PX,-60PX);  -webkit-transition: transform 0.5s 0.1s;transition: transform 0.5s 0.1s; }
+.w_menuFloat_move3{-webkit-transform:translate(80PX,0PX); transform:translate(80PX,0PX);  -webkit-transition: transform 0.5s 0.2s;transition: transform 0.5s 0.2s; }
 .w_rotate360{-webkit-transform:rotate(360deg);transform:rotate(360deg); -webkit-transition:0.4s linear;transition:0.4s ease-in;}
 
 
