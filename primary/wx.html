@@ -46,7 +46,6 @@
     // 微信分享的数据
 
     WeixinApi.ready(function(Api) {
-        alert(Api);
         var wxData = {
             "imgUrl": 'http://www.baidufe.com/fe/blog/static/img/weixin-qrcode-2.jpg',
             "link": 'http://www.baidufe.com',
@@ -59,6 +58,7 @@
             // 分享操作开始之前
             ready: function () {
                 // 你可以在这里对分享的数据进行重组
+                alert('ready!');
             },
             // 分享被用户自动取消
             cancel: function (resp) {
@@ -68,6 +68,7 @@
             // 分享失败了
             fail: function (resp) {
                 // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+                alert('fail!');
             },
             // 分享成功
             confirm: function (resp) {
