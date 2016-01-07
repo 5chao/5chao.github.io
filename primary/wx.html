@@ -12,6 +12,23 @@
 <h2>007</h2>
 <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js "></script>
 <script>
+    var WeixinApi = (function () {
+
+        /* 这里省略了一堆代码……下面直接看调用接口 */
+        return {
+            ready           :wxJsBridgeReady,
+            shareToTimeline :weixinShareTimeline,
+            shareToWeibo    :weixinShareWeibo,
+            shareToFriend   :weixinSendAppMessage,
+            showOptionMenu  :showOptionMenu,
+            hideOptionMenu  :hideOptionMenu,
+            showToolbar     :showToolbar,
+            hideToolbar     :hideToolbar,
+            getNetworkType  :getNetworkType,
+            imagePreview    :imagePreview
+        };
+
+    });
     /*WeixinApi.ready(function(Api){
      // 隐藏右上角popup菜单入口
      Api.hideOptionMenu();
