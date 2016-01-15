@@ -14,6 +14,19 @@
 <script src="../lib/WeixinApi.js"></script>
 <script>
 
+    WeixinJSBridge.on('menu:share:appmessage',
+            function (argv) {
+
+                WeixinJSBridge.invoke('sendAppMessage', {
+
+
+
+            },
+
+            function (res) {
+                alert(res);
+            })
+    });
     wx.onMenuShareAppMessage({
         title: '我', // 分享标题
         desc: '我', // 分享描述
