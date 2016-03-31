@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>22个css黑魔法</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{padding: 20px;font-family: Verdana,sans-serif;}
+        fieldset{margin-bottom: 20px;}
+        .css-1{background-color: #fff;}
+        .css-1 img{ mix-blend-mode: darken;}
+        .css-2{ margin: 20px 30px;width: 200px;height: 200px;position: relative;background: #fff;float: left;}
+        .css-2:before{ content: '';z-index: -1;position: absolute;width: 220px;height: 220px;top: -10px;left: -10px;background-image: linear-gradient(90deg, yellow, gold);}
+        .second:before{background-image: linear-gradient(0deg, orange, red);}
+        .third:before{ background-image: repeating-linear-gradient(-45deg, #cc2a2d, #cc2a2d 30px, #f2f2f2 30px, #f2f2f2 40px, #0e71bb 40px, #0e71bb 70px, #f2f2f2 70px, #f2f2f2 80px);}
+        .css-3{position: relative;padding: 50px;height: 300px;}
+        .css-3 div{position: absolute;width: 200px;height: 200px;}
+        .css-3 .one{z-index: 1;top: 0;left: 0;width: 800px;background: hsla(1, 70%, 50%, 0.5);-moz-transition: all 3s;-webkit-transition: all 3s;transition:all 3s;}
+        .css-3 .one:hover{z-index: 6;background: hsla(1, 100%, 10%, 1);-moz-transition:all 3s;-webkit-transition: all 3s;transition: all 3s;}
+        .css-3 .two{z-index: 2;top:120px;left: 0;background: hsla(50, 70%, 50%, 0.5);}
+        .css-3 .three{z-index: 3;top: 120px;left: 160px;background: hsla(120, 70%, 50%, 0.5);}
+        .css-3 .four{z-index: 4;top: 120px;left: 320px;background: hsla(220, 70%, 50%, 0.5);}
+        .css-3 .five{z-index: 5;top: 120px;left: 480px;background: hsla(300, 70%, 50%, 0.5);}
+
+
+        input[type=checkbox], input[type=radio]{display: none;}
+        input[type=checkbox] + label:before{content: '\2713';color: transparent;display: inline-block;border: 1px solid #000;font-size: 20px;line-height: 22px;margin: -5px 5px 0 0;height: 20px;width: 20px;text-align: center;vertical-align: middle;transition: color ease .3s;}
+        input[type=checkbox]:checked + label:before{color: #000;}
+        input[type=radio] + label:before{content: '\26AB';border: 1px solid #000; border-radius: 50%;display: inline-block;border: 1px solid #000;font-size: 20px;line-height: 20px;margin: -5px 5px 0 0;height: 20px;width: 20px;text-align: center;vertical-align: middle;font-size: 0;transition:font-size ease .3s;}
+        input[type=radio]:checked + label:before{font-size: 20px;}
+
+        /* 计数 */
+        .css-5 .languages{counter-reset: characters;}
+        .css-5 .languages input:checked{counter-increment: characters;}
+        .css-5 .total:after{ content: counter(characters);}
+        .css-5 .languages label{font-size: 15px;margin: 0 10px 0 0;display: inline-block;}
+        .css-5 .languages input[type=checkbox]{position: absolute;left: -10000px;}
+        .css-5 .languages input[type=checkbox] + label:before{content: '';border: 1px solid #000;color: transparent;cursor: pointer;display: inline-block;font-size: 15px;line-height: 16px;margin: 0 5px 0 0;height: 18px;width: 18px;text-align: center;vertical-align: middle;transition: color ease 0.4s;}
+        .css-5 .languages input[type=checkbox]:checked + label:before{content: '\2713';color: #000;}
+
+        *::selection{color: red;background: #000;}
+        *::-moz-selection{color: red;background: #000;}
+    </style>
+</head>
+<body>
+<fieldset>
+    <legend>混合模式</legend>
+    <div class="css-1">
+        <img src="http://img4.hqbcdn.com/product/8d/0d/8d0d242be6b4da9d5858525efb1f4b4e.190.jpg" alt=""/>
+        <img src="http://img4.hqbcdn.com/product/8d/0d/8d0d242be6b4da9d5858525efb1f4b4e.190.jpg" alt=""/>
+        <img src="http://img4.hqbcdn.com/product/8d/0d/8d0d242be6b4da9d5858525efb1f4b4e.190.jpg" alt=""/>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>边框渐变</legend>
+    <div class="css-2"></div>
+    <div class="css-2 second"></div>
+    <div class="css-2 third"></div>
+</fieldset>
+<fieldset>
+    <legend>z-index 渐变</legend>
+    <div class="css-3">
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div class="four"></div>
+        <div class="five"></div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>复选框和单选框按钮的样式</legend>
+    <div class="css-4">
+        <div>
+            <input type="checkbox" id="check" name="check" />
+            <label for="check">Checkbox</label>
+        </div>
+        <div>
+            <input type="checkbox" id="check1" name="check1" />
+            <label for="check1">Checkbox 2</label>
+        </div>
+        <div>
+            <input type="radio" id="radio" name="radio" />
+            <label for="radio">Radio</label>
+        </div>
+        <div>
+            <input type="radio" id="radio1" name="radio" />
+            <label for="radio1">Radio 1</label>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>css 计数</legend>
+    <div class="css-5">
+        <h1>Selection CSS Counter</h1>
+        <div class="languages">
+            <h3>Select your favorite languages:</h3>
+            <input id="c" type="checkbox"><label for="c">C</label>
+            <input id="C++" type="checkbox"><label for="C++">C++</label>
+            <input id="C#" type="checkbox"><label for="C#">C#</label>
+            <input id="Java" type="checkbox"><label for="Java">Java</label>
+            <input id="JavaScript" type="checkbox"><label for="JavaScript">JavaScript</label>
+            <input id="PHP" type="checkbox"><label for="PHP">PHP</label>
+            <input id="Python" type="checkbox"><label for="Python">Python</label>
+            <input id="Ruby" type="checkbox"><label for="Ruby">Ruby</label>
+        </div>
+        <p class="total">
+            Total selected:
+        </p>
+    </div>
+</fieldset>
+
+
+</body>
+</html>

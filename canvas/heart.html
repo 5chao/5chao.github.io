@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        html{height: 100%;}
+        body {
+            margin: 0;
+            height:100%;
+            overflow: hidden;
+            background: #eee;
+            font-family: Courier, monospace;
+            font-size: 14px;
+            margin: 0;
+            overflow: hidden;
+            background: #eee;
+            font-family: Courier, monospace;
+            font-size: 14px;
+            background-color: #2aa4d5;
+            background: -webkit-radial-gradient( 120vW 0vh circle 70vw, #030633, #2aa4d5);
+            background: -moz-radial-gradient(120vW 0vh, circle 70vw, #030633, #2aa4d5);
+            background: -ms-radial-gradient(120vW 0vh, circle 70vw, #030633, #2aa4d5);
+            background: -o-radial-gradient(120vW 0vh, circle 70vw, #030633, #2aa4d5);
+            background: radial-gradient( 120vw circle at 70vW 0vh, #030633, #2aa4d5);
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+        #c {
+            display: block;
+            margin: calc(50vh - 175px) auto;
+        }
+    </style>
+</head>
+<body>
+<canvas id="c">resume animation on click</canvas>
+<script>
+    var c = document.getElementById("c");
+    var ctx = c.getContext("2d");
+    var cw = c.width = 350;
+    var ch = c.height = 350;
+    var cx = cw/2,
+            cy = ch/5;
+    var rad = Math.PI / 180;
+    var frames = 0;
+    ctx.strokeStyle = "hsl(210,90%,50%)";
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 1;
+    ctx.shadowOffsetY = 1;
+    ctx.shadowColor = "hsl(210,90%,70%)";
+    ctx.lineWidth = 2;
+
+
+    var r =5;
+    var i = 0;
+
+    var heartRy = [];
+
+    ctx.beginPath();
+    for( var t = 310; t < 360 + 310; t+=5){
+        var o = {}
+        o.x = cx + 16*r*(Math.sin(t*rad) *Math.sin(t*rad) *Math.sin(t*rad) );
+        o.y = cy - 13*r*Math.cos(t*rad) +
+                5*r*Math.cos(2*t*rad) +
+                2*r*Math.cos(3*t*rad) +
+                r*Math.cos(4*t*rad);
+        heartRy.push(o);
+        i++;
+    }
+    var newRy = []
+
+
+    for( var i = 0; i < heartRy.length/2; i++){
+        var o = heartRy[i]; newRy.push(o);
+        var r = heartRy[heartRy.length -1-i];newRy.push(r);
+    }
+
+
+
+    var longRy = [];
+    for( var i = 1; i < newRy.length; i++){
+        interpolate(newRy[i-1], newRy[i], 20, longRy)
+    }
+    console.log(longRy.length);
+
+
+    function Draw(){
+        requestId = window.requestAnimationFrame(Draw);
+        frames+=3;
+        if(frames < longRy.length){
+            ctx.clearRect(0,0,cw,ch);
+            ctx.beginPath();
+            for( var i = 0; i < frames; i++){
+                var o = longRy[i];
+                ctx.lineTo(	o.x,o.y);
+                ctx.globalCompositeOperation = "lighter";
+            }
+            ctx.stroke();
+        }else{
+            window.cancelAnimationFrame(requestId);
+        }
+    }
+
+    requestId = window.requestAnimationFrame(Draw);
+
+
+    function interpolate(a, b, n, ry) {
+        for (var i = 1; i <= n; i++) {
+            var o = {}
+            o.x = ((b.x - a.x) * i / n) + a.x,
+                    o.y = ((b.y - a.y) * i / n) + a.y
+            ry.push(o);
+        }
+    }
+
+    window.addEventListener("click", function(){
+        if(requestId){window.cancelAnimationFrame(requestId);}
+        requestId = null;
+        frames = 0;
+        requestId = window.requestAnimationFrame(Draw);
+    },false)
+</script>
+</body>
+</html>

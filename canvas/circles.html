@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+        body{
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a;
+        }
+        #canvas{
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+        #slider-container{
+            position: absolute;
+            top:0;
+            margin: 10px;
+            width: 300px;
+        }
+        .slider{
+            display: inline-block;
+            margin-top: 2px;
+        }
+        .slider + label{
+            color: #ffffff;
+            font-family: "Open Sans";
+            font-size: 10pt;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="slider-container"></div>
+<script>
+    var W = window.innerWidth,
+            H = window.innerHeight,
+            c = document.querySelector("canvas");
+    var ctx = c.getContext("2d");
+
+    function Circles(args) {
+        'use strict';
+
+        var values = args || {},
+                self = this;
+        this.startX = values.startX || W / 2;
+        this.startY = values.startY || H / 2;
+        this.radius = values.radius || 100;
+        this.pointCount = values.pointCount || 100;
+        this.randomness = values.randomness || 0.25;
+        this.childRadius = values.childRadius || 20;
+        this.childPointCount = values.childPointCount || 10;
+        this.lineCount = values.lineCount || 10;
+
+        this.calculatePoints = function(isParent, startXi, startYi, radiusi, pointCounti, pointArray) {
+            var xmod = 1,
+                    ymod = 1,
+                    x,
+                    y,
+                    offset = Math.random() * Math.PI * 2,
+                    startX = startXi || this.startX,
+                    startY = startYi || this.startY,
+                    radius = radiusi || this.radius,
+                    pointCount = pointCounti || this.pointCount,
+                    points = pointArray || [];
+
+            for (var i = 0 + offset; i < pointCount + offset; i++) {
+                x = startX + Math.sin(i) * radius * xmod;
+                y = startY + Math.cos(i) * radius * ymod;
+
+                points.push({
+                    x: x,
+                    y: y
+                });
+
+                if (isParent) {
+                    points[points.length - 1].child = this.calculatePoints(false, x, y, this.childRadius, this.childPointCount);
+                }
+
+                xmod += (Math.random() - 0.5) * this.randomness;
+                ymod += (Math.random() - 0.5) * this.randomness;
+            }
+            return points;
+        };
+
+        this.drawCircles = function(points) {
+            ctx.strokeStyle = "white";
+            ctx.fillStyle = "tomato";
+
+            points.forEach(function(p) {
+
+                p.child.forEach(function(c) {
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, Math.floor(Math.random() * 2) + 1, 0, 2 * Math.PI);
+                    ctx.closePath();
+                    ctx.fill();
+                });
+
+                ctx.lineWidth = Math.random() * 2 - 1.5;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, Math.floor(Math.random() * 13) + 2, 0, 2 * Math.PI);
+                ctx.closePath();
+                ctx.stroke();
+            });
+        };
+
+        this.drawLines = function(points) {
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 0.5;
+            var i1,
+                    i2 = -1,
+                    p1,
+                    p2;
+
+            for (var i = 0; i < this.lineCount; i++) {
+                i1 = (~~(Math.random() * points.length - 1));
+                while (i2 < 0 || i2 > points.length - 1 || i2 === i1) {
+                    i2 = i1 + (~~(Math.random() * 4 - 2));
+                }
+
+                p1 = points[i1];
+                p2 = points[i2];
+
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.closePath();
+                ctx.stroke();
+
+                i2 = -1;
+            }
+        };
+
+        this.generateSliders = function() {
+            var container = document.querySelector("#slider-container"),
+                    element,
+                    label;
+
+            Object.keys(this).forEach(function(key) {
+
+                if (typeof self[key] !== "function") {
+                    element = document.createElement("input");
+                    element.type = "range";
+
+                    switch (key) {
+                        case "startX":
+                            element.min = 0;
+                            element.max = W;
+                            break;
+                        case "startY":
+                            element.min = 0;
+                            element.max = H;
+                            break;
+                        case "radius":
+                            element.min = 1;
+                            element.max = 1000;
+                            break;
+                        case "pointCount":
+                            element.min = 2;
+                            element.max = 250;
+                            break;
+                        case "randomness":
+                            element.min = 0;
+                            element.max = 5;
+                            element.setAttribute("step", 0.01);
+                            break;
+                        case "childRadius":
+                            element.min = 1;
+                            element.max = 1000;
+                            break;
+                        case "childPointCount":
+                            element.min = 1;
+                            element.max = 150;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    element.value = self[key];
+                    element.id = key;
+                    element.className = "slider";
+                    element.setAttribute("title", key);
+
+                    container.appendChild(element);
+                    label = document.createElement("label");
+                    label.htmlFor = key;
+                    label.id = key + "-label";
+                    label.innerHTML = self[key] + " " + key;
+                    container.appendChild(label);
+                }
+            });
+
+            document.getElementById("slider-container").addEventListener("input", function(e) {
+                self[e.target.id] = parseFloat(e.target.value, 10);
+                document.getElementById(e.target.id + "-label").innerHTML = e.target.value + " " + e.target.id;
+                self.init();
+            });
+        };
+
+        this.init = function() {
+            W = window.innerWidth;
+            H = window.innerHeight;
+
+            c.width = W;
+            c.height = H;
+
+            ctx.clearRect(0, 0, W, H);
+
+            var points = this.calculatePoints(true);
+            this.drawLines(points);
+            this.drawCircles(points);
+        };
+        this.generateSliders();
+
+        c.addEventListener("click", function() {
+            self.init();
+            document.getElementById("startX").max = W;
+            document.getElementById("startY").max = H;
+        });
+
+    }
+
+    var O = new Circles();
+    O.init();
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{background:black;
+            overflow:hidden;}
+        .wrap {
+            width: 200px;
+            height: 200px;
+            transform:rotate(50deg);
+            margin: 15% auto 0 auto;}
+        .circle{
+            height: 100%;
+            width: 100%;
+            background:#FFF8DC;
+            border: 44px;
+            box-shadow:0 0 10px 2px darkred;
+
+
+            padding: 2px;
+            transform:rotate(360deg);
+            box-sizing: border-box;
+            animation:myanim 20s ease-in-out infinite;
+        }
+        @keyframes myanim{
+            50%{transform:rotate(-360deg);}
+        }
+        .traingle {
+            height: 100%;
+            width: 100%;
+            background:#FFF8DC;
+            border: 44px;
+            box-shadow:0 0 10px 2px darkred;
+
+
+            padding: 2px;
+            transform:rotate(360deg);
+            box-sizing: border-box;
+            animation:myanim 20s ease-in-out infinite;
+        }
+        @keyframes myanim{50%{transform:rotate(-360deg);}}
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="traingle">
+        <div class="traingle">
+            <div class="traingle">
+                <div class="traingle">
+                    <div class="traingle">
+                        <div class="traingle">
+                            <div class="traingle">
+                                <div class="traingle">
+                                    <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

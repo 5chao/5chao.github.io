@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{box-sizing: border-box;position: relative;}
+        body{
+            -webkit-animation: dim 10s infinite linear;
+            animation: dim 10s infinite linear;
+            overflow: hidden;
+        }
+        div{
+            border-radius: 50%;
+            height: 20vmax;
+            left: calc(50vw - 20vmax * 0.5);
+            position: absolute;
+            top: calc(50vh - 20vmax * .5);
+            width: 20vmax;
+        }
+        .sun{
+            background: orange;
+        }
+        .moon{
+            -webkit-animation: eclipse 10s infinite linear forwards, dim 10s infinite linear forwards;
+            animation: eclipse 10s infinite linear forwards, dim 10s infinite linear forwards;
+            background: #fff;
+        }
+        @-webkit-keyframes eclipse{
+            0%, 10%{
+                left: calc(50vw + 20vmax * .5);
+            }
+            40%, 60%{
+                left: calc(50vw - 20vmax * .5);
+                -webkot-transform: scale(0.97);
+                transform: scale(0.97);
+            }
+            90%, 100%{
+                left: calc(50vw - 20vmax * 0.5);
+            }
+        }
+        @keyframes eclipse{
+            0%, 10%{
+                left: calc(50vw + 20vmax * .5);
+            }
+            40%, 60%{
+                left: calc(50vw - 20vmax * .5);
+                -webkot-transform: scale(0.97);
+                transform: scale(0.97);
+            }
+            90%, 100%{
+                left: calc(50vw - 20vmax * 1.5);
+            }
+        }
+        @-webkit-keyframes dim{
+            0%, 10%, 90%, 100%{
+                background: #fff;
+            }
+            40%, 60%{
+                background: #111;
+            }
+        }
+        @keyframes dim{
+            0%, 10%, 90%, 100%{
+                background: #fff;
+            }
+            40%, 60%{
+                background: #111;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="sun"></div>
+<div class="moon"></div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+$numBlocks: 16;
+$adur: 2s;
+$adel: $adur / $numBlocks / 2;
+$light: #d1c4e9;
+$dark: #b71c1c;
+$bg: #311b92;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  background-color: $bg;
+}
+.container{
+  width: 90vmin;
+  height: 90vmin;
+  margin: 5vmin auto;
+}
+svg{
+  width: 100%;
+  height: 100%;
+  background: #bg;
+}
+.seg{
+  animation: fade-out $adur infinite linear;
+  @for $i from 0 to $numBlocks{
+    &:nth-child(n+#{$i}){
+      animation-delay: $adel * $i;
+    }
+    &:nth-child(odd){
+      .pol{
+        &:nth-child(odd){
+          fill: $light;
+        }
+        &:nth-child(even){
+          fill: $dark;
+        }
+      }
+    }
+    &:nth-child(even){
+      .pol{
+        &:nth-child(odd){
+          fill: $dark;
+        }
+        &:nth-child(even){
+          fill: $light;
+        }
+      }
+    }
+  }
+}
+@keyframes fade-out{
+  0%{fill-opacity: 1;}
+  5%{fill-opacity: 0;}
+  50%{fill-opacity: 0;}
+  55%{fill-opacity: 1;}
+}

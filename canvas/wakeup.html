@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            background-color: #000;
+            overflow: hidden;
+        }
+        canvas{
+            background-color: #101010;
+            bottom: 0;
+            box-shadow: 0 0 0 2px #191919;
+            left: 0;
+            margin: auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<script>
+    var c = document.createElement('canvas'),
+            ctx = c.getContext('2d'),
+            cw = c.width = 400,
+            ch = c.height = 200,
+            messageString = 'Hello world !!!',
+            messageArray = messageString.split(''),
+            messageLength = messageArray.length,
+            pointer = 0,
+            typeTick = 0,
+            typeTickMax = 7,
+            typeResetTick = 0,
+            typeResetMax = 140;
+
+    ctx.font = 'normal 20px monospace';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.shadowColor = '#3f3';
+
+    var updateTypeTick = function(){
+        if(pointer < messageLength){
+            if(typeTick < typeTickMax){
+                typeTick++;
+            } else {
+                typeTick = 0;
+                pointer++;
+            }
+        } else {
+            if(typeResetTick < typeResetMax){
+                typeResetTick++;
+            } else {
+                typeResetTick = 0;
+                typeTick = 0;
+                pointer = 0;
+            }
+        }
+    }
+
+    var renderMessage = function(){
+        var text = messageArray.slice(0, pointer);
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = 'hsla(120, 30%, 50%, 0.25)';
+        var x = 20,
+                y = 20;
+
+        if( Math.random() < 0.05 ) {
+            ctx.fillStyle = 'hsla(120, 30%, 50%, ' + ( 0.25 + Math.random() * 0.5 ) + ')';
+        }
+        if( Math.random() < 0.1 ) {
+            x += -3 + Math.random() * 6;
+        }
+        if( Math.random() < 0.1 ) {
+            y += -3 + Math.random() * 6;
+        }
+        if( Math.random() < 0.99 ) {
+            ctx.fillText( text.join( '' ), Math.round( x ), Math.round( y ) );
+        }
+        ctx.shadowBlur = 0;
+    }
+
+    var renderLines = function(){
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.beginPath();
+        for(var i = 0; i < ch/2; i += 1){
+            ctx.moveTo(0, (i*2) + .5);
+            ctx.lineTo(cw, (i*2) + .5);
+        }
+        ctx.stroke();
+        ctx.globalCompositeOperation = 'lighter';
+    }
+
+    var loop = function(){
+        requestAnimationFrame( loop );
+        //ctx.clearRect(0, 0, cw, ch);
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+        ctx.fillRect( 0, 0, cw, ch );
+        ctx.globalCompositeOperation = 'lighter';
+        updateTypeTick();
+        renderMessage();
+        renderLines();
+    }
+
+    document.body.appendChild(c);
+    loop();
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+$light: #fff9c4;
+$dark: #bf360c;
+$bg: #bf360c;
+
+$s: 100;
+$minW: $s / 2000;
+$maxW: $s / 25;
+$numC: 20;
+$animDur: 2s;
+$animDel: $animDur / $numC;
+
+body{
+  background-color: $bg;
+}
+.container{
+  width: 90vmin;
+  height: 90vmin;
+  margin: 5vmin auto;
+}
+svg{
+  width: 100%;
+  height: 100%;
+  background: $light;
+}
+.circle{
+  fill: none;
+  stroke: $dark;
+  animation: w $animDur infinite;
+  @for $i from 0 to $numC{
+    &:nth-child(n+#{$i + 1}){
+      stroke-width: $minW;
+      animation-delay: $i * $animDel;
+    }
+  }
+}
+
+@keyframes w{
+  0%{stroke-width: $minW;}
+  50%{stroke-width: $maxW;}
+  100%{stroke-width: $minW;}
+}

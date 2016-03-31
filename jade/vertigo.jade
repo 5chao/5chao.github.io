@@ -1,0 +1,33 @@
+doctype html
+html
+    head
+        meta(charset="UTF-8")
+        title=title
+        link(rel='stylesheet', href='../public/css/vertigo.css')
+    body
+        - var numBlocks = 16;
+        - var pi = Math.PI;
+        - var d90 = pi/2;
+        - var d15 = pi/12;
+        - var d105 = d90 + d15;
+        - var s = 100 //svg dimension
+        - var sh = s/2;
+        - var sq2 = Math.sqrt(2)/2
+        - var r = s*sq2; //radius (half diaginal)
+        mixin seg(i)
+            - var sc = Math.pow(sq2, i)
+            g(class="seg" transform="translate("+[sh,sh]+") scale("+sc+") rotate("+i*15+")")
+                - for (var j = 0; j<4; j++){
+                    - var points = [];
+                    - var sa = j*d90 + pi/4;
+                    - var xp = Math.cos(sa)*r;
+                    - var yp = Math.sin(sa)*r;
+                    - points.push([Math.cos(sa)*r, Math.sin(sa)*r]);
+                    - points.push([Math.cos(sa+d90)*r, Math.sin(sa+d90)*r]);
+                    - points.push([Math.cos(sa+d105)*sh, Math.sin(sa+d105)*sh]);
+                    polygon(class="pol" points = points.join(" "))
+                    - }
+                    .container
+                    svg(viewBox='0 0 '+ s + " " + s)
+                - for(var i = 0; i < numBlocks; i++)
+                    +seg(i)

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *,html{height: 100%;}
+        body{
+            background: linear-gradient(#000, #000d19);
+            background: -webkit-linear-gradient(#000, #000d19);
+            margin: 0;
+        }
+        figure{
+            width: 150px;
+            height: 150px;
+            transform-style:preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            position: absolute;
+            top:40%;
+            left: 50%;
+        }
+        .face{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            border: 1px solid #e73977;
+            -webkit-animation: pulse 2s infinite;
+            animation: pulse 2s infinite;
+            box-sizing: border-box;
+        }
+        .front{
+            -webkit-transform: translate3d(0, 0, 75px);
+            transform: translate3d(0, 0, 75px);
+        }
+        .back{
+            -webkit-transform: rotateY(180deg) translate3d(0, 0, 75px);
+            transform: rotateY(180deg) translate3d(0, 0, 75px);
+        }
+        .left{
+            -webkit-transform: rotateY(-90deg) translate3d(0, 0, 75px);
+            transform: rotateY(-90deg) translate3d(0, 0, 75px);
+        }
+        .right{
+            -webkit-transform:rotateY(90deg) translate3d(0, 0, 75px);
+            transform:rotateY(90deg) translate3d(0, 0, 75px);
+        }
+        .top{
+            -webkit-transform:rotateX(90deg) translate3d(0, 0, 75px);
+            transform:rotateX(90deg) translate3d(0, 0, 75px);
+        }
+        .bottom{
+            -webkit-transform:rotateX(-90deg) translate3d(0, 0, 75px);
+            transform:rotateX(-90deg) translate3d(0, 0, 75px);
+        }
+
+        figure:nth-child(1){
+            margin-top: 0;
+            margin-left: -75px;
+            -webkit-transform: rotateX(35deg) rotateY(45deg);
+            transform: rotateX(35deg) rotateY(45deg);
+        }
+        figure:nth-child(2){
+            -webkit-transform: rotateX(35deg) rotateY(45deg) translate3d(-12px, -88px, 0);
+            transform: rotateX(35deg) rotateY(45deg) translate3d(-12px, -88px, 0);
+        }
+        figure:nth-child(3){
+            -webkit-transform: rotateX(35deg) rotateY(45deg) translate3d(-312px, 60px, 0);
+            transform: rotateX(35deg) rotateY(45deg) translate3d(-312px, 60px, 0);
+        }
+
+        @keyframes pulse{
+            0%{border: 1px solid #e73977}
+            50%{border: 1px solid #2a395b}
+        }
+        @-webkit-keyframes pulse{
+            0%{border: 1px solid #e73977}
+            50%{border: 1px solid #2a395b}
+        }
+    </style>
+</head>
+<body>
+<figure>
+    <div class="face front"></div>
+    <div class="face top"></div>
+    <div class="face right"></div>
+    <div class="face left"></div>
+    <div class="face bottom"></div>
+    <div class="face back"></div>
+</figure>
+<figure>
+    <div class="face front"></div>
+    <div class="face top"></div>
+    <div class="face right"></div>
+    <div class="face left"></div>
+    <div class="face bottom"></div>
+    <div class="face back"></div>
+</figure>
+<figure>
+    <div class="face front"></div>
+    <div class="face top"></div>
+    <div class="face right"></div>
+    <div class="face left"></div>
+    <div class="face bottom"></div>
+    <div class="face back"></div>
+</figure>
+</body>
+</html>

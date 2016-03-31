@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .column {
+            width: 50%;
+            margin: 50px auto;
+        }
+
+        .circle {
+            position: relative;
+            background-color: #EEE;
+            border-radius: 50%;
+        }
+        .circle::before {
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
+        .circle .circle-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        .circle .circle-content .browser {
+            position: absolute;
+            box-sizing: border-box;
+            border: 1px solid #AAA;
+            border-top-width: 0.8em;
+            border-radius: 0.2em;
+            width: 40%;
+            height: 40%;
+            margin: 30% 30% 0;
+            padding: 0.5em 0.5em 0;
+            background: no-repeat center #FFF;
+        }
+        .circle .circle-content .browser::before {
+            content: "";
+            display: block;
+            background: rgba(255, 255, 255, 0.2);
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .circle .circle-content .browser.firefox {
+            -webkit-animation: browser-1 6s infinite;
+            animation: browser-1 6s infinite;
+            background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106891/Firefox.png);
+            background-size: 70%;
+        }
+        .circle .circle-content .browser.chrome {
+            -webkit-animation: browser-2 6s infinite;
+            animation: browser-2 6s infinite;
+            background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106891/Chrome.png);
+            background-size: 70%;
+        }
+        .circle .circle-content .browser.ie {
+            -webkit-animation: browser-3 6s infinite;
+            animation: browser-3 6s infinite;
+            background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/106891/IE.png);
+            background-size: 60%;
+        }
+
+        @-webkit-keyframes browser-1 {
+            0%, 16.6%, 100% {
+                -webkit-transform: scale(1) translate(0);
+                transform: scale(1) translate(0);
+                z-index: 100;
+            }
+            33.2%, 49.8% {
+                -webkit-transform: scale(0.8) translate(60%);
+                transform: scale(0.8) translate(60%);
+                z-index: 0;
+            }
+            66.4%, 83% {
+                -webkit-transform: scale(0.8) translate(-60%);
+                transform: scale(0.8) translate(-60%);
+                z-index: 0;
+            }
+        }
+
+        @keyframes browser-1 {
+            0%, 16.6%, 100% {
+                -webkit-transform: scale(1) translate(0);
+                transform: scale(1) translate(0);
+                z-index: 100;
+            }
+            33.2%, 49.8% {
+                -webkit-transform: scale(0.8) translate(60%);
+                transform: scale(0.8) translate(60%);
+                z-index: 0;
+            }
+            66.4%, 83% {
+                -webkit-transform: scale(0.8) translate(-60%);
+                transform: scale(0.8) translate(-60%);
+                z-index: 0;
+            }
+        }
+        @-webkit-keyframes browser-2 {
+            0%, 16.6%, 100% {
+                -webkit-transform: scale(0.8) translate(-60%);
+                transform: scale(0.8) translate(-60%);
+                z-index: 0;
+            }
+            33.2%, 49.8% {
+                -webkit-transform: scale(1) translate(0);
+                transform: scale(1) translate(0);
+                z-index: 100;
+            }
+            66.4%, 83% {
+                -webkit-transform: scale(0.8) translate(60%);
+                transform: scale(0.8) translate(60%);
+                z-index: 0;
+            }
+        }
+        @keyframes browser-2 {
+            0%, 16.6%, 100% {
+                -webkit-transform: scale(0.8) translate(-60%);
+                transform: scale(0.8) translate(-60%);
+                z-index: 0;
+            }
+            33.2%, 49.8% {
+                -webkit-transform: scale(1) translate(0);
+                transform: scale(1) translate(0);
+                z-index: 100;
+            }
+            66.4%, 83% {
+                -webkit-transform: scale(0.8) translate(60%);
+                transform: scale(0.8) translate(60%);
+                z-index: 0;
+            }
+        }
+        @-webkit-keyframes browser-3 {
+            0%, 16.6%, 100% {
+                -webkit-transform: scale(0.8) translate(60%);
+                transform: scale(0.8) translate(60%);
+                z-index: 0;
+            }
+            33.2%, 49.8% {
+                -webkit-transform: scale(0.8) translate(-60%);
+                transform: scale(0.8) translate(-60%);
+                z-index: 0;
+            }
+            66.4%, 83% {
+                -webkit-transform: scale(1) translate(0);
+                transform: scale(1) translate(0);
+                z-index: 100;
+            }
+        }
+        @keyframes browser-3 {
+            0%, 16.6%, 100% {
+                -webkit-transform: scale(0.8) translate(60%);
+                transform: scale(0.8) translate(60%);
+                z-index: 0;
+            }
+            33.2%, 49.8% {
+                -webkit-transform: scale(0.8) translate(-60%);
+                transform: scale(0.8) translate(-60%);
+                z-index: 0;
+            }
+            66.4%, 83% {
+                -webkit-transform: scale(1) translate(0);
+                transform: scale(1) translate(0);
+                z-index: 100;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="column size-1" id="compatibility">
+    <div class="circle">
+        <div class="circle-content">
+            <div class="browser ie"></div>
+            <div class="browser firefox"></div>
+            <div class="browser chrome"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

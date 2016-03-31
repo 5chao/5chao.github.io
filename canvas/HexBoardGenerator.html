@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .hidden{display: none;}
+    </style>
+</head>
+<body>
+<canvas id="maximumData" class="hexBoard" data-boardRadius="15" data-hexColor="#00FFFF" width="350" height="350"></canvas>
+<canvas id="pictureSwitch" class="hexBoard" data-boardRadius="5" data-fillImage="pictureSwitchImg" width="350" height="350"></canvas>
+<img id="pictureSwitchImg" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/373707/blue-757264_960_720.jpg" class="hidden" />
+<canvas id="minimumData" class="hexBoard" width="350" height="350"></canvas>
+<script src="../lib/jquery-1.7.2.min.js"></script>
+<script>
+    var defaults = {
+        boardRadius: '3',
+        hexColor: '#000000'
+    };
+    $(function(){
+        $('.hexBoard').each(function(){
+            createHexBoard($(this));
+        });
+
+        $.each(activeHexBoardKeys, function(index, value){
+            activeHexBoards[value].build();
+            activeHexBoards[value].draw();
+        });
+
+    });
+
+    var activeHexBoards = {};
+    var activeHexBoardKeys = [];
+    var HexBoard = function(options, master){
+        this.boardRadius = options.boardRadius || defaults.boardRadius;
+        this.hexColor = options.hexColor || defaults.hexColor;
+        this.fillImage = options.fillImage;
+        this.height = options.height;
+        this.width = options.width;
+        this.id = options.id;
+
+        this.master = master;
+        this.hexTiles = [];
+        this.build = function(){
+            var targetHeight = this.height;
+            var targetWidth = this.width;
+
+            var vertexRadiusOne = (targetWidth) / (3 * this.boardRadius -1);
+            var vertexRadiusTwo = (targetHeight) / (4 * this.boardRadius -2) * 2 / Math.sqrt(3);
+            var vertexRadius = Math.min(vertexRadiusOne, vertexRadiusTwo);
+            var sideRadius = Math.sqrt(3) * vertexRadius / 2;
+            var boardHeight = sideRadius * (4 * this.boardRadius -2) + 4;
+            var boardWidth = vertexRadius * (3 * this.boardRadius -1) + 4;
+            this.hexTiles = [];
+
+            this.hexTiles[0] = new HexTile(boardWidth / 2, boardHeight / 2, sideRadius, vertexRadius, this.hexColor, this.fillImage);
+
+            for(var rightI = 1; rightI < this.boardRadius; rightI++){
+                for(var cardinalHexI = 1; cardinalHexI <= 6; cardinalHexI++){
+                    var xCenter = (boardWidth / 2) + sideRadius * (2 * rightI) * Math.cos((2 * Math.PI / 6) * cardinalHexI + (Math.PI / 6));
+                    var yCenter = (boardHeight / 2) + sideRadius * (2 * rightI) * Math.sin((2 * Math.PI / 6) * cardinalHexI + (Math.PI / 6));
+                    this.hexTiles[this.hexTiles.length] = new HexTile(xCenter, yCenter, sideRadius, vertexRadius, this.hexColor, this.fillImage);
+                    var webHexCount = rightI - 1;
+
+                    if(webHexCount < 0){
+                        webHexCount = 0;
+                    }
+
+                    for(var webHexI = 1; webHexI <= webHexCount; webHexI++){
+                        var webHexXCenter = xCenter + (sideRadius * 2 * Math.cos((2 * Math.PI / 6) * (2 + cardinalHexI) + (Math.PI / 6))) * webHexI;
+                        var webHexYCenter = yCenter + (sideRadius * 2 * Math.sin((2 * Math.PI / 6) * (2 + cardinalHexI) + (Math.PI / 6))) * webHexI;
+                        this.hexTiles[this.hexTiles.length] = new HexTile(webHexXCenter, webHexYCenter, sideRadius, vertexRadius, this.hexColor, this.fillImage);
+                    }
+                }
+            }
+        };
+
+        this.draw = function(){
+            var ctx = this.master.getContext('2d');
+            for(var i = 0; i < this.hexTiles.length; i++){
+                this.hexTiles[i].draw(ctx);
+            }
+        }
+
+    };
+
+    var HexTile = function(centerX, centerY, sideRadius, vertexRadius, hexColor, fillImage){
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.sideRadius = sideRadius;
+        this.vertexRadius = vertexRadius;
+        this.hexColor = hexColor;
+        this.fillImage = fillImage;
+
+        this.draw = function(ctx){
+            var centerX = this.centerX;
+            var centerY = this.centerY;
+
+            if(this.fillImage){
+                var img = $('#'+this.fillImage)[0];
+                var pat = ctx.createPattern(img, "repeat");
+                drawPolygon(6, this.vertexRadius, this.centerX, this.centerY, 0, ctx, "white", pat);
+            }else{
+                drawPolygon(6, this.vertexRadius, this.centerX, this.centerY, 0, ctx, "white", this.hexColor);
+            }
+        }
+    };
+
+    var createHexBoard = function(master){
+        var options = [];
+        options.id = master.attr('id');
+        options.height = master.attr('height');
+        options.width = master.attr('width');
+        options.boardRadius = master.attr('data-boardRadius');
+        options.hexColor = master.attr('data-hexColor');
+        options.fillImage = master.attr('data-fillImage');
+
+        var newHexBoard = new HexBoard(options, master[0]);
+        activeHexBoards[newHexBoard.id] = newHexBoard;
+        activeHexBoardKeys[activeHexBoardKeys.length] = newHexBoard.id;
+    };
+
+    var drawPolygon = function(sides, vertexRadius, centerX, centerY, angleOffset, ctx, stroke, fill){
+        ctx.beginPath();
+        for(var vertexI = 1; vertexI <= sides; vertexI++){
+            toX = vertexRadius * Math.cos((2 * Math.PI / sides) * vertexI + angleOffset) + centerX;
+            toY = vertexRadius * Math.sin((2 * Math.PI / sides) * vertexI + angleOffset) + centerY;
+
+            if(vertexI == 1){
+                ctx.moveTo(toX, toY);
+            }else{
+                ctx.lineTo(toX, toY);
+            }
+        }
+        ctx.closePath();
+
+        ctx.strokeStyle = stroke;
+        ctx.fillStyle = fill;
+
+        ctx.fill();
+        ctx.stroke();
+    };
+</script>
+</body>
+</html>

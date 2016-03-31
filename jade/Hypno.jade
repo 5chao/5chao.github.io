@@ -1,0 +1,15 @@
+- var s = 100;
+- var sh = s * 0.5;
+- var numC = 20
+doctype html
+html
+    head
+        meta(charset="UTF-8")
+        title
+        link(rel='stylesheet', href='../public/css/hypno.css')
+    body
+        .container
+            svg(viewBox="0 0 "+ s + " " + s)
+                - for(var i = 0; i < numC; i++){
+                    circle(cx=sh cy=sh r=i*s/numC class="circle")
+                - }

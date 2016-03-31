@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Oswald:400,700);
+        *, *::before, *::after{box-sizing: border-box;}
+        body{margin: 0;color: #fff;background-color: #444;font: 0/1 'Oswald', sans-serif;text-align: center;}
+        .container{margin: 0 auto; padding: 20px 5px;}
+        h1{margin: 0 5px 15px;font-size: 45px;line-height: 1.2;text-transform: uppercase;text-shadow: 0 0 20px #000;}
+        .marvel{color: #c00;}
+        input{position: absolute;left: -9999px;}
+        label{display: inline-block;position: relative;width: 150px;margin: 5px;padding: 10px 10px 10px 38px;background-color: #000;font-size: 18px;white-space: nowrap;cursor: pointer;}
+        label::before{content: '';display: block;position: absolute;top:10px;left: 10px;width: 18px;height: 18px;border: 2px solid #fff;background-color: #444;}
+        input:focus + label{outline: 1px solid #fff;}
+        input:checked + label::before{background-color: #c00;}
+        .characters{display: inline-block;width: 240px;list-style-type: none;margin: 15px -5px 0;padding: 0;}
+        .characters li{display: inline-block;position: relative;margin: 10px;padding: 0;width: 100px;height: 100px;}
+        .characters h2{display: none;position: absolute;z-index: 2;top: 70px;left: 0;right: 0;margin: 0;padding: 4px;border: 1px solid #fff;color: #fff;background-color: #000;font-size: 14px;font-weight: normal;}
+        .characters img{width: 100px;height: 100px;border: 4px solid #fff;border-radius: 50%;background-color: #fff;box-shadow: 0 0 20px #000;opacity: 0.25;transform:scale(0.5);}
+
+        #original:checked ~ .characters [data-teams~="original"] h2,
+        #force:checked ~ .characters [data-teams~="force"] h2,
+        #factor:checked ~ .characters [data-teams~="factor"] h2,
+        #hellfire:checked ~ .characters [data-teams~="hellfire"] h2{
+            display: block;
+        }
+        #original:checked ~ .characters [data-teams~="original"] img,
+        #force:checked ~ .characters [data-teams~="force"] img,
+        #factor:checked ~ .characters [data-teams~="factor"] img,
+        #hellfire:checked ~ .characters [data-teams~="hellfire"] img{
+            animation: avatar .3s forwards;
+        }
+
+        @keyframes  avatar{
+            70%{
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100%{
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @media only screen and (min-width: 500px){
+            .characters{width: 480px;}
+        }
+        @media  only screen and(min-width: 740px){
+            .characters{width: 720px;}
+            h1{font-size: 60px;}
+        }
+        @media  only screen and (min-width: 980px) {
+            .characters{width: 960px;}
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><span class="marvel">Marvel</span> Mutant Teams</h1>
+
+    <input id="original" type="radio" name="team" checked>
+    <label for="original">Original X-Men</label>
+
+    <input id="force" type="radio" name="team">
+    <label for="force">X-Force</label>
+
+    <input id="factor" type="radio" name="team">
+    <label for="factor">X-Factor</label>
+
+    <input id="hellfire" type="radio" name="team">
+    <label for="hellfire">Hellfire Club</label>
+
+    <br>
+    <ul class="characters">
+        <li id="angel" data-teams="original force factor hellfire">
+            <h2>Angel</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-angel.png" alt="">
+        </li>
+        <li id="beast" data-teams="original factor">
+            <h2>Beast</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-beast.png" alt="">
+        </li>
+        <li id="cyclops" data-teams="original force factor">
+            <h2>Cyclops</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-cyclops.png" alt="">
+        </li>
+        <li id="emma-frost" data-teams="hellfire">
+            <h2>Emma Frost</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-emma-frost.png" alt="">
+        </li>
+        <li id="iceman" data-teams="original factor">
+            <h2>Iceman</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-iceman.png" alt="">
+        </li>
+        <li id="jean-grey" data-teams="original factor">
+            <h2>Jean Grey</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-jean-grey.png" alt="">
+        </li>
+        <li id="magneto" data-teams="hellfire">
+            <h2>Magneto</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-magneto.png" alt="">
+        </li>
+        <li id="nightcrawler" data-teams="force">
+            <h2>Nightcrawler</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-nightcrawler.png" alt="">
+        </li>
+        <li id="professor-x" data-teams="original">
+            <h2>Professor X</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-professor-x.png" alt="">
+        </li>
+        <li id="psylocke" data-teams="force hellfire">
+            <h2>Psylocke</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-psylocke.png" alt="">
+        </li>
+        <li id="quicksilver" data-teams="factor">
+            <h2>Quicksilver</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-quicksilver.png" alt="">
+        </li>
+        <li id="rictor" data-teams="force factor">
+            <h2>Rictor</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-rictor.png" alt="">
+        </li>
+        <li id="storm" data-teams="force hellfire">
+            <h2>Storm</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-storm.png" alt="">
+        </li>
+        <li id="sunspot" data-teams="force hellfire">
+            <h2>Sunspot</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-sunspot.png" alt="">
+        </li>
+        <li id="tithe" data-teams="hellfire">
+            <h2>Tithe</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-tithe.png" alt="">
+        </li>
+        <li id="wolverine" data-teams="force">
+            <h2>Wolverine</h2>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/77020/ct-wolverine.png" alt="">
+        </li>
+    </ul>
+</div>
+
+
+</body>
+</html>
