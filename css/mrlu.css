@@ -1,5 +1,5 @@
-.left{float:left;width: 720px;height:600px;}
-.right{float:right;width: 240px;height:600px;border: 1px solid #BAC6D3; }
+.left{float:left;width: 720px;}
+.right{float:right;width: 240px;border: 1px solid #BAC6D3; }
 
 .sec{margin-bottom:10px;border-radius:5px;border: 1px solid #BAC6D3; }
 .game-title,
