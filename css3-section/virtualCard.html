@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            height: 100vh;
+            text-align: center;
+            background: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/5/unsplash-bonus.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=da7d75bd50bc054b3cd44c46f9a01e0c) center/cover fixed;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://images.unsplash.com/5/unsplash-bonus.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=da7d75bd50bc054b3cd44c46f9a01e0c) center/cover fixed;
+        }
+        .c-phone{
+            max-width: 500px;
+            width: 80%;
+            margin: 20vh auto 0;
+            position: relative;
+            -webkit-perspective:700px;
+                    perspective:700px;
+        }
+        .c-phone img{
+            -webkit-transition: 1.2s cubic-bezier(.5, .25, 0, 1.6);
+                    transition: 1.2s cubic-bezier(.5, .25, 0, 1.6);
+            -webkit-transform-style: preserve-3d;
+                    transform-style: preserve-3d;
+        }
+        .c-phone__screen{
+            width: 100%;
+            -webkit-animation:animate-screen 1.2s cubic-bezier(0.5, 0.25, 0, 1.6);
+                    animation:animate-screen 1.2s cubic-bezier(0.5, 0.25, 0, 1.6);
+        }
+        .c-phone__card{
+            width: 58%;
+            position: absolute;
+            top:12.5%;
+            left: 21.5%;
+            -webkit-animation: animate-card 1.2s cubic-bezier(0.5, 0.25, 0, 1.6);
+                    animation: animate-card 1.2s cubic-bezier(0.5, 0.25, 0, 1.6);
+        }
+        .c-phone:hover img{
+            -webkit-transition-duration:0.6s;
+                    transition-duration:0.6s;
+        }
+        .c-phone:hover .c-phone__screen{
+            -webkit-transform: scale(0.8) rotate(45deg) rotateY(-40deg);
+                    transform: scale(0.8) rotate(45deg) rotateY(-40deg);
+            opacity: 0;
+        }
+        .c-phone:hover .c-phone__card{
+            -webkit-transform:scale(1.15) rotate(45deg) rotateY(-40deg);
+                    transform:scale(1.15) rotate(45deg) rotateY(-40deg);
+        }
+        @-webkit-keyframes animate-screen{
+            from{
+                -webkit-transform:scale(0.8) rotate(45deg) rotateY(-40deg);
+                        transform:scale(0.8) rotate(45deg) rotateY(-40deg);
+                opacity: 0;
+            }
+        }
+        @keyframes animate-screen{
+            from{
+                -webkit-transform:scale(0.8) rotate(45deg) rotateY(-40deg);
+                        transform:scale(0.8) rotate(45deg) rotateY(-40deg);
+                opacity: 0;
+            }
+        }
+        @-webkit-keyframes animate-card{
+            from{
+                -webkit-transform: scale(1.15) rotate(45deg) roateY(-40deg);
+                        transform: scale(1.15) rotate(45deg) roateY(-40deg);
+            }
+        }
+        @keyframes animate-card{
+            from{
+                -webkit-transform: scale(1.15) rotate(45deg) roateY(-40deg);
+                        transform: scale(1.15) rotate(45deg) roateY(-40deg);
+            }
+        }
+        .link{
+            display: inline-block;
+            margin: 130px auto 10vh;
+            padding: 1em 2em;
+            font: bold 1em sans-serif;
+            text-decoration: none;
+            color: #bbb;
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            -webkit-transition:0.3s;
+                    transition:0.3s;
+        }
+        .link:hover{
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.2);
+            border-color: transparent;
+        }
+    </style>
+</head>
+<body>
+<div class="c-phone hide(max-sm)">
+    <img src="https://exporia.pl/images/fsi/phone.png" alt="iPhone" class="c-phone__screen"/>
+    <img src="https://exporia.pl/images/card/card.png" alt="Karta rabatowa Exporia" class="c-phone__card"/>
+</div>
+<a href="http://codepen.io/devy_pl" target="_blank" class="link">Check out my other animations</a>
+</body>
+</html>

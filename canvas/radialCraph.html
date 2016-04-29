@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <canvas width="200" height="200" class="radial_graph" id="asLittleInfoAsYouWant" data-nodes="Node 1,4.Node 2,0.Node 3,1.Node 4,3.Node 5,3.Node 6,4.Node 7,3.Node 8,2.Node 9,1.Node 10,0.Node 11,10"></canvas>
+        <canvas width="200" height="200" class="radial_graph" id="asManyNodesAsYouWant" data-nodes="Node 1,4,62bf00.Node 2,0,bf9472.Node 3,1,9172bf.Node 4,3,729ebf.Node 5,3,9dbf72.Node 6,4,727bbf.Node 7,3,9872bf.Node 8,2,bfa472.Node 9,1,bf9272.Node 10,0,7274bf" data-max="5" data-background="#949494"></canvas>
+        <canvas width="200" height="200" class="radial_graph" id="stepOptions" data-nodes="Node 1,8,590A05.Node 2,1.Node 3,3,0F1B43.Node 4,7,AD5911.Node 5,2,1EC3FD" data-max="10" data-border="polygon" data-step="2" data-stepColor="#72bfa0"></canvas>
+        <canvas width="200" height="200" class="radial_graph" id="web" data-nodes="Node 1,4,590A05.Node 2,0,0F1B43.Node 3,1,AD5911.Node 4,3,1EC3FD.Node 5,3" data-max="5" data-background="#ffffff" data-border="circle" data-web data-webColor="#72bfa0" data-webOpacity="0.75"></canvas>
+    </div>
+</div>
+<script>
+    // Max and the Defaults
+    var defaults = {
+        max: false,
+        background: "#ffffff",
+        border: "circle",
+        web: false,
+        webColor: "#FF0000",
+        webOpacity: 0.5,
+        step: 1,
+        stepColor: "#000000",
+        nodeColor: "000000",
+        nodeRadius: 5
+    };
+
+    // Radial graphs are shoved in here as they're created.
+    var activeRadialGraphKeys = [];
+    var activeRadialGraphs = {};
+
+    /* Radial Graph class */
+
+    var RadialGraph = function(options, master) {
+        // Ready the nodes!
+        this.prepareNodes = function(unparsed) {
+            var parsedList = [];
+            if (!unparsed) {
+                return parsedList;
+            }
+            var unparsedList = unparsed.split('.');
+            for (i = 0; i < unparsedList.length; i++) {
+                var value = unparsedList[i];
+                parsedList[i] = new GraphNode(value);
+            }
+
+            return parsedList;
+        };
+
+        this.getMaxNode = function() {
+            var retval = 1;
+            for (i = 0; i < this.nodes.length; i++) {
+                index = i;
+                value = this.nodes[i];
+                if (value.value > retval) {
+                    retval = value.value;
+                }
+            }
+            return retval;
+        };
+
+        // Peel off the options given.
+        this.id = options.id;
+        this.nodes = this.prepareNodes(options.nodes);
+        this.max = options.max || this.getMaxNode();
+        this.background = options.background || defaults.background;
+        this.border = options.border || defaults.border;
+        this.nodeRadius = options.nodeRadius || defaults.nodeRadius;
+        this.web = options.web || defaults.web;
+        this.webColor = options.webColor || defaults.webColor;
+        this.webOpacity = options.webOpacity || defaults.webOpacity;
+        this.step = options.step || defaults.step;
+        this.stepColor = options.stepColor || defaults.stepColor;
+        this.width = options.width;
+        this.height = options.height;
+        // Peel off the master element.
+        this.master = master;
+
+        // Redraws the frame.
+        this.draw = function() {
+            var ctx = this.master.getContext("2d");
+
+            // Find the center of the circle to draw around.
+            var coreX = this.width / 2;
+            var coreY = this.height / 2;
+            // Find the max radius
+            var minR = defaults.nodeRadius * 2;
+            var maxR = Math.min(this.width, this.height) / 2 - defaults.nodeRadius * 3;
+
+            // Draw the background
+            ctx.beginPath();
+            ctx.fillStyle = this.background;
+            ctx.arc(coreX, coreY, minR + maxR, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Draw the rings.
+            if (this.border == "circle") {
+                for (i = 0; i <= this.max; i += this.step) {
+                    // Calculate the radius for this ring.
+                    var radius = maxR * i / this.max + minR;
+
+                    // Draw ring.
+                    ctx.beginPath();
+                    ctx.strokeStyle = this.stepColor;
+                    ctx.arc(coreX, coreY, radius, 0, 2 * Math.PI);
+                    ctx.stroke();
+                }
+            } else if (this.border == "polygon") {
+                for (var i = 0; i <= this.max; i++) {
+                    // Calculate first border coords.
+                    var radius = maxR * i / this.max + minR;
+                    var angle = 0;
+                    var borderX = radius * Math.cos(angle) + coreX;
+                    var borderY = radius * Math.sin(angle) + coreY;
+
+                    // Begin path.
+                    ctx.beginPath();
+                    ctx.strokeStyle = this.stepColor;
+                    ctx.moveTo(borderX, borderY);
+                    for (var ii = 2 * Math.PI / this.nodes.length; ii <= 2 * Math.PI; ii += (2 * Math.PI / this.nodes.length)) {
+                        // Calculate next border coords.
+                        var radius = maxR * i / this.max + minR;
+                        var angle = ii;
+                        var borderX = radius * Math.cos(angle) + coreX;
+                        var borderY = radius * Math.sin(angle) + coreY;
+
+                        // Line to next border dot.
+                        ctx.lineTo(borderX, borderY);
+                    }
+                    ctx.stroke();
+                }
+            }
+
+            // Draw the web.
+            if (this.web) {
+                // Calculate first node coords.
+                var radius = maxR * this.nodes[0].value / this.max + minR;
+                var angle = 2 * Math.PI * 0 / this.nodes.length;
+                var firstCenterX = radius * Math.cos(angle) + coreX;
+                var firstCenterY = radius * Math.sin(angle) + coreY;
+
+                // Begin path.
+                ctx.beginPath();
+                ctx.moveTo(firstCenterX, firstCenterY);
+                for (var i = 1; i < this.nodes.length; i++) {
+                    var node = this.nodes[i];
+
+                    // Calculate node coords.
+                    var radius = maxR * node.value / this.max + minR;
+                    var angle = 2 * Math.PI * i / this.nodes.length;
+                    var centerX = radius * Math.cos(angle) + coreX;
+                    var centerY = radius * Math.sin(angle) + coreY;
+
+                    // Line to next node.
+                    ctx.lineTo(centerX, centerY);
+                }
+
+                // Line back to the first node.
+                ctx.lineTo(firstCenterX, firstCenterY);
+                ctx.fillStyle = convertHex(this.webColor, this.webOpacity);
+                ctx.fill();
+                ctx.strokeStyle = this.webColor;
+                ctx.stroke();
+            }
+
+            // Draw the node dots.
+            for (i = 0; i < this.nodes.length; i++) {
+                var node = this.nodes[i];
+
+                // Calculate the center coords for the node.
+                var radius = maxR * node.value / this.max + minR;
+                var angle = 2 * Math.PI * i / this.nodes.length;
+                var centerX = radius * Math.cos(angle) + coreX;
+                var centerY = radius * Math.sin(angle) + coreY;
+
+                // Draw node.
+                ctx.beginPath();
+                ctx.fillStyle = "#".concat(node.color);
+                ctx.arc(centerX, centerY, this.nodeRadius, 0, 2 * Math.PI);
+                ctx.fill();
+                if(this.stepColor !== ctx.fillStyle) {
+                    ctx.strokeStyle = this.stepColor;
+                    ctx.stroke();
+                }
+            }
+        };
+    };
+
+    var GraphNode = function(unparsed) {
+        var options = unparsed.split(',');
+        this.label = options[0];
+        this.value = parseInt(options[1]);
+        this.color = options[2] || defaults.nodeColor;
+    };
+
+    var createRadialGraph = function(master) {
+        // Pull the options out.
+        var options = [];
+        options.id = master.getAttribute('id');
+        options.nodes = master.getAttribute('data-nodes');
+        options.max = parseInt(master.getAttribute('data-max'));
+        options.background = master.getAttribute('data-background');
+        options.border = master.getAttribute('data-border');
+        options.web = typeof master.getAttribute('data-web') == typeof "";
+        options.webColor = master.getAttribute('data-webColor');
+        options.webOpacity = master.getAttribute('data-webOpacity');
+        options.step = parseInt(master.getAttribute('data-step'));
+        options.stepColor = master.getAttribute('data-stepColor');
+        options.width = master.getAttribute('width');
+        options.height = master.getAttribute('height');
+
+        // Create radial graph.
+        var newRadialGraph = new RadialGraph(options, master);
+        activeRadialGraphs[newRadialGraph.id] = newRadialGraph;
+        activeRadialGraphKeys[activeRadialGraphKeys.length] = newRadialGraph.id;
+
+        // Draw.
+        activeRadialGraphs[newRadialGraph.id].draw();
+    };
+
+    // Taken from http://jsfiddle.net/subodhghulaxe/t568u/
+    function convertHex(hex, opacity) {
+        hex = hex.replace('#', '');
+        r = parseInt(hex.substring(0, 2), 16);
+        g = parseInt(hex.substring(2, 4), 16);
+        b = parseInt(hex.substring(4, 6), 16);
+
+        result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
+        return result;
+    }
+
+    var Radial = function(target) {
+        if (target.startsWith('.')) {
+            var realTarget = target.slice(1, target.length);
+            var targetList = document.getElementsByClassName(realTarget);
+            for(ii = 0; ii < targetList.length; ii++) {
+                createRadialGraph(targetList[ii]);
+            }
+        }
+
+        if (target.startsWith("#")) {
+            createRadialGraph(document.getElementByID(target));
+        }
+    }
+
+    // Color scheme taken from http://www.colourlovers.com/palette/4104540/shelter_2.2
+
+    /** Include the JS file in the header, call it in the body, after the DOM has loaded. **/
+
+    Radial('.radial_graph');
+</script>
+</body>
+</html>
