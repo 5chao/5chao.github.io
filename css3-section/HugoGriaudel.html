@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /**
+  * 1. Make all elements inherit the box-sizing value from their
+  *    parent, here ultimately inherit the one from `html`.
+  */
+        * {
+            box-sizing: inherit;
+            /* 1 */
+        }
+
+        /**
+         * 1. Define a proper box-sizing for all elements in the page.
+         */
+        html {
+            box-sizing: border-box;
+            /* 2 */
+        }
+
+        /**
+         * 1. Make `html` and `body` inherit height from the viewport.
+         */
+        html, body {
+            height: 100%;
+            /* 1 */
+        }
+
+        /**
+         * 1. Apply an internal spacing to `body` equal to 5% of the
+         *    width of the viewport.
+         */
+        body {
+            background-color: #444;
+            font-family: 'Galada', sans-serif;
+            padding: 5vw;
+            /* 1 */
+        }
+
+        /**
+         * 1. Make all relevant elements flexbox containers.
+         */
+        body, ul, li {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            /* 1 */
+        }
+
+        /**
+         * 1. Reset default styles from `ul`.
+         * 2. Make the element as wide and tall as its parent.
+         */
+        ul {
+            list-style: none;
+            /* 1 */
+            margin: 0;
+            /* 1 */
+            padding: 0;
+            /* 1 */
+            -webkit-box-flex: 1;
+            -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            /* 2 */
+        }
+
+        /**
+         * 1. Make the list items take 1/5th of the parent width.
+         * 2. Give the list items an external spacing of 1% of the
+         *    width of the viewport.
+         * 3. Align content at the bottom.
+         * 4. Horizontally center content.
+         * 5. Give an inner transparent border of 0.5% of the width
+         *    of the viewport.
+         */
+        li {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1 1 20%;
+            -ms-flex: 1 1 20%;
+            flex: 1 1 20%;
+            /* 1 */
+            margin: 1vw;
+            /* 2 */
+            -webkit-box-align: end;
+            -webkit-align-items: flex-end;
+            -ms-flex-align: end;
+            align-items: flex-end;
+            /* 3 */
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            /* 4 */
+            font-size: 5em;
+            box-shadow: inset 0 0 0 0.5vw rgba(255, 255, 255, 0.3);
+            /* 5 */
+            -webkit-transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /**
+         * 1. Make all items except the hover one slightly transparent.
+         */
+        ul:hover li:not(:hover) {
+            opacity: 0.8;
+            /* 1 */
+        }
+
+        /**
+         * 1. Make hovered items slightly bigger.
+         */
+        li:hover {
+            -webkit-transform: scale(1.05);
+            transform: scale(1.05);
+            /* 1 */
+        }
+
+        li:nth-of-type(1) {
+            background-color: #69D2E7;
+        }
+
+        li:nth-of-type(2) {
+            background-color: #A7DBD8;
+        }
+
+        li:nth-of-type(3) {
+            background-color: #E0E4CC;
+        }
+
+        li:nth-of-type(4) {
+            background-color: #F38630;
+        }
+
+        li:nth-of-type(5) {
+            background-color: #FA6900;
+        }
+
+    </style>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+</body>
+</html>

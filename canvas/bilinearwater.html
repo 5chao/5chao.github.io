@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin: 0;padding: 0;border: 0;background: #000;}
+        canvas{position: relative;top:50%;left: 50%;margin-left: -50vw;width: 100vmin;height: 100vmin;overflow: hidden;display: block;}
+    </style>
+</head>
+<body>
+<canvas></canvas>
+<script>
+var canvas,ctx,timer,isstart,count,sita,hei,bgr,gdt,imtank,hztank;
+canvas = document.getElementsByTagName('canvas')[0];
+ctx = canvas.getContext('2d');
+canvas.width=canvas.height=400;
+sita=250;
+hei=canvas.height-sita;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+gdt=ctx.getImageData(0,0,canvas.width,hei);
+hztank=[];
+for(var a=0;a<hei;a++){
+    hztank[a]=[];
+    for(var b=0;b<canvas.width;b++)hztank[a][b]=[0,0];
+}
+init();
+aaa();
+
+function pika(tx,ty,s){
+    var a,b,c,r,x,y,p,max;
+    max=(10+s*3)|0;
+    r=0;
+    ctx.fillStyle=ctx.strokeStyle="hsla("+((Math.random()*360)|0)+",30%,50%,0.7)";
+
+    p=[];
+    for(a=0;a<max;a++){
+        b=0.1+Math.random();
+        x=Math.cos(r)*b;
+        y=Math.sin(r)*b;
+        p.push([x,y]);
+        r+=Math.PI*2/max;
+    }
+
+    ctx.beginPath();
+    for(a=0;a<max;a++)ctx.lineTo(tx+p[a][0]*s,ty+p[a][1]*s);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(tx,ty,s/2,0,Math.PI*2,0);
+    ctx.fill();
+
+    if(s<3)return;
+    ctx.beginPath();
+    ctx.arc(tx,ty,s/4,0,Math.PI*2,0);
+    ctx.fill();
+    ctx.lineWidth=s/10;
+    ctx.beginPath();
+    ctx.arc(tx,ty,s*0.8,0,Math.PI*2,0);
+    ctx.stroke();
+}
+
+function init(){
+    var a,b,c,d,e,grd,pt,mt,sco,dt,iti,x,y,y0,ritu,bai,tim,max,plen,st;
+    grd=ctx.createLinearGradient(0,0,0,sita);
+    a=244;
+    grd.addColorStop(0,"hsl("+a+",90%,20%)");
+    grd.addColorStop(1,"hsl("+a+",90%,40%)");
+    ctx.fillStyle=grd;
+    tim=new Date().getTime();
+
+    ctx.fillRect(0,0,canvas.width,sita);
+    ctx.globalCompositeOperation = "lighter";
+    max=2000;
+
+    for(c=0;c<3;c++){
+        for(a=0;a<max;a++){
+            y0=Math.random();
+            y=y0*sita;
+            x=Math.random()*canvas.width;
+            b=Math.random();
+            b*=b*b*b*b;
+            if(Math.random()<0.5)b*=-1;
+            x=(b*0.7+0.5)*canvas.width;
+            y0=1-y0+0.5;
+            y0*=y0;
+            x+=(Math.sin(y0*8+c+tim)+Math.sin(y0*4+c*2.2+tim*3))*20*y0;
+            b=Math.random();
+            b=Math.pow(b,40);
+            pika(x,y,0.5+b*9);
+        }
+    }
+
+    ctx.globalCompositeOperation = "source-over";
+    pt=[];
+    plen=5000;
+    for(a=0;a<plen;a++)pt[a]=Math.random()*Math.random();
+    for(d=0;d<5;d++){
+        mt=new Float32Array(canvas.width+1);
+        ritu=1;
+        bai=1;
+        sco=0;
+        for(b=0;b<7;b++){
+            st=Math.random()*pt.length;
+            c=ritu;
+            for(a=0;a<mt.length;a++){
+                px=a/bai+st;
+                x=Math.floor(px);
+                px=px-x;
+                x=x%plen;if(x<0)x+=plen;
+                mt[a]+=noize1(px,pt[x%plen],pt[(x+1)%plen],pt[(x+2)%plen])*c;
+            }
+            bai*=2;
+            sco+=c;
+            ritu*=2;
+        }
+
+        sco=1/sco;
+        ctx.fillStyle="hsl(225,60%,"+(20-d*3)+"%)";
+        ctx.beginPath();
+        for(a=0;a<mt.length;a++){
+            e=1-Math.sin(a/mt.length*Math.PI)/2;
+            ctx.lineTo(a,sita-mt[a]*2*e+10+d*5);
+        }
+        ctx.lineTo(canvas.width,sita+10+d*5);
+        ctx.lineTo(0,sita+10+d*5);
+        ctx.fill();
+    }
+
+    bgr=ctx.getImageData(0,0,canvas.width,sita);
+    dt=bgr.data;
+    imtank=[];
+    iti=0;
+    for(a=0;a<sita;a++){
+        imtank[a]=[];
+        for(b=0;b<canvas.width;b++){
+            imtank[a][b]=[dt[iti],dt[iti+1],dt[iti+2]];
+            iti+=4;
+        }
+    }
+}
+
+function noize1(r1,p0,p1,p2){
+    var r2=1-r1,
+            x0=(p0+p1)*0.5,x1=(p1+p2)*0.5;
+    return (x0*r2+p1*r1)*r2+(p1*r2+x1*r1)*r1;
+}
+
+function pmap(x,y,tm){
+    var a,b,c,d,e,sx,sy,ex,ey,x1,y1,han,hz,bai,pei;
+
+    pei=3;
+    han=(y+0.2)*120*(tm);
+    x*=canvas.width;
+    y*=hei;
+    sx=Math.floor(x-han)-1;
+    if(sx<0)sx=0;
+    sy=Math.floor(y-han/pei)-1;
+    if(sy<0)sy=0;
+    ex=Math.floor(x+han)+1;
+    if(ex>=canvas.width)ex=canvas.width;
+    ey=Math.floor(y+han/pei)+1;
+    if(ey>=hei)ey=hei;
+
+    hz=hztank;
+    e=(0.5-tm)*2;
+    e*=e*2;
+    for(a=sy;a<ey;a++){
+        for(b=sx;b<ex;b++){
+            y1=a-y;
+            x1=b-x;
+            y1*=pei;
+            c=Math.pow(x1*x1+y1*y1,0.5)/han;
+            if(c<=1){
+                c=1-c;
+                d=Math.sin(c*37+tm*22)/2*e;
+                d*=0.5-Math.cos(c*Math.PI*2)/2;
+                c+=d;
+                hz[a][b][0]-=x1*c/24*e;
+                hz[a][b][1]-=y1*c/8*e;
+            }
+        }
+    }
+}
+
+function aaa(){
+    var a,b,c,d,e,f,x,y,x1,y1,hz,dt,cou,nm,bai,
+            c1,c2,c3,max,tm,tp,tim,mx,my,mx1,my1,rx,ry,rx1,ry1,
+            p1,p2,p3,p4;
+    ctx.putImageData(bgr,0,0);
+    ctx.globalCompositeOperation = "lighter";
+    tim=new Date().getTime()/1000;
+    hz=hztank;
+    for(a=0;a<hei;a++){
+        y=a/hei;
+        y=1-y;
+        y*=y*y;
+        y=1-y;
+        d=Math.sin((1-y)*10+tim/5);
+        y=d*4;
+        y=y%2;
+        if(y<0)y+=2;
+        if(y>1)y=2-y;
+        d=a/hei/4;
+        for(b=0;b<canvas.width;b++){
+            x=b/canvas.width;
+            x-=0.5;
+            x=x*d;
+            hz[a][b][0]=-x;
+            hz[a][b][1]=y;
+        }
+    }
+
+    max=700;
+    p=[];
+    for(a=0;a<max;a++){
+        x=a/(max-1)*canvas.width;
+        x=(x+tim*13)%canvas.width;
+        tm=2+Math.sin(a*13+1)+Math.sin(a*31+2)+tim+a*7;
+        tm=tm%5;
+        b=0.5+Math.sin(a*5)/2;
+        tp=1-b;
+        tp=Math.pow(tp,7)*0.9+0.1;
+        if(tm<1){
+            p.push([x,-tp*hei+(sita+hei*tp*2)*tm,tp*0.7+0.3]);
+        }else if(tm<3){
+            pmap(a/(max-1),tp,(tm-1)/4);
+        }
+    }
+
+    dt=gdt.data;
+    iti=0;
+    for(a=0;a<hei;a++){
+        for(b=0;b<canvas.width;b++){
+            y=a/sita+hz[a][b][1]/18;
+            x=b/canvas.width+hz[a][b][0];
+            if(x<0)x=0;
+            if(y<0)y=0;
+            if(y>=1)y=1;
+            if(x>=1)x=1;
+            y=1-y;
+            x*=imtank[0].length-1;
+            y*=imtank.length-1;
+            mx=x|0;my=y|0;
+            mx1=mx+1;my1=my+1;
+            if(mx1>=imtank[0].length)mx1=imtank[0].length-1;
+            if(my1>=imtank.length)my1=imtank.length-1;
+
+            rx=x-mx;ry=y-my;rx1=1-rx;ry1=1-ry;
+            p1=rx1*ry1;p3=rx*ry1;p2=rx1*ry;p4=rx*ry;
+
+            c1=imtank[my][mx][0]*p1+
+                    imtank[my1][mx][0]*p2+imtank[my][mx1][0]*p3+imtank[my1][mx1][0]*p4;
+            c2=imtank[my][mx][1]*p1+
+                    imtank[my1][mx][1]*p2+imtank[my][mx1][1]*p3+imtank[my1][mx1][1]*p4;
+            c3=imtank[my][mx][2]*p1+
+                    imtank[my1][mx][2]*p2+imtank[my][mx1][2]*p3+imtank[my1][mx1][2]*p4;
+
+            dt[iti]=c1|0;
+            dt[iti+1]=c2|0;
+            dt[iti+2]=c3|0;
+            iti+=4;
+        }
+    }
+    ctx.putImageData(gdt,0,sita);
+
+    for(a=0;a<p.length;a++){
+        d=p[a][2];
+        ctx.lineWidth=2*d;
+        for(b=0;b<3;b++){
+            c=d*b*2;
+            ctx.strokeStyle="rgba(25,37,73,"+(1-b/3)+")";
+            ctx.beginPath();
+            ctx.lineTo(p[a][0]+0.3*d,p[a][1]-2*d-c);
+            ctx.lineTo(p[a][0]+0.3*d,p[a][1]-c);
+            ctx.stroke();
+
+            ctx.strokeStyle="rgba(120,130,155,"+(1-b/3)+")";
+            ctx.beginPath();
+            ctx.lineTo(p[a][0]-0.3*d,p[a][1]-2*d-c);
+            ctx.lineTo(p[a][0]-0.3*d,p[a][1]-c);
+            ctx.stroke();
+        }
+    }
+    requestAnimationFrame(aaa);
+}
+
+
+
+</script>
+</body>
+</html>

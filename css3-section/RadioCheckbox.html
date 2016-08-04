@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Show / Hide Tab</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        html{background-color: #0f606d;}
+        body{font-family: sans-serif;color: #fff;}
+        h1{font-size: 35px;text-align: center;padding: 4% 0;letter-spacing: 1px;}
+        .main input[type=radio]{display: none;}
+
+        #tab-1:checked ~ .tab label:nth-child(1),
+        #tab-2:checked ~ .tab label:nth-child(2),
+        #tab-3:checked ~ .tab label:nth-child(3),
+        #tab-4:checked ~ .tab label:nth-child(4){background-color: rgba(0, 0, 0, 0.2);box-shadow: none;}
+        .content > div{display: none;}
+
+        #tab-1:checked ~ .content div:nth-child(1),
+        #tab-2:checked ~ .content div:nth-child(2),
+        #tab-3:checked ~ .content div:nth-child(3),
+        #tab-4:checked ~ .content div:nth-child(4){display: block;}
+
+        .main{margin: 0 auto;max-width: 800px;border: 1px solid rgba(0, 0, 0, 0.2);}
+        .tab{overflow: hidden;}
+        .tab label{
+            font-size: 18px;
+            cursor: pointer;
+            float: left;
+            color: #fff;
+            width: 25%;
+            text-align: center;
+            padding: 15px 0;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+        }
+        .content{background-color: rgba(0, 0, 0, 0.2);min-height: 250px;}
+        .content > div{padding: 30px;line-height: 1.5;font-size: 17px;}
+    </style>
+</head>
+<body>
+<h1>Show / Hide Tab using pure CSS width <br/>Radio Checkbox and ~ Selector</h1>
+<div class="main">
+    <input type="radio" id="tab-1" name="show" checked />
+    <input type="radio" id="tab-2" name="show"/>
+    <input type="radio" id="tab-3" name="show"/>
+    <input type="radio" id="tab-4" name="show"/>
+    <div class="tab">
+        <label for="tab-1">Tab 1</label>
+        <label for="tab-2">Tab 2</label>
+        <label for="tab-3">Tab 3</label>
+        <label for="tab-4">Tab 4</label>
+    </div>
+    <div class="content">
+        <div class="content-dis">
+            Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,<br>Making it over 2000 years old. Richard McClintock.
+            Contrary to popular belief, Lorem Ipsum is not simply random text. <br>It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock.
+        </div>
+        <div class="content-dis">
+            Cascading Style Sheets. A cascade is like a waterfall: there's no backward motion. So, naturally, there is no previous sibling selector in CSS.<br>
+            Flex items are, by default, displayed and laid out in the same order as they appear in the source document. The  order property can be used to change this ordering.
+        </div>
+        <div class="content-dis">
+            You can use unicode-bidi and direction properties to reverse the rendering order of element, and then you use adjacent or general sibling selector will select those elements which is before the current element.<br>
+            Flex items are, by default, displayed and laid out in the same order as they appear in the source document. The  order property can be used to change this ordering.
+        </div>
+        <div class="content-dis">
+            You can add an explanation of how it works. (it seems that you apply an style to all the items and to the following items but it can de described explicitly).
+        </div>
+    </div>
+</div>
+</body>
+</html>
