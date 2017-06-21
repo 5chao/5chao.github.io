@@ -126,9 +126,9 @@
     <!--<script src="http://192.168.31.224:9688/static/js/uuchat.js"></script>-->
     <script>
 	var iframe = document.createElement('iframe');
-	iframe.style.position = 'absolute';
-	iframe.height= 0;
-	iframe.width= 0;
+	iframe.style.position = 'fixed';
+	iframe.height= "100%";
+	iframe.width= "100%";
 	iframe.style.top = 0;
 	iframe.style.bottom = 0;
 	iframe.style.left = 0;
@@ -136,29 +136,10 @@
 	iframe.style.border = 'none';
 	iframe.allowfullscreen=true;
 	iframe.src = 'http://192.168.31.224:9688/demo';
+
 	//document.getElementsByClassName('intercom-messenger-frame')[0].appendChild(iframe);
 
 	document.body.appendChild(iframe);
-
-	var callback = function () {
-		;(function(w, d, u){
-			if(window.UUCT){
-				return;
-			}
-			var uuchat = document.createElement('script');
-			uuchat.type = 'text/javascript';
-			uuchat.async = true;
-			uuchat.src = u;
-			var s = document.getElementsByTagName('script')[0];
-			s.parentNode.insertBefore(uuchat, s);
-
-		})(window, document, 'http://192.168.31.224:9688/static/js/uuchat.js');
-	}
-	if (iframe.attachEvent) {
-		iframe.attachEvent("onload", callback);
-	} else {
-		iframe.onload = callback
-	}
 </script>
 
 </body>
