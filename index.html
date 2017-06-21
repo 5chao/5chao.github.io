@@ -123,6 +123,18 @@
         </ul>
     </div>
 </div>
-    <script src="http://192.168.31.224:9688/static/js/uuchat.js"></script>
+    <!--<script src="http://192.168.31.224:9688/static/js/uuchat.js"></script>-->
+    var iframe = document.createElement('iframe');
+	iframe.style.position = 'fixed';
+	iframe.height='100%';
+	iframe.width='100%';
+	iframe.style.top = 0;
+	iframe.style.bottom = 0;
+	iframe.style.left = 0;
+	iframe.style.right = 0;
+	iframe.allowfullscreen=true;
+	iframe.src = 'http://192.168.31.224:9688/demo';
+	//document.getElementsByClassName('intercom-messenger-frame')[0].appendChild(iframe);
+	document.body.appendChild(iframe);
 </body>
 </html>
