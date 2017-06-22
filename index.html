@@ -124,30 +124,24 @@
     </div>
 </div>
     <!--<script src="http://192.168.31.224:9688/static/js/uuchat.js"></script>-->
-<script> 
-    ;(function(w, d, u){
-		var iframe = document.createElement('iframe');
-		iframe.style = "display: none;width: 0; height: 0; position: absolute; left: 0px; bottom: 0px; border: none;";
-		iframe.setAttribute("src", "http://192.168.31.224:9688/s")
-		document.body.appendChild(iframe);
-		if(w.attachEvent){
-			w.attachEvent('onload', frameLoad);
-		}else{
-			w.addEventListener('load', frameLoad,false);
+<script>
+	;(function(w, d, u){
+		if(w.uuchat){
+			return false;
 		}
+		var s = d.createElement('script'),
+			r=d.getElementsByTagName('script')[0];
 
-		function frameLoad(){
-			console.log('|------ load ss ---->>>>');
+		s.async = 1;
+		s.src = u;
+		r.parentNode.insertBefore(s,r);
 
-			var s = document.createElement('script');
-			s.type='text/javascript';
-			s.async=true;
-			s.src = u;
-			var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);
-			
-		}
-
-	})(window, document, 'http://192.168.31.224:9688/static/js/uuchat.js');
-	</script>
+		w.uuchat = (function(){
+			return {
+				src: u
+			};
+		})();
+	})(window, document, "http://192.168.31.224:9688/static/js/loader.js");
+</script>
 </body>
 </html>
