@@ -123,25 +123,23 @@
         </ul>
     </div>
 </div>
-    <!--<script src="http://192.168.31.224:9688/static/js/uuchat.js"></script>-->
 <script>
-	;(function(w, d, u){
-		if(w.uuchat){
-			return false;
-		}
-		var s = d.createElement('script'),
-			r=d.getElementsByTagName('script')[0];
-
-		s.async = 1;
-		s.src = u;
-		r.parentNode.insertBefore(s,r);
-
-		w.uuchat = (function(){
-			return {
-				src: u
-			};
-		})();
-	})(window, document, "http://192.168.31.224:9688/static/js/loader.js");
+;(function(w, d, u, c){
+    if(w.uuchat){
+        return false;
+    }
+    var s = d.createElement('script'),
+        r=d.getElementsByTagName('script')[0];
+    s.async = 1;
+    s.src = u;
+    r.parentNode.insertBefore(s,r);
+    w.UUCHAT = (function(){
+        return {
+            domain: c,
+            src: u
+        };
+    })();
+})(window, document, "http://192.168.31.224:9688/static/js/loader.js", 'http://192.168.31.224:9688/');
 </script>
 </body>
 </html>
