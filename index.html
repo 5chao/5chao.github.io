@@ -125,22 +125,20 @@
 </div>
 <!-- begin uuchat code -->
 <script>
-;(function(u, c, h, t){
-    if(u.UUCHAT){
-        return false;
-    }
-    var s = c.createElement('script'),
-        r=c.getElementsByTagName('script')[0];
-    s.async = 1;
-    s.src = h;
-    r.parentNode.insertBefore(s,r);
+;(function(u, c, h){
     u.UUCHAT = (function(){
         return {
-            domain: t,
+            domain: 'http://192.168.31.224:9688',
             src: h
         };
     })();
-})(window, document, "http://192.168.31.224:9688/static/js/loader.js", 'http://192.168.31.224:9688');
+    var s = c.createElement('script'),
+        r=c.getElementsByTagName('script')[0];
+    s.async = 1;
+    s.src = u.UUCHAT.domain+h;
+    r.parentNode.insertBefore(s,r);
+
+})(window, document, "/static/js/loader.js", );
 </script>
 <!-- end uuchat code -->    
 </body>
