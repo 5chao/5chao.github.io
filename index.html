@@ -123,23 +123,25 @@
         </ul>
     </div>
 </div>
+<!-- begin uuchat code -->
 <script>
-;(function(w, d, u, c){
-    if(w.uuchat){
+;(function(u, c, h, t){
+    if(u.UUCHAT){
         return false;
     }
-    var s = d.createElement('script'),
-        r=d.getElementsByTagName('script')[0];
+    var s = c.createElement('script'),
+        r=c.getElementsByTagName('script')[0];
     s.async = 1;
-    s.src = u;
+    s.src = h;
     r.parentNode.insertBefore(s,r);
-    w.UUCHAT = (function(){
+    u.UUCHAT = (function(){
         return {
-            domain: c,
-            src: u
+            domain: t,
+            src: h
         };
     })();
-})(window, document, "http://192.168.31.224:9688/static/js/loader.js", 'http://192.168.31.224:9688');
+})(window, document, "http://192.168.31.224:9688/static/js/loader.js", 'http://192.168.31.224:9688/');
 </script>
+<!-- end uuchat code -->    
 </body>
 </html>
