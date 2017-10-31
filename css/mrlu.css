@@ -16,7 +16,7 @@
     font-weight: bold;
 }
 
-.sec-list{padding:10px 20px;text-align: justify;}
+.sec-list{padding:10px 20px;}
 .sec-list a{display: inline-block;padding:5px;text-decoration: none;transition:all .5s; }
 .sec-list a:hover{transform:scale(1.2);}
 
