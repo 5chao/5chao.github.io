@@ -1,6 +1,10 @@
 *{margin: 0;padding: 0;}
 ul,li{list-style-type: none;}
-.width-980{margin:0 auto;width: 980px;}
+.width-980{
+    margin:0 auto;
+    min-width:640px;
+    max-width: 980px;
+}
 .cfix:before, .cfix:after {content:"";display:table;}
 .cfix:after {clear:both;}
 .cfix {*zoom:1;}
