@@ -1,9 +1,7 @@
 *{margin: 0;padding: 0;}
 ul,li{list-style-type: none;}
-.width-980{
-    margin:0 auto;
-    min-width:640px;
-    max-width: 980px;
+body{
+    padding: 0 1%;
 }
 .cfix:before, .cfix:after {content:"";display:table;}
 .cfix:after {clear:both;}
@@ -14,8 +12,12 @@ ul,li{list-style-type: none;}
 .header{margin-bottom: 20px;}
 .nav{padding:20px 0;height:40px;line-height:40px;border: 1px solid #BAC6D3;}
 .nav-left{float: left;padding:0 20px;height: 40px;line-height: 40px;}
-.logo{position:relative;display:inline-block;width: 40px;height: 40px;background: #B1d202;border-radius: 100%;}
-.logo span{position: absolute;display:block;background: #fff;}
+.logo{position:relative;display:inline-block;width: 40px;height: 40px;background: #B1d202;border-radius: 100%;
+    text-align: center;
+    color:#fff;
+    font-size:20px;
+    text-transform: uppercase;
+}
 .logo .logo-l-eye{left: 5px;top:5px;width: 10px;height: 10px;border-radius: 100%;}
 .logo .logo-r-eye{right: 5px;top:5px;width: 10px;height: 10px;border-radius: 100%;}
 .logo .logo-mouse{left: 10px;top:25px;width: 20px;height:2px;border-radius: 100%;}

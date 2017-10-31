@@ -1,5 +1,5 @@
-.left{float:left;width: 720px;}
-.right{float:right;width: 240px;border: 1px solid #BAC6D3; }
+.left{float:left;width: 60%;}
+.right{float:right;width: 38%;border: 1px solid #BAC6D3; }
 
 .sec{margin-bottom:10px;border-radius:5px;border: 1px solid #BAC6D3; }
 .game-title,
@@ -16,6 +16,17 @@
     font-weight: bold;
 }
 
-.sec-list{padding:10px 20px;}
+.sec-list{padding:10px 20px;text-align: justify;}
 .sec-list a{display: inline-block;padding:5px;text-decoration: none;transition:all .5s; }
 .sec-list a:hover{transform:scale(1.2);}
+
+@media screen and (max-width: 780px){
+    .left{
+        display:block;
+        width: 100%;
+    }
+    .right{
+        display: block;
+        width: 100%;
+    }
+}
