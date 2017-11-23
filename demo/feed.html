@@ -229,9 +229,9 @@
                 </label>
             </li>
             <li>
-                <label for="l5"">
+                <label for="l5">
                     <input type="checkbox" id="l5" class="check" data-type="s" />
-                    <span>✓</span>
+                <span>✓</span>
                     Servers are full/sleepy
                 </label>
             </li>
@@ -305,7 +305,7 @@
 
                     TOOL.addEvent(TOOL.$$('.btn-submit'), 'click', function(e) {
                         var checkbox = TOOL.$$('input[type=checkbox]:checked', 'all');
-                        
+
                         if (!this.classList.contains('enable')) {
                             console.log('|------enable---');
                             return false
