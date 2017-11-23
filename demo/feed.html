@@ -12,12 +12,14 @@
         ul,li{
             list-style: none;
         }
-        html, body, .feed{
+        html, body{
             height: 100%;
         }
         .feed{
+            position: relative;
             margin: 0 auto;
             padding: 0 2%;
+            min-height: 100%;
             max-width: 640px;
             background: rgba(0, 0, 0, 0.04);
         }
@@ -65,7 +67,7 @@
         .btn-submit{
             position: absolute;
             left: 2%;
-            bottom: 1.5%;
+            bottom: 20px;
             width: 96%;
             line-height: 2.5em;
             font-size: 16px;
@@ -84,12 +86,17 @@
             margin-bottom: 3%;
             height: 40px;
             line-height: 40px;
+            font-size: 1.25em;
+            text-align: center;
         }
         .feed-list li{
             margin: 15px 5px;
             font-size: 14px;
             -webkit-tap-highlight-color:rgba(0,0,0,0);
             tap-highlight-color:rgba(0,0,0,0);
+        }
+        .feed-list li:last-child{
+            margin-top: 20px;
         }
         .feed-list li input[type=checkbox]{
             margin-left: -20px;
@@ -274,10 +281,57 @@
                 },
                 addEvent: function(el, event, cb) {
                     el.addEventListener(event, cb ,false);
+                },
+                ajax: function (options) {
+                    var xhr = new XMLHttpRequest(),
+                        defaults = {
+                            type: 'GET',
+                            url: '',
+                            data: null,
+                            dataType: 'json',
+                            success: null,
+                            error: null
+                        };
+
+                    for ( k in options) {
+                        defaults[k] = options[k];
+                    }
+
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            var status = xhr.status;
+                            if (status >= 200 && status < 300) {
+                                var response = '',
+                                    type = xhr.getResponseHeader('Content-type');
+
+                                if (type.indexOf('xml') !== -1 && xhr.responseXML) {
+                                    response = xhr.responseXML;
+                                } else if(type === 'application/json') {
+                                    response = JSON.parse(xhr.responseText);
+                                } else {
+                                    response = xhr.responseText;
+                                }
+
+                                defaults.success && defaults.success(response);
+                            } else {
+                                defaults.error && defaults.error(status);
+                            }
+                        }
+                    };
+
+                    if (defaults.type === 'GET') {
+                        xhr.open(defaults.type, defaults.url, true);
+                        xhr.send(null)
+                    } else {
+                        xhr.open(defaults.type, defaults.url, true);
+                        xhr.send(defaults.data);
+                    }
+
+
                 }
             };
 
-            var FEDD = {
+            var FEED = {
                 init: function (){
                     window.onload = this.loadList;
                 },
@@ -328,10 +382,10 @@
 
                 loadList: function () {
                     TOOL.$$('.loading').style.display = 'none';
-                    FEDD.action();
+                    FEED.action();
                 }
             };
-            FEDD.init();
+            FEED.init();
         })();
     </script>
 </body>
