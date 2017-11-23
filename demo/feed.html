@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Feed back</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        html, body, .feed{
+            height: 100%;
+        }
+        .feed{
+            margin: 0 auto;
+            padding: 0 2%;
+            max-width: 640px;
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .loading{
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            text-align: center;
+        }
+        .loading span{
+            position: relative;
+            display: block;
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #0d95e8;
+            border-radius: 100%;
+            -webkit-animation: loadRote 3s linear infinite;
+            animation: loadRote 3s linear infinite;
+        }
+        .loading span:before{
+            content: '';
+            display: block;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            z-index: 99999;
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            background: #cc0000;
+        }
+        .btn-submit{
+            position: fixed;
+            left: 2%;
+            bottom: 1.5%;
+            width: 96%;
+            line-height: 2.5em;
+            font-size: 16px;
+            font-weight: normal;
+            text-align: center;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 3px;
+            cursor: not-allowed;
+        }
+        .btn-submit.enable{
+            background: #0085fd;
+            cursor: pointer;
+        }
+        .head{
+            margin-bottom: 3%;
+            height: 40px;
+            line-height: 40px;
+        }
+        .feed-list li{
+            margin: 15px 5px;
+            font-size: 14px;
+        }
+        .feed-list li input[type=checkbox]{
+            margin-left: -20px;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            background: #fff;
+            border: none;
+            visibility: hidden;
+        }
+        .feed-list li label{
+            display: block;
+            position: relative;
+            padding-left: 24px;
+            cursor: pointer;
+            word-break: break-all;
+        }
+        .feed-list li span{
+            position: absolute;
+            display: inline-block;
+            left: 0;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            -webkit-transition: all 0.1s linear;
+            transition: all 0.1s linear;
+        }
+        .feed-list li input[type=checkbox]:checked + span{
+            display: inline-block;
+            background: #2ecc71;
+            color: #fff;
+            border-color: #2ecc71;
+        }
+        .feed-list li input[type=text],
+        .feed-list li .desciption{
+            display: none;
+            margin-top: 5px;
+            margin-left: 2%;
+            padding: 1%;
+            width: 94%;
+            line-height: 20px;
+            min-height: 20px;
+            word-break: break-all;
+            border: none;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+        }
+        .feed-list li .desciption.on{
+            display: block;
+        }
+        .feed-list li .desciption:after{
+            content: 'Typing something...';
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .feed-list li .desciption:focus{
+            border: none;
+            outline: none;
+            border-bottom: 2px solid #00a854;
+        }
+        .feed-list li .desciption:focus:after{
+            content: '';
+        }
+        .feed-list li .desciption.active:after{
+            content: '';
+        }
+        .email{
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            width: 85%;
+            border: none;
+            border-bottom: 2px solid #00a854;
+            background: none;
+        }
+        .email:focus{
+            border: none;
+            outline: none;
+            border-bottom: 2px solid #00a854;
+        }
+        @-webkit-keyframes loadRote {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        @keyframes loadRote {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="feed">
+        <div class="loading">
+            <span></span>
+        </div>
+        <div class="head">What's your problem?</div>
+        <ul class="feed-list">
+            <li>
+                <label for="l1">
+                    <input type="checkbox" id="l1" data-type="s">
+                    <span>✓</span>
+                    Can't connect
+                </label>
+            </li>
+            <li>
+                <label for="l2">
+                    <input type="checkbox" id="l2" class="check" data-type="m" />
+                    <span>✓</span>
+                    Connected, but can't access sites/apps， Connected, but can't access sites/apps
+                </label>
+                <div contenteditable="true" class="desciption"></div>
+            </li>
+            <li>
+                <label for="l3">
+                    <input type="checkbox" id="l3" data-type="s">
+                    <span>✓</span>
+                    Speed is too slow
+                </label>
+            </li>
+            <li>
+                <label for="l4">
+                    <input type="checkbox" id="l4" class="check" data-type="s" />
+                    <span>✓</span>
+                    Auto-disconnected
+                </label>
+            </li>
+            <li>
+                <label for="l5"">
+                    <input type="checkbox" id="l5" class="check" data-type="s" />
+                    <span>✓</span>
+                    Servers are full/sleepy
+                </label>
+            </li>
+            <li>
+                <label for="l6">
+                    <input type="checkbox" id="l6" class="check" data-type="m" />
+                    <span>✓</span>
+                    Others
+                </label>
+                <div contenteditable="true" class="desciption"></div>
+            </li>
+            <li>
+                Email: <input type="email" placeholder="(Optional)" class="email" />
+                <br>
+                <br>
+                <p>Or <a href="mailto:307892391@qq.com">Contact us</a></p>
+            </li>
+        </ul>
+        <div class="btn-submit">SUBMIT</div>
+    </div>
+    <script>
+        ;(function() {
+
+            var TOOL = {
+                $$: function (el) {
+                    if (arguments.length > 1) {
+                        return document.querySelectorAll(el);
+                    }
+                    return document.querySelector(el);
+                },
+                addEvent: function(el, event, cb) {
+                    el.addEventListener(event, cb ,false);
+                }
+            };
+
+            var FEDD = {
+                init: function (){
+                    window.onload = this.loadList;
+                },
+                action: function () {
+                    var checkBoxList = TOOL.$$('.feed-list input[type=checkbox]', 'all');
+
+                    for (var i = 0, l = checkBoxList.length; i < l; i++) {
+                        (function (el) {
+                            TOOL.addEvent(el, 'click', function(e) {
+
+                                var type = this.getAttribute('data-type'),
+                                    checkedBoxList = TOOL.$$('input[type=checkbox]:checked', 'all'),
+                                    submit = TOOL.$$('.btn-submit'),
+                                    description;
+
+                                if (type === 'm') {
+                                    description = this.parentNode.parentNode.querySelector('.desciption');
+                                    description.classList.toggle('on');
+                                    if (description.innerText !== '') {
+                                        description.classList.add('active');
+                                    } else {
+                                        description.classList.remove('active');
+                                    }
+                                }
+
+                                if (checkedBoxList.length > 0) {
+                                    submit.classList.add('enable');
+                                } else {
+                                    submit.classList.remove('enable');
+                                }
+
+                            });
+                        })(checkBoxList[i]);
+                    }
+
+                    TOOL.addEvent(TOOL.$$('.btn-submit'), 'click', function(e) {
+                        var checkbox = TOOL.$$('input[type=checkbox]:checked', 'all');
+                        
+                        if (!this.classList.contains('enable')) {
+                            console.log('|------enable---');
+                            return false
+                        }
+
+                        console.log('|------checkbox---', checkbox.length);
+
+                    });
+                },
+
+                loadList: function () {
+                    TOOL.$$('.loading').style.display = 'none';
+                    FEDD.action();
+                }
+            };
+            FEDD.init();
+        })();
+    </script>
+</body>
+</html>
