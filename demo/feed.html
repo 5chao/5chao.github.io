@@ -88,6 +88,8 @@
         .feed-list li{
             margin: 15px 5px;
             font-size: 14px;
+            -webkit-tap-highlight-color:rgba(0,0,0,0);
+            tap-highlight-color:rgba(0,0,0,0);
         }
         .feed-list li input[type=checkbox]{
             margin-left: -20px;
@@ -122,10 +124,18 @@
             -webkit-transition: all 0.1s linear;
             transition: all 0.1s linear;
         }
+        .feed-list li span i{
+            display: inline-block;
+            width: 10px;
+            height: 5px;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            -webkit-transform: rotate(45deg) translateY(-3px) translateX(3px);
+            transform: rotate(-45deg) translateY(-3px) translateX(3px);
+        }
         .feed-list li input[type=checkbox]:checked + span{
             display: inline-block;
             background: #2ecc71;
-            color: #fff;
             border-color: #2ecc71;
         }
         .feed-list li input[type=text],
@@ -202,14 +212,14 @@
             <li>
                 <label for="l1">
                     <input type="checkbox" id="l1" data-type="s">
-                    <span>✓</span>
+                    <span><i></i></span>
                     Can't connect
                 </label>
             </li>
             <li>
                 <label for="l2">
                     <input type="checkbox" id="l2" class="check" data-type="m" />
-                    <span>✓</span>
+                    <span><i></i></span>
                     Connected, but can't access sites/apps， Connected, but can't access sites/apps
                 </label>
                 <div contenteditable="true" class="desciption"></div>
@@ -217,28 +227,28 @@
             <li>
                 <label for="l3">
                     <input type="checkbox" id="l3" data-type="s">
-                    <span>✓</span>
+                    <span><i></i></span>
                     Speed is too slow
                 </label>
             </li>
             <li>
                 <label for="l4">
                     <input type="checkbox" id="l4" class="check" data-type="s" />
-                    <span>✓</span>
+                    <span><i></i></span>
                     Auto-disconnected
                 </label>
             </li>
             <li>
                 <label for="l5">
                     <input type="checkbox" id="l5" class="check" data-type="s" />
-                <span>✓</span>
+                    <span><i></i></span>
                     Servers are full/sleepy
                 </label>
             </li>
             <li>
                 <label for="l6">
                     <input type="checkbox" id="l6" class="check" data-type="m" />
-                    <span>✓</span>
+                    <span><i></i></span>
                     Others
                 </label>
                 <div contenteditable="true" class="desciption"></div>
