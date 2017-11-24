@@ -24,6 +24,7 @@
             margin: 0 auto;
             padding: 0 2%;
             min-height: 100%;
+            min-width: 320px;
             max-width: 640px;
             background: rgba(0, 0, 0, 0.02);
         }
@@ -41,7 +42,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             width: 200%;
             height: 200%;
             transform-origin: 0 0;
@@ -109,7 +110,7 @@
             border-color: #2ecc71;
         }
         .feed-list li input[type=text],
-        .feed-list li .desciption{
+        .feed-list li .description{
             display: none;
             margin-top: 5px;
             margin-left: 2%;
@@ -122,10 +123,10 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.4);
             color: rgba(0 ,0 , 0, 0.9);
         }
-        .feed-list li .desciption.on{
+        .feed-list li .description.on{
             display: block;
         }
-        .feed-list li .desciption:focus{
+        .feed-list li .description:focus{
             border: none;
             outline: none;
             border-bottom: 2px solid #00a854;
@@ -145,6 +146,7 @@
             border-bottom: 2px solid #00a854;
         }
         .btn-submit{
+            position: relative;
             margin-top: 30px;
             width: 100%;
             line-height: 2.5em;
@@ -155,66 +157,83 @@
             background: rgba(0, 0, 0, 0.4);
             border-radius: 3px;
             cursor: not-allowed;
+            overflow: hidden;
         }
         .btn-submit.enable{
             background: #0085fd;
             cursor: pointer;
+        }
+        .btn-submit .submit-tips{
+            position: absolute;
+            right: -100%;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 2px;
+            -webkit-transition: right 0.5s linear;
+            transition: right 0.5s linear;
+        }
+        .btn-submit .submit-tips.on{
+            right: 0;
         }
     </style>
 </head>
 <body>
     <div class="feed">
         <div class="head">What's your problem?</div>
+        <input type="hidden" class="classType" value="network" />
         <ul class="feed-list">
             <li>
                 <label for="l1">
-                    <input type="checkbox" id="l1" data-type="s">
+                    <input type="checkbox" id="l1" data-key="question1" data-type="s">
                     <span><i></i></span>
                     Can't connect
                 </label>
             </li>
             <li>
                 <label for="l2">
-                    <input type="checkbox" id="l2" class="check" data-type="m" />
+                    <input type="checkbox" id="l2" class="check" data-key="question2"  data-type="m" />
                     <span><i></i></span>
                     Connected, but can't access sites/apps， Connected, but can't access sites/apps
                 </label>
-                <div contenteditable="true" class="desciption" placeholder="Type something ..."></div>
+                <div contenteditable="true" class="description" placeholder="Type something ..."></div>
             </li>
             <li>
                 <label for="l3">
-                    <input type="checkbox" id="l3" data-type="s">
+                    <input type="checkbox" id="l3" data-key="question3" data-type="s">
                     <span><i></i></span>
                     Speed is too slow
                 </label>
             </li>
             <li>
                 <label for="l4">
-                    <input type="checkbox" id="l4" class="check" data-type="s" />
+                    <input type="checkbox" id="l4" data-key="question4" data-type="s" />
                     <span><i></i></span>
                     Auto-disconnected
                 </label>
             </li>
             <li>
                 <label for="l5">
-                    <input type="checkbox" id="l5" class="check" data-type="s" />
+                    <input type="checkbox" id="l5" data-key="question5" data-type="s" />
                     <span><i></i></span>
                     Servers are full/sleepy
                 </label>
             </li>
             <li>
                 <label for="l6">
-                    <input type="checkbox" id="l6" class="check" data-type="m" />
+                    <input type="checkbox" id="l6" data-key="question6" data-type="m" />
                     <span><i></i></span>
                     Others
                 </label>
-                <div contenteditable="true" class="desciption" placeholder="Type something ..."></div>
+                <div contenteditable="true" class="description" placeholder="Type something ..."></div>
             </li>
             <li>
                 Email: <input type="email" placeholder="(Optional)" class="email" />
             </li>
         </ul>
-        <div class="btn-submit">SUBMIT</div>
+        <div class="btn-submit">SUBMIT<div class="submit-tips">Sorry, the system is busy, please try again later</div></div>
     </div>
     <script>
         ;(function() {
@@ -266,6 +285,8 @@
                         }
                     };
 
+                    defaults.error && (xhr.onerror = defaults.error);
+
                     if (defaults.type === 'GET') {
                         xhr.open(defaults.type, defaults.url, true);
                         xhr.send(null)
@@ -273,16 +294,19 @@
                         xhr.open(defaults.type, defaults.url, true);
                         xhr.send(defaults.data);
                     }
-
-
                 }
             };
 
-            var FEED = {
+            var emailReg = /^[0-9a-z_A-Z.\\-]+@(([0-9a-zA-Z]+)[.]){1,2}[a-z]{2,3}$/g,
+                baseUrl = 'http://192.168.31.85:9688/feedbacks/class/',
+                FEED = {
+                isPosting: false,
                 init: function (){
-                    window.onload = this.action;
+                    this.addCheckboxEvent();
+                    this.sumbitFeedBack();
+                    this.emailInputChange();
                 },
-                action: function () {
+                addCheckboxEvent: function() {
                     var checkBoxList = TOOL.$$('.feed-list input[type=checkbox]', 'all');
 
                     for (var i = 0, l = checkBoxList.length; i < l; i++) {
@@ -295,7 +319,7 @@
                                     description;
 
                                 if (type === 'm') {
-                                    description = this.parentNode.parentNode.querySelector('.desciption');
+                                    description = this.parentNode.parentNode.querySelector('.description');
                                     description.classList.toggle('on');
                                 }
 
@@ -308,12 +332,85 @@
                             });
                         })(checkBoxList[i]);
                     }
-
+                },
+                sumbitFeedBack: function () {
                     TOOL.addEvent(TOOL.$$('.btn-submit'), 'click', function(e) {
-                        var checkbox = TOOL.$$('input[type=checkbox]:checked', 'all');
-
-                        if (!this.classList.contains('enable')) {
+                        e.preventDefault();
+                        if (!this.classList.contains('enable') || FEED.isPosting) {
                             return false
+                        }
+
+                        var checkboxlist = TOOL.$$('input[type=checkbox]:checked', 'all'),
+                            classid = TOOL.$$('.classType').value,
+                            email = TOOL.$$('.email').value,
+                            postData = {
+                                email: '',
+                                feedback: []
+                            };
+
+                        if (email !== '' && emailReg.test(email)) {
+                            postData.email = email;
+                        }
+                        for (var i = 0, l = checkboxlist.length; i < l; i++) {
+                            var data = {};
+
+                            data.key = checkboxlist[i].getAttribute('data-key');
+
+                            if (checkboxlist[i].getAttribute('data-type') === 'm') {
+                                var description = checkboxlist[i].parentNode.parentNode.querySelector('.description');
+                                if (description.innerText != '') {
+                                    data.content = description.innerText;
+                                }
+                            }
+
+                            postData.feedback.push(data);
+                        }
+
+
+                        FEED.isPosting = true;
+
+                        TOOL.ajax({
+                            type: 'POST',
+                            url: baseUrl+classid,
+                            data: postData,
+                            success: function (d) {
+
+                                var data = JSON.parse(d);
+
+                                if (data.code === 200) {
+                                    FEED.showSubmitTips('Thank you for your feedback', 'ok');
+                                } else {
+                                    FEED.showSubmitTips('Sorry, the system is busy, please try again later', 'error');
+                                }
+
+                            }
+                        });
+
+                    });
+                },
+                showSubmitTips: function(text, cls) {
+                    var tips = TOOL.$$('.submit-tips'),
+                        bgColor = {
+                            ok: '#2ecc71',
+                            error: '#cc0000'
+                        };
+                    tips.innerText = text;
+                    console.log(cls);
+                    tips.style.background = bgColor[cls];
+                    tips.classList.add('on');
+
+                    setTimeout(function() {
+                        tips.classList.remove('on');
+                        FEED.isPosting = false;
+                    }, 4000);
+                },
+                emailInputChange: function() {
+                    TOOL.addEvent(TOOL.$$('.email'), 'change',function(e){
+
+                        var email = this.value;
+
+                        if (!/^[0-9a-z_A-Z.\\-]+@(([0-9a-zA-Z]+)[.]){1,2}[a-z]{2,3}$/g.test(email)) {
+                            this.style.borderColor = '#ff0000';
                         }
 
                     });
