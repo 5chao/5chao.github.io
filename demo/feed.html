@@ -387,6 +387,7 @@
                     for (var i = 0, l = FEED.checkBoxList.length; i < l; i++) {
                         FEED.checkBoxList[i].checked = false;
                         if (FEED.checkBoxList[i].parentNode.parentNode.querySelector('.description') ) {
+                            FEED.checkBoxList[i].parentNode.parentNode.querySelector('.description').innerHTML = '';
                             FEED.checkBoxList[i].parentNode.parentNode.querySelector('.description').classList.remove('on');
                         }
                     }
