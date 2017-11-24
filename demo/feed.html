@@ -301,15 +301,15 @@
                 baseUrl = 'http://192.168.31.85:9688/feedbacks/class/',
                 FEED = {
                 isPosting: false,
+                checkBoxList: TOOL.$$('.feed-list input[type=checkbox]', 'all'),
                 init: function (){
                     this.addCheckboxEvent();
                     this.sumbitFeedBack();
                     this.emailInputChange();
                 },
                 addCheckboxEvent: function() {
-                    var checkBoxList = TOOL.$$('.feed-list input[type=checkbox]', 'all');
 
-                    for (var i = 0, l = checkBoxList.length; i < l; i++) {
+                    for (var i = 0, l = FEED.checkBoxList.length; i < l; i++) {
                         (function (el) {
                             TOOL.addEvent(el, 'click', function(e) {
 
@@ -330,7 +330,7 @@
                                 }
 
                             });
-                        })(checkBoxList[i]);
+                        })(FEED.checkBoxList[i]);
                     }
                 },
                 sumbitFeedBack: function () {
@@ -340,8 +340,7 @@
                             return false
                         }
 
-                        var checkboxlist = TOOL.$$('input[type=checkbox]:checked', 'all'),
-                            classid = TOOL.$$('.classType').value,
+                        var classid = TOOL.$$('.classType').value,
                             email = TOOL.$$('.email').value,
                             postData = {
                                 email: '',
@@ -351,13 +350,13 @@
                         if (email !== '' && emailReg.test(email)) {
                             postData.email = email;
                         }
-                        for (var i = 0, l = checkboxlist.length; i < l; i++) {
+                        for (var i = 0, l = FEED.checkBoxList.length; i < l; i++) {
                             var data = {};
 
-                            data.key = checkboxlist[i].getAttribute('data-key');
+                            data.key = FEED.checkBoxList[i].getAttribute('data-key');
 
-                            if (checkboxlist[i].getAttribute('data-type') === 'm') {
-                                var description = checkboxlist[i].parentNode.parentNode.querySelector('.description');
+                            if (FEED.checkBoxList[i].getAttribute('data-type') === 'm') {
+                                var description = FEED.checkBoxList[i].parentNode.parentNode.querySelector('.description');
                                 if (description.innerText != '') {
                                     data.content = description.innerText;
                                 }
@@ -366,7 +365,6 @@
                             postData.feedback.push(data);
                         }
 
-
                         FEED.isPosting = true;
 
                         TOOL.ajax({
@@ -374,19 +372,25 @@
                             url: baseUrl+classid,
                             data: postData,
                             success: function (d) {
-
                                 var data = JSON.parse(d);
-
                                 if (data.code === 200) {
                                     FEED.showSubmitTips('Thank you for your feedback', 'ok');
                                 } else {
                                     FEED.showSubmitTips('Sorry, the system is busy, please try again later', 'error');
                                 }
-
+                                FEED.initChecklist();
                             }
                         });
-
                     });
+                },
+                initChecklist: function () {
+                    for (var i = 0, l = FEED.checkBoxList.length; i < l; i++) {
+                        FEED.checkBoxList[i].checked = false;
+                        if (FEED.checkBoxList[i].parentNode.parentNode.querySelector('.description') ) {
+                            FEED.checkBoxList[i].parentNode.parentNode.querySelector('.description').classList.remove('on');
+                        }
+                    }
+                    TOOL.$$('.email').value = '';
                 },
                 showSubmitTips: function(text, cls) {
                     var tips = TOOL.$$('.submit-tips'),
@@ -394,8 +398,8 @@
                             ok: '#2ecc71',
                             error: '#cc0000'
                         };
-                    tips.innerText = text;
-                    console.log(cls);
+
+                    tips.innerHTML = text;
                     tips.style.background = bgColor[cls];
                     tips.classList.add('on');
 
@@ -406,13 +410,10 @@
                 },
                 emailInputChange: function() {
                     TOOL.addEvent(TOOL.$$('.email'), 'change',function(e){
-
                         var email = this.value;
-
                         if (!/^[0-9a-z_A-Z.\\-]+@(([0-9a-zA-Z]+)[.]){1,2}[a-z]{2,3}$/g.test(email)) {
                             this.style.borderColor = '#ff0000';
                         }
-
                     });
                 }
             };
