@@ -28,12 +28,25 @@
             background: rgba(0, 0, 0, 0.02);
         }
         .head{
+            position: relative;
             padding: 10px 0;
             height: 40px;
             line-height: 40px;
             font-size: 1.15em;
             text-align: center;
-            border-bottom: 1px solid rgba(0 ,0 , 0, 0.1);
+
+        }
+        .head::before{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-bottom: 1px solid rgba(0 ,0 , 0, 0.6);
+            width: 200%;
+            height: 200%;
+            transform-origin: 0 0;
+            transform: scale(0.5,0.5);
+            box-sizing: border-box;
         }
         .feed-list li{
             margin: 15px 5px;
