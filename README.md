@@ -1,1 +1,1 @@
-##  abtou UUCHAT <img alt="uuchat" src="http://i.imgur.com/endrrcC.png" />
+##  abtou UUCHAT <img alt="uuchat" src="./images/icon_01.png" />
