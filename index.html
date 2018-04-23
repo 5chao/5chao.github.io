@@ -127,24 +127,23 @@
         </ul>
     </div>
 </div>
-<!-- begin uuchat code -->
-<script>
-;(function(u, c, h){
-    u.UUCHAT = (function(){
-        return {
-            //domain: 'https://uuchat.io',
-            domain: 'http://192.168.31.224:9688',
-            src: h
-        };
-    })();
-    var s = c.createElement('script'),
-        r=c.getElementsByTagName('script')[0];
-    s.async = 1;
-    s.src = u.UUCHAT.domain+h;
-    r.parentNode.insertBefore(s,r);
+ <!-- begin uuchat code  -->
+<script type="text/javascript">
+    ;(function(u, c, h){
+        u.UUCHAT = (function(){
+            return {
+                domain: 'http://uuchat.io', // change your own domain here
+                src: h
+            };
+        })();
+        var s = c.createElement('script'),
+                r=c.getElementsByTagName('script')[0];
+        s.async = 1;
+        s.src = u.UUCHAT.domain+h;
+        r.parentNode.insertBefore(s,r);
 
-})(window, document, "/static/js/loader.js");
+    })(window, document, "/static/js/loader.js", );
 </script>
-<!-- end uuchat code -->    
+<!-- end uuchat code  -->   
 </body>
 </html>
